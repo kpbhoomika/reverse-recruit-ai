@@ -1,80 +1,96 @@
 import Link from "next/link";
+import { Cpu, ShieldCheck, Github, ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#F5F5F7] text-[#6E6E73] border-t border-[#D2D2D7] text-[12px] leading-[1.33]">
-      <div className="max-w-[1080px] mx-auto px-6 py-10 space-y-6">
+    <footer className="hairline-t bg-[#05070A] text-muted text-xs">
+      <div className="max-w-6xl mx-auto px-6 py-16 space-y-12">
         
-        {/* Footnote disclaimer */}
-        <div className="space-y-2 border-b border-[#D2D2D7]/80 pb-6 text-[#86868B] text-[11px] leading-[1.4]">
+        {/* Footnote telemetry disclaimer */}
+        <div className="p-6 rounded-2xl bg-surface-50/80 border border-border-subtle text-[11px] leading-relaxed text-muted space-y-2">
           <p>
-            1. The 5-interview guarantee applies to active accounts matching minimum role and skill thresholds. If 5 qualified interviews are not secured within the service period, a full refund of the base service fee is granted.
+            <span className="text-foreground font-semibold">1. Performance Guarantee:</span> The 5-interview guarantee applies to active accounts matching minimum role and skill parameters. If 5 qualified interview milestones are not verified within the monthly cycle, a 100% refund of the base plan fee is issued.
           </p>
           <p>
-            2. Dual-channel application automation submits verified application data directly to employer ATS endpoints and delivers tailored recruiter outreach.
+            <span className="text-foreground font-semibold">2. Autonomous Infrastructure:</span> All resume bullet re-ranking and semantic parsing are performed natively via Gemini 1.5 with zero artificial hallucination of non-existent qualifications.
           </p>
         </div>
 
         {/* Directory columns */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 py-4">
           
-          <div className="space-y-2">
-            <h4 className="font-semibold text-[#1D1D1F] text-[12px]">Platform</h4>
-            <ul className="space-y-1.5 text-[#6E6E73]">
-              <li><Link href="/dashboard" className="hover:text-[#1D1D1F] hover:underline">Pipeline Tracker</Link></li>
-              <li><Link href="/dashboard/resume-tailor" className="hover:text-[#1D1D1F] hover:underline">ATS Resume Tailor</Link></li>
-              <li><Link href="/dashboard/cover-letters" className="hover:text-[#1D1D1F] hover:underline">Outreach Pitch</Link></li>
-              <li><Link href="/dashboard/linkedin-optimizer" className="hover:text-[#1D1D1F] hover:underline">LinkedIn SEO</Link></li>
-              <li><Link href="/dashboard/offer-negotiator" className="hover:text-[#1D1D1F] hover:underline">Offer Negotiator</Link></li>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-foreground font-semibold text-sm">
+              <Cpu className="h-4 w-4 text-cyan-400" />
+              <span>ReverseRecruit</span>
+            </div>
+            <p className="text-[12px] text-muted leading-relaxed">
+              Intelligent career operating system for software engineers, freshers, and career switchers.
+            </p>
+            <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+              <span>All Systems Operational</span>
+            </div>
+          </div>
+
+          <div className="space-y-2.5">
+            <h4 className="font-mono uppercase tracking-wider text-[11px] text-foreground font-semibold">
+              Platform Architecture
+            </h4>
+            <ul className="space-y-2">
+              <li><Link href="/dashboard" className="hover:text-cyan-300 transition-colors">Pipeline Command Center</Link></li>
+              <li><Link href="/dashboard/resume-tailor" className="hover:text-cyan-300 transition-colors">ATS Reverse Engineering Studio</Link></li>
+              <li><Link href="/dashboard/cover-letters" className="hover:text-cyan-300 transition-colors">Dual-Channel Outreach Engine</Link></li>
+              <li><Link href="/dashboard/linkedin-optimizer" className="hover:text-cyan-300 transition-colors">LinkedIn Recruiter Visibility SEO</Link></li>
+              <li><Link href="/dashboard/offer-negotiator" className="hover:text-cyan-300 transition-colors">Offer &amp; Comp Negotiation Copilot</Link></li>
             </ul>
           </div>
 
-          <div className="space-y-2">
-            <h4 className="font-semibold text-[#1D1D1F] text-[12px]">Tiers &amp; Pricing</h4>
-            <ul className="space-y-1.5 text-[#6E6E73]">
-              <li><Link href="/onboarding" className="hover:text-[#1D1D1F] hover:underline">Student Tier ($20/mo)</Link></li>
-              <li><Link href="/onboarding" className="hover:text-[#1D1D1F] hover:underline">IT Professional ($99/mo)</Link></li>
-              <li><Link href="/onboarding" className="hover:text-[#1D1D1F] hover:underline">Guarantee Terms</Link></li>
+          <div className="space-y-2.5">
+            <h4 className="font-mono uppercase tracking-wider text-[11px] text-foreground font-semibold">
+              Plans &amp; Guarantee
+            </h4>
+            <ul className="space-y-2">
+              <li><Link href="/onboarding" className="hover:text-cyan-300 transition-colors">Student &amp; Fresher Tier ($20/mo)</Link></li>
+              <li><Link href="/onboarding" className="hover:text-cyan-300 transition-colors">IT Professional Tier ($99/mo)</Link></li>
+              <li><Link href="/onboarding" className="hover:text-cyan-300 transition-colors">Guarantee Fulfillment Terms</Link></li>
+              <li><Link href="/admin" className="hover:text-cyan-300 transition-colors">Agency Operations Cockpit</Link></li>
             </ul>
           </div>
 
-          <div className="space-y-2">
-            <h4 className="font-semibold text-[#1D1D1F] text-[12px]">Operations</h4>
-            <ul className="space-y-1.5 text-[#6E6E73]">
-              <li><Link href="/admin" className="hover:text-[#1D1D1F] hover:underline">Agency Cockpit</Link></li>
-              <li><span className="text-[#86868B]">Greenhouse &amp; Lever Feeds</span></li>
-              <li><span className="text-[#86868B]">Ashby API Sync</span></li>
-            </ul>
-          </div>
-
-          <div className="space-y-2">
-            <h4 className="font-semibold text-[#1D1D1F] text-[12px]">GitHub &amp; Code</h4>
-            <ul className="space-y-1.5 text-[#6E6E73]">
+          <div className="space-y-2.5">
+            <h4 className="font-mono uppercase tracking-wider text-[11px] text-foreground font-semibold">
+              Engineering &amp; Code
+            </h4>
+            <ul className="space-y-2">
               <li>
                 <a
                   href="https://github.com/kpbhoomika"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#1D1D1F] hover:underline"
+                  className="hover:text-cyan-300 transition-colors inline-flex items-center gap-1"
                 >
-                  kpbhoomika on GitHub
+                  <Github className="h-3.5 w-3.5" />
+                  <span>github.com/kpbhoomika</span>
+                  <ArrowUpRight className="h-3 w-3 text-muted" />
                 </a>
               </li>
-              <li><span className="text-[#86868B]">Daily Actions Cron</span></li>
+              <li><span className="font-mono text-[11px] text-muted">Daily Actions Cron: 06:00 UTC</span></li>
+              <li><span className="font-mono text-[11px] text-muted">Direct ATS Feed Ingestion: 24h</span></li>
             </ul>
           </div>
 
         </div>
 
-        {/* Legal bar */}
-        <div className="pt-4 border-t border-[#D2D2D7]/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#86868B]">
-          <p>Copyright © {new Date().getFullYear()} ReverseRecruit Inc. All rights reserved.</p>
+        {/* Legal & Copyright */}
+        <div className="pt-8 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[11px] text-muted font-mono">
+          <p>© {new Date().getFullYear()} ReverseRecruit AI Inc. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <span className="hover:underline cursor-pointer">Privacy Policy</span>
-            <span>|</span>
-            <span className="hover:underline cursor-pointer">Terms of Use</span>
-            <span>|</span>
-            <span className="hover:underline cursor-pointer">Sales and Refunds</span>
+            <span className="hover:text-foreground cursor-pointer transition-colors">Security &amp; Encryption</span>
+            <span>•</span>
+            <span className="hover:text-foreground cursor-pointer transition-colors">Privacy Protocol</span>
+            <span>•</span>
+            <span className="hover:text-foreground cursor-pointer transition-colors">Terms of Service</span>
           </div>
         </div>
 

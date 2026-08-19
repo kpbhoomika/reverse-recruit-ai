@@ -9,20 +9,21 @@ import {
   Linkedin, 
   Mail, 
   RefreshCw, 
-  CheckCircle2,
-  Building
+  Cpu, 
+  Terminal,
+  ArrowRight
 } from "lucide-react";
 import { CoverLetterResult } from "@/lib/types";
 
 export default function CoverLettersPage() {
   const [candidateName, setCandidateName] = useState("Bhoomika K P");
   const [companyName, setCompanyName] = useState("Stripe");
-  const [roleTitle, setRoleTitle] = useState("Full Stack Engineer — Developer Platform");
+  const [roleTitle, setRoleTitle] = useState("Staff Developer Platform Engineer");
   const [jobDescription, setJobDescription] = useState(
-    "Building developer APIs and high-throughput financial dashboards using React, TypeScript, Node.js, and PostgreSQL."
+    "Building high-throughput financial developer APIs and distributed systems in TypeScript, Go, and PostgreSQL."
   );
   const [candidateSkills, setCandidateSkills] = useState(
-    "React, Next.js, TypeScript, Node.js, PostgreSQL, AWS"
+    "Go, TypeScript, React, Next.js, PostgreSQL, Distributed Systems, AWS"
   );
 
   const [loading, setLoading] = useState(false);
@@ -46,7 +47,7 @@ export default function CoverLettersPage() {
       const data = await res.json();
       setResult(data);
     } catch (err) {
-      console.error("Failed to generate cover letter", err);
+      console.error("Failed to generate outreach pitch", err);
     } finally {
       setLoading(false);
     }
@@ -59,154 +60,159 @@ export default function CoverLettersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#07090E] text-[#F1F5F9] p-6 sm:p-10 pt-28">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Header */}
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-2">
-            <Send className="h-3.5 w-3.5" />
-            <span>Dual-Channel Outreach Engine</span>
+        {/* Studio Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-subtle">
+          <div>
+            <span className="text-eyebrow-telemetry flex items-center gap-1.5">
+              <Send className="h-3.5 w-3.5 text-cyan-400" /> Dual-Channel Outreach Studio
+            </span>
+            <h1 className="text-3xl font-semibold text-foreground tracking-tight mt-1">
+              Recruiter InMail &amp; Cover Letter Engine
+            </h1>
+            <p className="text-xs text-muted mt-1">
+              3-sentence high-impact hiring manager pitches + ATS narrative cover letters.
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-            High-Conversion Cover Letter &amp; Recruiter InMail
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Generate a targeted 3-paragraph ATS cover letter and a punchy 3-sentence direct InMail for the hiring manager.
-          </p>
+
+          <button
+            onClick={handleGenerate}
+            disabled={loading}
+            className="btn-primary-glow text-xs py-2.5 px-6 shrink-0 cursor-pointer"
+          >
+            {loading ? (
+              <>
+                <RefreshCw className="h-4 w-4 animate-spin" />
+                <span>Synthesizing Outreach Package...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                <span>Generate Outreach Package</span>
+              </>
+            )}
+          </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* 3-Column Studio Workspace */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* Inputs */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Company Name *</label>
-                <input
-                  type="text"
-                  value={companyName}
-                  onChange={(e) => setCompanyName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-purple-500"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Target Role Title *</label>
-                <input
-                  type="text"
-                  value={roleTitle}
-                  onChange={(e) => setRoleTitle(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-purple-500"
-                />
-              </div>
+          {/* Left Column: Job Intelligence Inputs (4 cols) */}
+          <div className="lg:col-span-4 glass-surface p-6 rounded-3xl border border-border-subtle space-y-4">
+            <span className="font-mono text-xs text-muted uppercase tracking-wider block pb-2 border-b border-border-subtle">
+              Job Intelligence Vectors
+            </span>
+
+            <div>
+              <label className="block text-[11px] font-mono text-muted uppercase mb-1">Company</label>
+              <input
+                type="text"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-medium focus:outline-none focus:border-cyan-400"
+              />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Key Candidate Skills</label>
+              <label className="block text-[11px] font-mono text-muted uppercase mb-1">Role Title</label>
+              <input
+                type="text"
+                value={roleTitle}
+                onChange={(e) => setRoleTitle(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-medium focus:outline-none focus:border-cyan-400"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[11px] font-mono text-muted uppercase mb-1">Key Skills</label>
               <input
                 type="text"
                 value={candidateSkills}
                 onChange={(e) => setCandidateSkills(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-mono focus:outline-none focus:border-cyan-400"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Job Description Snippet</label>
+              <label className="block text-[11px] font-mono text-muted uppercase mb-1">JD Excerpt</label>
               <textarea
-                rows={5}
+                rows={4}
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white font-mono text-xs focus:outline-none focus:border-purple-500"
+                className="w-full p-3 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs leading-relaxed font-mono focus:outline-none focus:border-cyan-400"
               />
             </div>
-
-            <button
-              onClick={handleGenerate}
-              disabled={loading}
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-95 text-white font-bold text-sm shadow-lg shadow-purple-600/20 transition-all flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <RefreshCw className="h-4 w-4 animate-spin" />
-                  <span>Drafting Cover Letter &amp; InMail...</span>
-                </>
-              ) : (
-                <>
-                  <Sparkles className="h-4 w-4" />
-                  <span>Generate Outreach Package</span>
-                </>
-              )}
-            </button>
           </div>
 
-          {/* Results */}
-          <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-6">
+          {/* Center & Right Columns: Generated Artifacts & Reasoning (8 cols) */}
+          <div className="lg:col-span-8 glass-surface-elevated p-6 sm:p-8 rounded-3xl border border-border-light space-y-6">
+            
             {result ? (
               <div className="space-y-6 animate-fadeIn">
                 
-                {/* Recruiter 3-Sentence InMail */}
-                <div className="p-4 rounded-xl bg-slate-950 border border-indigo-500/30 space-y-2">
+                {/* 3-Sentence Recruiter InMail Pitch */}
+                <div className="p-5 rounded-2xl bg-surface-100 border border-cyan-500/30 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-1.5">
-                      <Linkedin className="h-3.5 w-3.5" /> 3-Sentence Recruiter InMail
+                    <span className="font-mono text-xs text-cyan-300 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                      <Linkedin className="h-3.5 w-3.5 text-cyan-400" /> 3-Sentence Hiring Manager InMail
                     </span>
                     <button
                       onClick={() => copyText(result.recruiterInMailPitch, "inmail")}
-                      className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-semibold"
+                      className="text-xs font-mono text-cyan-300 hover:text-foreground flex items-center gap-1"
                     >
                       {copiedType === "inmail" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                      <span>{copiedType === "inmail" ? "Copied" : "Copy"}</span>
+                      <span>{copiedType === "inmail" ? "Copied" : "Copy InMail"}</span>
                     </button>
                   </div>
-                  <p className="text-xs text-slate-200 leading-relaxed font-medium bg-slate-900 p-3 rounded-lg border border-slate-800">
+                  <p className="text-xs text-foreground font-mono leading-relaxed p-3 rounded-xl bg-surface-200/80 border border-border-subtle">
                     &quot;{result.recruiterInMailPitch}&quot;
                   </p>
                 </div>
 
-                {/* Email Subject Line */}
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
-                  <div>
-                    <span className="text-slate-500 font-mono block">Subject Line:</span>
-                    <span className="text-slate-200 font-semibold">{result.emailSubjectLine}</span>
+                {/* AI Reasoning Inspector */}
+                <div className="p-4 rounded-xl bg-surface-100/60 border border-border-subtle text-xs space-y-1.5">
+                  <span className="font-mono text-[11px] text-emerald-400 font-semibold uppercase tracking-wider block">
+                    AI Strategic Reasoning:
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] text-muted">
+                    <div>• <strong>Recruiter Hook:</strong> Mentions scale metrics in first sentence.</div>
+                    <div>• <strong>Relevance:</strong> Directly maps 2 hardest technical vectors.</div>
+                    <div>• <strong>Low Friction CTA:</strong> Asks for a 5-minute exploratory sync.</div>
                   </div>
-                  <button
-                    onClick={() => copyText(result.emailSubjectLine, "subject")}
-                    className="text-slate-400 hover:text-white"
-                  >
-                    <Copy className="h-3.5 w-3.5" />
-                  </button>
                 </div>
 
-                {/* Full 3-Paragraph Cover Letter */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <Mail className="h-3.5 w-3.5 text-blue-400" /> Full Tailored Cover Letter
+                {/* Full ATS Cover Letter */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-muted uppercase tracking-wider flex items-center gap-1.5">
+                      <Mail className="h-3.5 w-3.5 text-muted" /> 3-Paragraph Narrative Letter
                     </span>
                     <button
                       onClick={() => copyText(result.fullLetter, "letter")}
-                      className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-semibold"
+                      className="text-xs font-mono text-cyan-300 hover:text-foreground flex items-center gap-1"
                     >
                       {copiedType === "letter" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                      <span>{copiedType === "letter" ? "Copied" : "Copy Full Letter"}</span>
+                      <span>{copiedType === "letter" ? "Copied" : "Copy Letter"}</span>
                     </button>
                   </div>
-                  <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 whitespace-pre-line leading-relaxed max-h-[300px] overflow-y-auto">
+                  <div className="p-4 rounded-xl bg-surface-100 border border-border-subtle text-xs text-foreground whitespace-pre-line leading-relaxed font-mono max-h-[220px] overflow-y-auto">
                     {result.fullLetter}
                   </div>
                 </div>
 
               </div>
             ) : (
-              <div className="h-full min-h-[350px] flex flex-col items-center justify-center text-center p-6 text-slate-500">
-                <Send className="h-10 w-10 text-slate-600 mb-3" />
-                <p className="text-sm font-medium text-slate-400">Click &quot;Generate Outreach Package&quot;</p>
-                <p className="text-xs text-slate-500 max-w-xs mt-1">
-                  Produces a high-conversion 3-paragraph letter and an InMail cold pitch for the hiring manager.
+              <div className="h-64 flex flex-col items-center justify-center text-center p-6 text-muted font-mono text-xs">
+                <Send className="h-8 w-8 text-muted/60 mb-2" />
+                <p>Click &quot;Generate Outreach Package&quot;</p>
+                <p className="text-[11px] text-muted/60 mt-1">
+                  Synthesizes direct hiring manager InMails and tailored ATS letters.
                 </p>
               </div>
             )}
+
           </div>
 
         </div>

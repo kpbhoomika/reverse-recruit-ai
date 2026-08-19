@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RefreshCw, ExternalLink, Send } from "lucide-react";
+import { RefreshCw, ExternalLink, Send, ShieldCheck, Activity, Cpu, Users, DollarSign } from "lucide-react";
 import { initialCandidates, initialJobs } from "@/lib/mock-data";
 import { CandidateProfile, JobPosting } from "@/lib/types";
 
@@ -38,86 +38,88 @@ export default function AgencyAdminCockpit() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F] p-6 sm:p-10">
-      <div className="max-w-[1080px] mx-auto space-y-8">
+    <div className="min-h-screen bg-[#07090E] text-[#F1F5F9] p-6 sm:p-10 pt-28">
+      <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Header */}
-        <div className="bg-[#FFFFFF] p-8 rounded-[24px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        {/* Header Telemetry Bar */}
+        <div className="glass-surface-elevated p-8 rounded-3xl border border-border-light flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div>
-            <p className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73] mb-1">
-              Agency Operations
-            </p>
-            <h1 className="text-[28px] sm:text-[34px] font-semibold text-[#1D1D1F] tracking-tight">
-              Reverse Recruiting Cockpit
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-mono text-xs text-cyan-300 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-cyan-400" /> Agency Operations Cockpit
+              </span>
+            </div>
+            <h1 className="text-3xl font-semibold text-foreground tracking-tight">
+              Reverse Recruiting Operations
             </h1>
-            <p className="text-[14px] text-[#6E6E73]">
-              Manage multi-client queues, review 1-click ATS matches, and track guarantee fulfillment.
+            <p className="text-xs text-muted mt-1">
+              Multi-candidate dispatch queue, guarantee fulfillment tracking, and ATS board ingestion feeds.
             </p>
           </div>
 
           <button
             onClick={handleSyncJobs}
             disabled={isSyncing}
-            className="apple-btn-interactive text-[13px] font-normal text-[#1D1D1F] bg-[#F5F5F7] hover:bg-[#E5E5EA] px-4 py-2 rounded-full border border-[#D2D2D7] flex items-center gap-2"
+            className="btn-secondary-glass text-xs py-2.5 px-5 flex items-center gap-2 shrink-0 cursor-pointer"
           >
-            <RefreshCw className={`h-3.5 w-3.5 ${isSyncing ? "animate-spin" : ""}`} />
-            <span>{isSyncing ? "Syncing..." : "Sync ATS Feeds"}</span>
+            <RefreshCw className={`h-3.5 w-3.5 ${isSyncing ? "animate-spin text-cyan-400" : ""}`} />
+            <span>{isSyncing ? "Syncing ATS Feeds..." : "Sync Live ATS Feeds"}</span>
           </button>
         </div>
 
-        {/* 4 Metrics */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
-            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73] block mb-2">Monthly Revenue</span>
-            <span className="text-[36px] font-semibold text-[#1D1D1F]">${totalRevenue}</span>
-            <span className="text-[12px] text-[#6E6E73] block mt-1">1 Student ($20) • 2 Pros ($99)</span>
+        {/* 4 Metrics Telemetry */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
+          <div className="glass-surface p-6 rounded-2xl border border-border-subtle">
+            <span className="text-[10px] text-muted uppercase tracking-wider block mb-1">Monthly Agency MRR</span>
+            <span className="text-3xl font-bold text-foreground">${totalRevenue}</span>
+            <span className="text-[11px] text-muted block mt-1">1 Student ($20) • 2 Pros ($99)</span>
           </div>
 
-          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
-            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73] block mb-2">Guarantee Goal</span>
-            <span className="text-[36px] font-semibold text-[#1D1D1F]">{totalInterviewsLanded} <span className="text-[18px] text-[#6E6E73] font-normal">/ {totalInterviewsGuaranteed}</span></span>
-            <span className="text-[12px] text-[#0071E3] block mt-1">60% Fulfillment rate</span>
+          <div className="glass-surface p-6 rounded-2xl border border-border-subtle">
+            <span className="text-[10px] text-muted uppercase tracking-wider block mb-1">Guarantee Fulfillment</span>
+            <span className="text-3xl font-bold text-emerald-400">{totalInterviewsLanded} <span className="text-sm text-muted font-normal">/ {totalInterviewsGuaranteed}</span></span>
+            <span className="text-[11px] text-cyan-300 block mt-1">60% Fulfillment rate</span>
           </div>
 
-          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
-            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73] block mb-2">Total Dispatches</span>
-            <span className="text-[36px] font-semibold text-[#1D1D1F]">{totalApplications}</span>
-            <span className="text-[12px] text-[#6E6E73] block mt-1">+18 submitted today</span>
+          <div className="glass-surface p-6 rounded-2xl border border-border-subtle">
+            <span className="text-[10px] text-muted uppercase tracking-wider block mb-1">Total Dispatches</span>
+            <span className="text-3xl font-bold text-foreground">{totalApplications}</span>
+            <span className="text-[11px] text-blue-400 block mt-1">+18 submitted today</span>
           </div>
 
-          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
-            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73] block mb-2">Active Clients</span>
-            <span className="text-[36px] font-semibold text-[#1D1D1F]">{candidates.length}</span>
-            <span className="text-[12px] text-[#0071E3] block mt-1">100% Retained</span>
+          <div className="glass-surface p-6 rounded-2xl border border-border-subtle">
+            <span className="text-[10px] text-muted uppercase tracking-wider block mb-1">Active Clients</span>
+            <span className="text-3xl font-bold text-foreground">{candidates.length}</span>
+            <span className="text-[11px] text-emerald-400 block mt-1">100% Client Retention</span>
           </div>
         </div>
 
-        {/* Tab Switch */}
-        <div className="flex items-center gap-2">
+        {/* Tab Switcher */}
+        <div className="flex items-center gap-2 font-mono text-xs">
           <button
             onClick={() => setActiveTab("clients")}
-            className={`px-5 py-1.5 rounded-full text-[13px] font-medium transition-all ${
+            className={`px-5 py-2 rounded-full transition-all ${
               activeTab === "clients"
-                ? "bg-[#1D1D1F] text-white shadow-sm"
-                : "text-[#6E6E73] hover:text-[#1D1D1F] bg-[#FFFFFF] border border-[#D2D2D7]"
+                ? "bg-foreground text-background font-bold shadow-md"
+                : "text-muted hover:text-foreground glass-surface"
             }`}
           >
-            Clients ({candidates.length})
+            Candidate Queue ({candidates.length})
           </button>
           <button
             onClick={() => setActiveTab("jobs")}
-            className={`px-5 py-1.5 rounded-full text-[13px] font-medium transition-all ${
+            className={`px-5 py-2 rounded-full transition-all ${
               activeTab === "jobs"
-                ? "bg-[#1D1D1F] text-white shadow-sm"
-                : "text-[#6E6E73] hover:text-[#1D1D1F] bg-[#FFFFFF] border border-[#D2D2D7]"
+                ? "bg-foreground text-background font-bold shadow-md"
+                : "text-muted hover:text-foreground glass-surface"
             }`}
           >
-            Job Pool ({jobs.length})
+            ATS Job Pool ({jobs.length})
           </button>
         </div>
 
         {dispatchSuccess && (
-          <div className="p-4 rounded-[14px] bg-[#FFFFFF] border border-[#0071E3]/40 text-[#0071E3] text-[13px] font-medium shadow-sm animate-fadeIn">
+          <div className="p-4 rounded-xl bg-surface-100 border border-cyan-400 text-cyan-300 text-xs font-mono shadow-glow animate-fadeIn">
             ✓ {dispatchSuccess}
           </div>
         )}
@@ -126,71 +128,73 @@ export default function AgencyAdminCockpit() {
         {activeTab === "clients" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            {/* Client List */}
+            {/* Candidate List (1 col) */}
             <div className="space-y-3 lg:col-span-1">
-              <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73] block">
-                Active Candidates
+              <span className="font-mono text-xs text-muted uppercase tracking-wider block">
+                Active Client Queue
               </span>
               {candidates.map((cand) => (
                 <div
                   key={cand.id}
                   onClick={() => setSelectedCandidate(cand)}
-                  className={`p-5 rounded-[18px] border cursor-pointer transition-all ${
+                  className={`p-5 rounded-2xl border cursor-pointer transition-all ${
                     selectedCandidate.id === cand.id
-                      ? "border-[#0071E3] bg-[#FFFFFF] shadow-md shadow-[#0071E3]/5"
-                      : "border-[#D2D2D7]/80 bg-[#FFFFFF] hover:border-[#86868B]"
+                      ? "bg-surface-200 border-cyan-400 shadow-glow"
+                      : "bg-surface-100/70 border-border-subtle hover:border-border-light"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-semibold text-[15px] text-[#1D1D1F]">{cand.fullName}</span>
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-[#F5F5F7] text-[#6E6E73]">
+                    <span className="font-semibold text-sm text-foreground">{cand.fullName}</span>
+                    <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-surface-300 text-cyan-300">
                       {cand.tier === "student" ? "$20 Student" : "$99 Pro"}
                     </span>
                   </div>
-                  <p className="text-[12px] text-[#6E6E73] line-clamp-1">{cand.targetRoles.join(", ")}</p>
-                  <div className="mt-3 pt-3 border-t border-[#F5F5F7] flex items-center justify-between text-[12px]">
-                    <span className="text-[#6E6E73]">{cand.applicationsSubmitted} Applied</span>
-                    <span className="text-[#0071E3] font-medium">{cand.interviewsLanded}/{cand.interviewsGuaranteed} Interviews</span>
+                  <p className="text-xs text-muted line-clamp-1">{cand.targetRoles.join(", ")}</p>
+                  <div className="mt-3 pt-2.5 border-t border-border-subtle/50 flex items-center justify-between font-mono text-[11px]">
+                    <span className="text-muted">{cand.applicationsSubmitted} Applied</span>
+                    <span className="text-emerald-400 font-bold">{cand.interviewsLanded}/{cand.interviewsGuaranteed} Landed</span>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Selected Client Operational Details */}
-            <div className="lg:col-span-2 bg-[#FFFFFF] p-8 rounded-[24px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] space-y-6">
-              <div className="flex items-center justify-between pb-6 border-b border-[#F5F5F7]">
+            {/* Selected Client Operational Details (2 cols) */}
+            <div className="lg:col-span-2 glass-surface-elevated p-8 rounded-3xl border border-border-light space-y-6">
+              <div className="flex items-center justify-between pb-6 border-b border-border-subtle">
                 <div>
-                  <h3 className="text-[24px] font-semibold text-[#1D1D1F]">{selectedCandidate.fullName}</h3>
-                  <p className="text-[13px] text-[#6E6E73]">{selectedCandidate.email} • {selectedCandidate.phone} • {selectedCandidate.location}</p>
+                  <h3 className="text-2xl font-bold text-foreground">{selectedCandidate.fullName}</h3>
+                  <p className="text-xs text-muted mt-0.5">{selectedCandidate.email} • {selectedCandidate.phone} • {selectedCandidate.location}</p>
                 </div>
-                <div className="text-right">
-                  <span className="text-[12px] text-[#6E6E73] block">Guaranteed Goal</span>
-                  <span className="text-[20px] font-semibold text-[#1D1D1F]">
+                <div className="text-right font-mono">
+                  <span className="text-[10px] text-muted uppercase block">Guaranteed Goal</span>
+                  <span className="text-lg font-bold text-emerald-400">
                     {selectedCandidate.interviewsLanded} / {selectedCandidate.interviewsGuaranteed} Landed
                   </span>
                 </div>
               </div>
 
-              {/* Data Rows (No grid lines, generous padding and hover state) */}
+              {/* Data Rows for 1-Click Dispatch */}
               <div className="space-y-3">
-                <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73] block">
-                  Matched High-Yield Jobs Ready for Dispatch
+                <span className="font-mono text-xs text-muted uppercase tracking-wider block">
+                  Matched High-Yield Jobs Ready for 1-Click Dispatch
                 </span>
 
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   {jobs.map((job) => (
                     <div
                       key={job.id}
-                      className="p-4 rounded-[14px] bg-[#F5F5F7] hover:bg-[#EBEBEF] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                      className="p-4 rounded-xl bg-surface-100/90 border border-border-subtle hover:border-border-light transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                     >
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-[14px] text-[#1D1D1F]">{job.companyName}</span>
-                          <span className="text-[12px] text-[#6E6E73]">• {job.location}</span>
-                          <span className="text-[11px] font-mono text-[#0071E3] font-medium">{job.matchScore}% ATS Score</span>
+                          <span className="font-semibold text-sm text-foreground">{job.companyName}</span>
+                          <span className="text-xs text-muted">• {job.location}</span>
+                          <span className="font-mono text-[10px] text-emerald-400 font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 border border-emerald-500/20">
+                            {job.matchScore}% Match
+                          </span>
                         </div>
-                        <p className="text-[13px] text-[#1D1D1F] mt-0.5">{job.roleTitle}</p>
-                        <p className="text-[11px] text-[#86868B]">{job.salaryRange || "Competitive"} • Via {job.atsPlatform}</p>
+                        <p className="text-xs text-foreground mt-0.5">{job.roleTitle}</p>
+                        <p className="text-[11px] font-mono text-muted">{job.salaryRange || "Competitive"} • Via {job.atsPlatform}</p>
                       </div>
 
                       <div className="flex items-center gap-2 shrink-0">
@@ -198,15 +202,16 @@ export default function AgencyAdminCockpit() {
                           href={job.applyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full bg-[#FFFFFF] text-[#6E6E73] hover:text-[#1D1D1F] border border-[#D2D2D7]"
+                          className="p-2 rounded-xl bg-surface-200 text-muted hover:text-foreground border border-border-subtle"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
                         </a>
                         <button
                           onClick={() => handleDispatch(job.roleTitle, job.companyName)}
-                          className="apple-btn-interactive text-[12px] font-normal text-white bg-[#0071E3] hover:bg-[#0077ED] px-4 py-1.5 rounded-full"
+                          className="btn-primary-glow text-xs py-1.5 px-4"
                         >
-                          1-Click Apply
+                          <Send className="h-3 w-3" />
+                          <span>1-Click Apply</span>
                         </button>
                       </div>
                     </div>
@@ -222,26 +227,27 @@ export default function AgencyAdminCockpit() {
         {activeTab === "jobs" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {jobs.map((job) => (
-              <div key={job.id} className="bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 space-y-3">
+              <div key={job.id} className="glass-surface p-6 rounded-2xl border border-border-subtle space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-[12px] text-[#6E6E73]">{job.companyName}</span>
-                    <h4 className="text-[16px] font-semibold text-[#1D1D1F]">{job.roleTitle}</h4>
+                    <span className="text-xs text-muted font-mono">{job.companyName}</span>
+                    <h4 className="text-base font-semibold text-foreground">{job.roleTitle}</h4>
                   </div>
-                  <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#6E6E73]">
+                  <span className="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-surface-200 border border-border-subtle text-cyan-300">
                     {job.atsPlatform}
                   </span>
                 </div>
-                <p className="text-[13px] text-[#6E6E73] line-clamp-2">{job.description}</p>
-                <div className="pt-3 border-t border-[#F5F5F7] flex items-center justify-between text-[12px]">
-                  <span className="text-[#86868B]">{job.salaryRange || "Disclosed on screen"}</span>
+                <p className="text-xs text-muted line-clamp-2 leading-relaxed">{job.description}</p>
+                <div className="pt-3 border-t border-border-subtle/50 flex items-center justify-between text-xs font-mono">
+                  <span className="text-muted">{job.salaryRange || "Disclosed on screening"}</span>
                   <a
                     href={job.applyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="apple-link text-[12px]"
+                    className="text-cyan-300 hover:underline inline-flex items-center gap-1"
                   >
-                    View Board ›
+                    <span>View Career Board</span>
+                    <ExternalLink className="h-3 w-3" />
                   </a>
                 </div>
               </div>

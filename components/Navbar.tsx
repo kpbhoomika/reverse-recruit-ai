@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight, Sparkles, Shield, Cpu } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -12,19 +12,16 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 30);
     };
-
-    // Initial check
     handleScroll();
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const links = [
-    { name: "Overview", href: "/dashboard" },
-    { name: "ATS Tailor", href: "/dashboard/resume-tailor" },
+  const navLinks = [
+    { name: "Live Engine", href: "/dashboard" },
+    { name: "ATS Studio", href: "/dashboard/resume-tailor" },
     { name: "Outreach", href: "/dashboard/cover-letters" },
     { name: "LinkedIn SEO", href: "/dashboard/linkedin-optimizer" },
     { name: "Negotiator", href: "/dashboard/offer-negotiator" },
@@ -32,34 +29,46 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#FFFFFF]/85 backdrop-blur-md border-b border-[#D2D2D7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
-          : "bg-transparent border-b border-transparent shadow-none"
+          ? "py-3 px-4 sm:px-6"
+          : "py-5 px-6"
       }`}
     >
-      <div className="max-w-[1080px] mx-auto px-6 h-12 flex items-center justify-between">
-        
-        {/* Brand */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-[15px] font-semibold tracking-tight text-[#1D1D1F] hover:opacity-75 active:scale-[0.98] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3] rounded-md px-1"
-        >
-          <span>ReverseRecruit</span>
+      <div
+        className={`max-w-6xl mx-auto transition-all duration-300 rounded-full px-5 sm:px-6 h-13 flex items-center justify-between ${
+          scrolled
+            ? "glass-surface-elevated border border-border-light shadow-2xl py-2"
+            : "bg-surface-50/40 backdrop-blur-md border border-border-subtle py-2.5"
+        }`}
+      >
+        {/* Brand Logo & Telemetry Indicator */}
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="h-7 w-7 rounded-lg bg-gradient-to-tr from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 group-hover:scale-105 transition-transform">
+            <Cpu className="h-4 w-4" />
+          </div>
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-bold text-sm tracking-tight text-foreground">
+              ReverseRecruit<span className="text-cyan-400">.ai</span>
+            </span>
+            <span className="hidden sm:inline-block font-mono text-[9px] uppercase tracking-widest text-emerald-400 px-1.5 py-0.2 rounded bg-emerald-500/10 border border-emerald-500/20">
+              v2.4
+            </span>
+          </div>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {links.map((link) => {
+        {/* Center Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-7">
+          {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[12px] tracking-normal transition-colors py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3] rounded-md ${
+                className={`text-xs font-medium tracking-wide transition-colors ${
                   isActive
-                    ? "text-[#1D1D1F] font-medium"
-                    : "text-[#6E6E73] hover:text-[#1D1D1F]"
+                    ? "text-cyan-300 font-semibold"
+                    : "text-muted hover:text-foreground"
                 }`}
               >
                 {link.name}
@@ -68,27 +77,28 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Actions */}
-        <div className="hidden md:flex items-center gap-5">
+        {/* Actions & Launch Trigger */}
+        <div className="hidden md:flex items-center gap-4">
           <Link
             href="/admin"
-            className="text-[12px] text-[#6E6E73] hover:text-[#1D1D1F] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3] rounded-md px-1"
+            className="text-xs font-mono text-muted hover:text-foreground transition-colors"
           >
             Cockpit
           </Link>
           <Link
             href="/onboarding"
-            className="apple-btn-interactive text-[12px] text-white bg-[#0071E3] hover:bg-[#0077ED] px-3.5 py-1 rounded-full font-normal shadow-sm"
+            className="btn-primary-glow text-xs py-2 px-4 shadow-sm"
           >
-            Apply for $20
+            <span>Start My Engine</span>
+            <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
-        {/* Mobile menu trigger */}
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-[#1D1D1F] p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3] rounded-md"
-          aria-label="Toggle Navigation"
+          className="md:hidden text-foreground p-1"
+          aria-label="Toggle navigation"
         >
           {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -96,14 +106,14 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#FFFFFF]/95 backdrop-blur-xl border-b border-[#D2D2D7] px-6 py-6 space-y-4 animate-fadeIn">
+        <div className="md:hidden mt-3 max-w-6xl mx-auto glass-surface-elevated rounded-2xl p-6 border border-border-light space-y-4 animate-fadeIn">
           <div className="flex flex-col space-y-3">
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-[17px] text-[#1D1D1F] py-1 border-b border-[#F5F5F7]"
+                className="text-sm font-medium text-foreground py-1 border-b border-border-subtle"
               >
                 {link.name}
               </Link>
@@ -111,17 +121,18 @@ export default function Navbar() {
             <Link
               href="/admin"
               onClick={() => setMobileOpen(false)}
-              className="text-[17px] text-[#6E6E73] py-1 border-b border-[#F5F5F7]"
+              className="text-sm font-mono text-muted py-1 border-b border-border-subtle"
             >
-              Agency Cockpit
+              Agency Admin Cockpit
             </Link>
           </div>
           <Link
             href="/onboarding"
             onClick={() => setMobileOpen(false)}
-            className="block text-center text-[15px] font-normal text-white bg-[#0071E3] py-2.5 rounded-full"
+            className="btn-primary-glow w-full text-center text-xs py-3 justify-center"
           >
-            Get Started ($20 / $99)
+            <span>Launch Career Engine ($20 / $99)</span>
+            <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       )}

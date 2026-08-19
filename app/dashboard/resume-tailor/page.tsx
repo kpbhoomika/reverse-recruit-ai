@@ -3,25 +3,25 @@
 import { useState } from "react";
 import { 
   Sparkles, 
-  FileText, 
-  CheckCircle2, 
-  XCircle, 
   Copy, 
   Check, 
   RefreshCw, 
-  Download,
-  AlertTriangle,
-  ArrowRight
+  Cpu, 
+  CheckCircle2, 
+  Layers, 
+  ArrowRight,
+  Terminal,
+  FileCode
 } from "lucide-react";
 import { ATSAnalysisResult } from "@/lib/types";
 
 export default function ResumeTailorPage() {
-  const [targetRole, setTargetRole] = useState("Full Stack Software Engineer");
+  const [targetRole, setTargetRole] = useState("Staff Backend Engineer");
   const [jobDescription, setJobDescription] = useState(
-    `We are seeking a Full Stack Software Engineer to build scalable microservices and customer-facing dashboards. Required: React, Next.js, TypeScript, Node.js, PostgreSQL, REST APIs. Preferred: Docker, Kubernetes, GraphQL, and AWS cloud deployment.`
+    `We are seeking a Staff Backend Engineer to scale distributed transaction systems. Required: Go, Kubernetes, Kafka, PostgreSQL, gRPC, and high-throughput low-latency microservices architecture.`
   );
   const [resumeText, setResumeText] = useState(
-    `Software Engineer with 3 years experience in React, TypeScript, Node.js, and PostgreSQL. Built frontend modules, integrated REST APIs, created backend SQL schemas, and improved performance.`
+    `Software Engineer with 4 years experience in Go, Python, PostgreSQL, and AWS. Built backend services, optimized database queries, integrated APIs, and deployed containers.`
   );
 
   const [loading, setLoading] = useState(false);
@@ -52,175 +52,174 @@ export default function ResumeTailorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#07090E] text-[#F1F5F9] p-6 sm:p-10 pt-28">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Header */}
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>AI Dynamic Resume Tailor</span>
+        {/* Studio Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-subtle">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-eyebrow-telemetry flex items-center gap-1.5">
+                <Cpu className="h-3.5 w-3.5" /> ATS Vector Realignment Studio
+              </span>
+            </div>
+            <h1 className="text-3xl font-semibold text-foreground tracking-tight mt-1">
+              Zero-Hallucination ATS Resume Tailor
+            </h1>
+            <p className="text-xs text-muted mt-1">
+              Split-view algorithmic editor with Gemini semantic weighting and Google XYZ metric rewrites.
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-            100% ATS-Compliant Resume Optimizer
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Align real experience with target job descriptions using Google XYZ metrics without hallucinating fake skills.
-          </p>
+
+          <button
+            onClick={handleTailor}
+            disabled={loading}
+            className="btn-primary-glow text-xs py-2.5 px-6 shrink-0 cursor-pointer"
+          >
+            {loading ? (
+              <>
+                <RefreshCw className="h-4 w-4 animate-spin" />
+                <span>Computing Semantic Weights...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                <span>Execute Realignment</span>
+              </>
+            )}
+          </button>
         </div>
 
-        {/* Input Matrix */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          
-          <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Target Role Title
-              </label>
-              <input
-                type="text"
-                value={targetRole}
-                onChange={(e) => setTargetRole(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Target Job Description (Paste from Greenhouse / Lever / Ashby)
-              </label>
-              <textarea
-                rows={6}
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white font-mono text-xs focus:outline-none focus:border-blue-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Candidate Master Resume / Experience Summary
-              </label>
-              <textarea
-                rows={6}
-                value={resumeText}
-                onChange={(e) => setResumeText(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white font-mono text-xs focus:outline-none focus:border-blue-500"
-              />
-            </div>
-
-            <button
-              onClick={handleTailor}
-              disabled={loading}
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold text-sm shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <RefreshCw className="h-4 w-4 animate-spin" />
-                  <span>Tailoring Resume &amp; Scoring ATS...</span>
-                </>
-              ) : (
-                <>
-                  <Sparkles className="h-4 w-4" />
-                  <span>Tailor Resume for this Job</span>
-                </>
-              )}
-            </button>
+        {/* Input Parameters Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="block text-xs font-mono text-muted uppercase tracking-wider">
+              Employer Job Description
+            </label>
+            <textarea
+              rows={4}
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
+              className="w-full p-4 rounded-2xl bg-surface-100 border border-border-subtle text-foreground text-xs leading-relaxed font-mono focus:outline-none focus:border-cyan-400 transition-colors"
+            />
           </div>
 
-          {/* Results Output */}
-          <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-6">
+          <div className="space-y-2">
+            <label className="block text-xs font-mono text-muted uppercase tracking-wider">
+              Target Role Title
+            </label>
+            <input
+              type="text"
+              value={targetRole}
+              onChange={(e) => setTargetRole(e.target.value)}
+              className="w-full px-4 py-3 rounded-2xl bg-surface-100 border border-border-subtle text-foreground text-xs font-medium focus:outline-none focus:border-cyan-400 transition-colors mb-2"
+            />
+            <div className="p-3 rounded-xl bg-surface-100/50 border border-border-subtle text-[11px] font-mono text-muted flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span>ATS Parser Mode: High-Concurrency Tier (Greenhouse &amp; Lever)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Split Screen AI Editor (Left: Original | Right: AI Optimized) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          {/* Left Pane: Original Resume */}
+          <div className="glass-surface p-6 sm:p-8 rounded-3xl border border-border-subtle space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
+              <span className="font-mono text-xs text-muted uppercase tracking-wider">
+                Original Experience Source
+              </span>
+              <span className="text-xs font-mono text-muted">Raw Text</span>
+            </div>
+
+            <textarea
+              rows={12}
+              value={resumeText}
+              onChange={(e) => setResumeText(e.target.value)}
+              className="w-full p-4 rounded-xl bg-surface-100/80 border border-border-subtle text-foreground text-xs leading-relaxed font-mono focus:outline-none focus:border-cyan-400 transition-colors"
+            />
+          </div>
+
+          {/* Right Pane: AI-Optimized Realignment */}
+          <div className="glass-surface-elevated p-6 sm:p-8 rounded-3xl border border-border-light space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
+              <span className="font-mono text-xs text-cyan-300 uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5" /> AI Optimized ATS Output
+              </span>
+              {result && (
+                <span className="font-mono text-xs text-emerald-400 font-bold">
+                  {result.matchScore}% Match Index
+                </span>
+              )}
+            </div>
+
             {result ? (
               <div className="space-y-6 animate-fadeIn">
                 
-                {/* Score Header */}
-                <div className="flex items-center justify-between p-4 rounded-xl bg-slate-950 border border-slate-800">
-                  <div>
-                    <span className="text-xs text-slate-400 font-medium">ATS Match Score</span>
-                    <h3 className="text-xl font-bold text-white">High Compatibility</h3>
-                  </div>
-                  <div className="h-14 w-14 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col items-center justify-center">
-                    <span className="text-xl font-extrabold text-emerald-400">{result.matchScore}%</span>
-                  </div>
-                </div>
-
-                {/* Matched & Missing Keywords */}
-                <div className="space-y-3">
-                  <div>
-                    <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block mb-1">
-                      Matched ATS Keywords ({result.matchedKeywords.length})
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {result.matchedKeywords.map((kw) => (
-                        <span key={kw} className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-xs font-mono">
-                          {kw}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <span className="text-xs font-semibold text-rose-400 uppercase tracking-wider block mb-1">
-                      Missing JD Keywords ({result.missingKeywords.length})
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {result.missingKeywords.map((kw) => (
-                        <span key={kw} className="px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-300 border border-rose-500/20 text-xs font-mono">
-                          {kw}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Tailored Summary */}
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
-                      Tailored Executive Summary
+                {/* Tailored Executive Summary */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono text-muted uppercase tracking-wider">
+                      Tailored Profile Summary
                     </span>
                     <button
                       onClick={() => copyToClipboard(result.tailoredSummary)}
-                      className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                      className="text-xs font-mono text-cyan-300 hover:text-foreground flex items-center gap-1"
                     >
                       {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                       <span>{copied ? "Copied" : "Copy"}</span>
                     </button>
                   </div>
-                  <p className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+                  <p className="p-4 rounded-xl bg-surface-100 border border-border-subtle text-xs text-foreground leading-relaxed font-mono">
                     {result.tailoredSummary}
                   </p>
                 </div>
 
-                {/* Tailored Bullet Points */}
+                {/* XYZ Bullet Points with "Why this change?" reasoning */}
                 <div className="space-y-3">
-                  <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                    Tailored Accomplishment Bullets (XYZ Formula)
+                  <span className="text-[11px] font-mono text-muted uppercase tracking-wider block">
+                    Rewritten Metric Bullet Points (Google XYZ)
                   </span>
-                  {result.tailoredBulletPoints.map((item, idx) => (
-                    <div key={idx} className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+
+                  {result.tailoredBulletPoints.map((bullet, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-xl bg-surface-100 border border-border-subtle space-y-2 text-xs"
+                    >
                       <div className="flex items-center justify-between">
-                        <span className="font-semibold text-emerald-400">✓ Upgraded Bullet {idx + 1}</span>
+                        <span className="font-mono font-semibold text-emerald-400">
+                          ✓ Aligned Metric {idx + 1}
+                        </span>
                         <button
-                          onClick={() => copyToClipboard(item.improved)}
-                          className="text-[11px] text-slate-400 hover:text-white flex items-center gap-1"
+                          onClick={() => copyToClipboard(bullet.improved)}
+                          className="text-[11px] font-mono text-muted hover:text-foreground flex items-center gap-1"
                         >
                           <Copy className="h-3 w-3" /> Copy
                         </button>
                       </div>
-                      <p className="text-slate-200 font-medium leading-relaxed">{item.improved}</p>
-                      <p className="text-[10px] text-slate-500 italic">Why: {item.reason}</p>
+
+                      <p className="text-foreground font-mono leading-relaxed">
+                        {bullet.improved}
+                      </p>
+
+                      <div className="p-2.5 rounded-lg bg-surface-200/60 border border-cyan-500/20 text-[11px] text-muted space-y-0.5">
+                        <span className="font-mono text-cyan-300 font-semibold block">
+                          WHY THIS CHANGE?
+                        </span>
+                        <p>{bullet.reason}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
 
               </div>
             ) : (
-              <div className="h-full min-h-[350px] flex flex-col items-center justify-center text-center p-6 text-slate-500">
-                <FileText className="h-10 w-10 text-slate-600 mb-3" />
-                <p className="text-sm font-medium text-slate-400">Click &quot;Tailor Resume for this Job&quot;</p>
-                <p className="text-xs text-slate-500 max-w-xs mt-1">
-                  Our AI will align your bullets with the job description for maximum ATS pass-through.
+              <div className="h-64 flex flex-col items-center justify-center text-center p-6 text-muted font-mono text-xs">
+                <FileCode className="h-8 w-8 text-muted/60 mb-2" />
+                <p>Click &quot;Execute Realignment&quot; to parse keywords</p>
+                <p className="text-[11px] text-muted/60 mt-1">
+                  Generates machine-validated bullet points aligned to job spec.
                 </p>
               </div>
             )}

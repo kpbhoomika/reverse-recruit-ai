@@ -8,20 +8,20 @@ import {
   Copy, 
   Check, 
   RefreshCw, 
-  CheckCircle2, 
   ShieldCheck,
-  Building2,
-  Award
+  Award,
+  Layers,
+  ArrowRight
 } from "lucide-react";
 import { OfferNegotiationResult } from "@/lib/types";
 
 export default function OfferNegotiatorPage() {
   const [companyName, setCompanyName] = useState("Retool");
-  const [roleTitle, setRoleTitle] = useState("Full Stack Engineer");
-  const [baseSalary, setBaseSalary] = useState("145000");
-  const [signingBonus, setSigningBonus] = useState("15000");
-  const [equityValueYear, setEquityValueYear] = useState("25000");
-  const [yoe, setYoe] = useState("3");
+  const [roleTitle, setRoleTitle] = useState("Staff Distributed Systems Engineer");
+  const [baseSalary, setBaseSalary] = useState("165000");
+  const [signingBonus, setSigningBonus] = useState("20000");
+  const [equityValueYear, setEquityValueYear] = useState("40000");
+  const [yoe, setYoe] = useState("4");
   const [location, setLocation] = useState("San Francisco, CA / Remote");
 
   const [loading, setLoading] = useState(false);
@@ -60,195 +60,189 @@ export default function OfferNegotiatorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#07090E] text-[#F1F5F9] p-6 sm:p-10 pt-28">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Header */}
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
-            <DollarSign className="h-3.5 w-3.5" />
-            <span>AI Compensation Analyzer &amp; Counter-Offer Copilot</span>
+        {/* Studio Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-subtle">
+          <div>
+            <span className="text-eyebrow-telemetry flex items-center gap-1.5">
+              <DollarSign className="h-3.5 w-3.5 text-emerald-400" /> Compensation Intelligence Studio
+            </span>
+            <h1 className="text-3xl font-semibold text-foreground tracking-tight mt-1">
+              AI Offer Negotiation &amp; Equity Copilot
+            </h1>
+            <p className="text-xs text-muted mt-1">
+              Deconstruct compensation bands against market percentiles and generate data-backed counter-offers.
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Maximize Your Tech Job Offer
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Compare compensation against real-world benchmarks and generate professional, high-leverage counter-offer scripts.
-          </p>
+
+          <button
+            onClick={handleAnalyze}
+            disabled={loading}
+            className="btn-primary-glow text-xs py-2.5 px-6 shrink-0 cursor-pointer"
+          >
+            {loading ? (
+              <>
+                <RefreshCw className="h-4 w-4 animate-spin" />
+                <span>Benchmarking Market Percentiles...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                <span>Compute Leverage Strategy</span>
+              </>
+            )}
+          </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* Inputs */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Inputs Column (5 cols) */}
+          <div className="lg:col-span-5 glass-surface p-6 rounded-3xl border border-border-subtle space-y-4">
+            <span className="font-mono text-xs text-muted uppercase tracking-wider block pb-2 border-b border-border-subtle">
+              Compensation Vectors
+            </span>
+
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Company Name</label>
+                <label className="block text-[11px] font-mono text-muted uppercase mb-1">Company</label>
                 <input
                   type="text"
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-medium focus:outline-none focus:border-cyan-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Role Title</label>
+                <label className="block text-[11px] font-mono text-muted uppercase mb-1">Role Title</label>
                 <input
                   type="text"
                   value={roleTitle}
                   onChange={(e) => setRoleTitle(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-medium focus:outline-none focus:border-cyan-400"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Base Salary ($)</label>
+                <label className="block text-[11px] font-mono text-muted uppercase mb-1">Base ($)</label>
                 <input
                   type="number"
                   value={baseSalary}
                   onChange={(e) => setBaseSalary(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-mono focus:outline-none focus:border-cyan-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Signing Bonus ($)</label>
+                <label className="block text-[11px] font-mono text-muted uppercase mb-1">Bonus ($)</label>
                 <input
                   type="number"
                   value={signingBonus}
                   onChange={(e) => setSigningBonus(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-mono focus:outline-none focus:border-cyan-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Equity/yr ($)</label>
+                <label className="block text-[11px] font-mono text-muted uppercase mb-1">Equity/yr ($)</label>
                 <input
                   type="number"
                   value={equityValueYear}
                   onChange={(e) => setEquityValueYear(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-mono focus:outline-none focus:border-cyan-400"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Years of Experience (YOE)</label>
+                <label className="block text-[11px] font-mono text-muted uppercase mb-1">YOE</label>
                 <input
                   type="number"
                   value={yoe}
                   onChange={(e) => setYoe(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-mono focus:outline-none focus:border-cyan-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Location / Remote Policy</label>
+                <label className="block text-[11px] font-mono text-muted uppercase mb-1">Location</label>
                 <input
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs font-medium focus:outline-none focus:border-cyan-400"
                 />
               </div>
             </div>
-
-            <button
-              onClick={handleAnalyze}
-              disabled={loading}
-              className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <RefreshCw className="h-4 w-4 animate-spin" />
-                  <span>Analyzing Market Benchmarks...</span>
-                </>
-              ) : (
-                <>
-                  <Sparkles className="h-4 w-4" />
-                  <span>Analyze Offer &amp; Generate Counter Script</span>
-                </>
-              )}
-            </button>
           </div>
 
-          {/* Results */}
-          <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-6">
+          {/* Results Column (7 cols) */}
+          <div className="lg:col-span-7 glass-surface-elevated p-6 sm:p-8 rounded-3xl border border-border-light space-y-6">
+            
             {result ? (
               <div className="space-y-6 animate-fadeIn">
                 
-                {/* Market Benchmark Summary */}
-                <div className="grid grid-cols-3 gap-3 p-4 rounded-xl bg-slate-950 border border-slate-800 text-center">
+                {/* Market Benchmark Tri-Panel */}
+                <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-surface-100 border border-border-subtle text-center font-mono">
                   <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Total Offer</span>
-                    <span className="text-lg font-bold text-white">${result.currentOfferTotal.toLocaleString()}</span>
+                    <span className="text-[10px] text-muted uppercase block">Total Package</span>
+                    <span className="text-lg font-bold text-foreground">${result.currentOfferTotal.toLocaleString()}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Market Median</span>
-                    <span className="text-lg font-bold text-blue-400">${result.marketBenchmarkMedian.toLocaleString()}</span>
+                    <span className="text-[10px] text-muted uppercase block">Market Median</span>
+                    <span className="text-lg font-bold text-cyan-300">${result.marketBenchmarkMedian.toLocaleString()}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Top 15% High</span>
+                    <span className="text-[10px] text-muted uppercase block">Top 15% Band</span>
                     <span className="text-lg font-bold text-emerald-400">${result.marketBenchmarkHigh.toLocaleString()}</span>
                   </div>
                 </div>
 
-                {/* Counter Targets */}
-                <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 space-y-2 text-xs">
-                  <span className="font-bold text-emerald-400 uppercase tracking-wider block">
-                    🎯 Recommended Counter-Offer Targets:
+                {/* Counter Targets Recommendations */}
+                <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-xs font-mono space-y-1.5">
+                  <span className="font-semibold text-emerald-400 uppercase tracking-wider block">
+                    🎯 Recommended Counter-Offer Anchors:
                   </span>
-                  <div className="grid grid-cols-2 gap-2 text-slate-200">
+                  <div className="grid grid-cols-2 gap-2 text-foreground">
                     <div>• Target Base: <strong>${result.counterOfferRecommendation.baseSalaryTarget.toLocaleString()}</strong></div>
                     <div>• Signing Bonus: <strong>${result.counterOfferRecommendation.signingBonusTarget.toLocaleString()}</strong></div>
                   </div>
-                  <p className="text-[11px] text-slate-400 pt-1">
+                  <p className="text-[11px] text-muted pt-1">
                     Equity: {result.counterOfferRecommendation.equityTarget}
                   </p>
                 </div>
 
-                {/* Counter Email Script */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
-                      AI Counter-Offer Email Script
+                {/* Counter-Offer Email Script */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-muted uppercase tracking-wider">
+                      Executive Counter-Offer Script
                     </span>
                     <button
                       onClick={() => copyScript(result.negotiationEmailScript)}
-                      className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-semibold"
+                      className="text-xs font-mono text-cyan-300 hover:text-foreground flex items-center gap-1"
                     >
                       {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                      <span>{copied ? "Copied" : "Copy Email"}</span>
+                      <span>{copied ? "Copied" : "Copy Script"}</span>
                     </button>
                   </div>
-                  <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 whitespace-pre-line leading-relaxed max-h-[220px] overflow-y-auto">
+                  <div className="p-4 rounded-xl bg-surface-100 border border-border-subtle text-xs font-mono text-foreground whitespace-pre-line leading-relaxed max-h-[180px] overflow-y-auto">
                     {result.negotiationEmailScript}
                   </div>
                 </div>
 
-                {/* Tactical Talking Points */}
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs text-slate-300">
-                  <span className="font-bold text-amber-400 uppercase tracking-wider block mb-1">
-                    Negotiation Playbook:
-                  </span>
-                  {result.talkingPoints.map((point, idx) => (
-                    <div key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
-                      <span>{point}</span>
-                    </div>
-                  ))}
-                </div>
-
               </div>
             ) : (
-              <div className="h-full min-h-[350px] flex flex-col items-center justify-center text-center p-6 text-slate-500">
-                <DollarSign className="h-10 w-10 text-slate-600 mb-3" />
-                <p className="text-sm font-medium text-slate-400">Click &quot;Analyze Offer &amp; Generate Counter Script&quot;</p>
-                <p className="text-xs text-slate-500 max-w-xs mt-1">
-                  Evaluates your compensation package against market bands and produces a high-leverage negotiation letter.
+              <div className="h-64 flex flex-col items-center justify-center text-center p-6 text-muted font-mono text-xs">
+                <DollarSign className="h-8 w-8 text-muted/60 mb-2" />
+                <p>Click &quot;Compute Leverage Strategy&quot;</p>
+                <p className="text-[11px] text-muted/60 mt-1">
+                  Evaluates compensation bands against market percentiles and drafts counter-offer scripts.
                 </p>
               </div>
             )}
+
           </div>
 
         </div>

@@ -2,7 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Clock, ExternalLink } from "lucide-react";
+import { 
+  ChevronRight, 
+  Clock, 
+  ExternalLink, 
+  Cpu, 
+  Sparkles, 
+  FileText, 
+  Send, 
+  Linkedin, 
+  DollarSign,
+  Activity,
+  ArrowUpRight,
+  ShieldCheck
+} from "lucide-react";
 import { initialApplications, initialCandidates } from "@/lib/mock-data";
 import { ApplicationItem, ApplicationStatus } from "@/lib/types";
 
@@ -11,7 +24,7 @@ export default function CandidateDashboard() {
   const [applications, setApplications] = useState<ApplicationItem[]>(initialApplications);
   const [selectedApp, setSelectedApp] = useState<ApplicationItem | null>(initialApplications[0]);
 
-  const columns: ApplicationStatus[] = [
+  const stages: ApplicationStatus[] = [
     "Applied",
     "Screening",
     "Interview Scheduled",
@@ -28,163 +41,156 @@ export default function CandidateDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F] p-6 sm:p-10">
-      <div className="max-w-[1080px] mx-auto space-y-10">
+    <div className="min-h-screen bg-[#07090E] text-[#F1F5F9] p-6 sm:p-10 pt-28">
+      <div className="max-w-6xl mx-auto space-y-10">
         
-        {/* Header Profile Bar (Spec-Sheet Style) */}
-        <div className="bg-[#FFFFFF] p-8 rounded-[24px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-3 mb-1">
-              <h1 className="text-[28px] sm:text-[34px] font-semibold text-[#1D1D1F] tracking-tight">
-                {candidate.fullName}
-              </h1>
-              <span className="text-[12px] font-medium px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] border border-[#D2D2D7]">
-                {candidate.tier === "student" ? "$20 Student" : "$99 Pro IT"}
-              </span>
-            </div>
-            <p className="text-[14px] text-[#6E6E73]">
-              {candidate.targetRoles.join(" • ")} • Min Comp: ${candidate.minSalary.toLocaleString()}/yr
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Link
-              href="/dashboard/resume-tailor"
-              className="apple-btn-interactive text-[13px] font-normal text-[#1D1D1F] bg-[#F5F5F7] hover:bg-[#E5E5EA] px-4 py-2 rounded-full border border-[#D2D2D7]"
-            >
-              ATS Tailor
-            </Link>
-            <Link
-              href="/dashboard/cover-letters"
-              className="apple-btn-interactive text-[13px] font-normal text-[#1D1D1F] bg-[#F5F5F7] hover:bg-[#E5E5EA] px-4 py-2 rounded-full border border-[#D2D2D7]"
-            >
-              Outreach
-            </Link>
-            <Link
-              href="/dashboard/offer-negotiator"
-              className="apple-btn-interactive text-[13px] font-normal text-white bg-[#1D1D1F] hover:bg-[#333336] px-4 py-2 rounded-full shadow-sm"
-            >
-              Negotiator
-            </Link>
-          </div>
-        </div>
-
-        {/* 4 Spec Sheet Metric Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* ===================================================================== */}
+        {/* CAREER COMMAND CENTER HEADER                                          */}
+        {/* ===================================================================== */}
+        <div className="glass-surface-elevated p-8 sm:p-10 rounded-3xl border border-border-light relative overflow-hidden">
           
-          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73]">
-              Interviews Landed
-            </span>
-            <div className="my-4">
-              <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
-                {candidate.interviewsLanded}
-              </span>
-              <span className="text-[14px] text-[#6E6E73] ml-1">/ {candidate.interviewsGuaranteed} goal</span>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs uppercase tracking-widest text-cyan-400 flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  CAREER ENGINE ● ACTIVE
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-surface-200 border border-border-subtle text-[11px] font-mono text-muted">
+                  {candidate.tier === "student" ? "Student Plan ($20)" : "Pro IT Plan ($99)"}
+                </span>
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">
+                Good evening, {candidate.fullName.split(" ")[0]}.
+              </h1>
+              <p className="text-sm text-muted max-w-xl leading-relaxed">
+                Your autonomous agent is monitoring Greenhouse and Lever career feeds. 3 new high-match roles ingested today.
+              </p>
             </div>
-            <div className="h-1 w-full bg-[#F5F5F7] rounded-full overflow-hidden">
-              <div
-                className="h-full bg-[#1D1D1F] rounded-full"
-                style={{ width: `${(candidate.interviewsLanded / candidate.interviewsGuaranteed) * 100}%` }}
-              />
+
+            {/* Studio Navigation Buttons */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              <Link
+                href="/dashboard/resume-tailor"
+                className="btn-secondary-glass text-xs py-2 px-4 flex items-center gap-1.5"
+              >
+                <FileText className="h-3.5 w-3.5 text-cyan-400" />
+                <span>ATS Tailor</span>
+              </Link>
+              <Link
+                href="/dashboard/cover-letters"
+                className="btn-secondary-glass text-xs py-2 px-4 flex items-center gap-1.5"
+              >
+                <Send className="h-3.5 w-3.5 text-emerald-400" />
+                <span>Outreach</span>
+              </Link>
+              <Link
+                href="/dashboard/offer-negotiator"
+                className="btn-primary-glow text-xs py-2 px-4 flex items-center gap-1.5"
+              >
+                <DollarSign className="h-3.5 w-3.5" />
+                <span>Negotiator</span>
+              </Link>
             </div>
           </div>
 
-          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73]">
-              Applications
-            </span>
-            <div className="my-4">
-              <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
-                {candidate.applicationsSubmitted}
-              </span>
-              <span className="text-[13px] text-[#0071E3] font-medium ml-2">+8 today</span>
+          {/* Telemetry Stream Strip */}
+          <div className="mt-8 pt-6 border-t border-border-subtle grid grid-cols-2 sm:grid-cols-5 gap-4 text-left font-mono">
+            <div>
+              <span className="text-[10px] text-muted uppercase tracking-wider block">Jobs Analyzed</span>
+              <span className="text-xl font-bold text-foreground">148</span>
             </div>
-            <span className="text-[12px] text-[#86868B]">Greenhouse, Lever &amp; Ashby</span>
-          </div>
-
-          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73]">
-              Avg Match Score
-            </span>
-            <div className="my-4">
-              <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
-                93.4%
-              </span>
+            <div>
+              <span className="text-[10px] text-muted uppercase tracking-wider block">High-Match Tier</span>
+              <span className="text-xl font-bold text-cyan-300">32</span>
             </div>
-            <span className="text-[12px] text-[#86868B]">100% Truthful ATS match</span>
-          </div>
-
-          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73]">
-              InMail Outreach
-            </span>
-            <div className="my-4">
-              <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
-                24
-              </span>
-              <span className="text-[13px] text-[#0071E3] font-medium ml-2">18 read</span>
+            <div>
+              <span className="text-[10px] text-muted uppercase tracking-wider block">Dispatched</span>
+              <span className="text-xl font-bold text-foreground">{candidate.applicationsSubmitted}</span>
             </div>
-            <span className="text-[12px] text-[#86868B]">Direct hiring managers</span>
+            <div>
+              <span className="text-[10px] text-muted uppercase tracking-wider block">InMail Replies</span>
+              <span className="text-xl font-bold text-blue-400">11</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-muted uppercase tracking-wider block">Interviews Landed</span>
+              <span className="text-xl font-bold text-emerald-400">{candidate.interviewsLanded} / {candidate.interviewsGuaranteed}</span>
+            </div>
           </div>
 
         </div>
 
-        {/* Pipeline Tracker (Kanban) */}
+        {/* ===================================================================== */}
+        {/* PIPELINE COMMAND MATRIX (STAGES)                                      */}
+        {/* ===================================================================== */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-[20px] font-semibold text-[#1D1D1F]">Application Pipeline</h2>
-              <p className="text-[13px] text-[#6E6E73]">Real-time status synced with verified ATS endpoints.</p>
+              <h2 className="text-lg font-semibold text-foreground">Stage Pipeline Matrix</h2>
+              <p className="text-xs text-muted">Real-time status synced with employer webhook queues</p>
             </div>
-            <span className="text-[12px] text-[#86868B]">Syncs every 3 hours</span>
+            <span className="font-mono text-xs text-cyan-400">Sync: Operational</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {columns.map((column) => {
-              const items = applications.filter((a) => a.status === column);
-              const isActive = column === "Interview Scheduled" || column === "Offer Received";
+            {stages.map((stage) => {
+              const items = applications.filter((a) => a.status === stage);
               return (
-                <div key={column} className="bg-[#FFFFFF] p-4 rounded-[18px] border border-[#D2D2D7]/80 min-h-[380px] flex flex-col justify-between">
+                <div
+                  key={stage}
+                  className="glass-surface p-4 rounded-2xl border border-border-subtle min-h-[380px] flex flex-col justify-between"
+                >
                   <div>
-                    <div className="flex items-center justify-between pb-3 border-b border-[#F5F5F7] mb-3">
-                      <span className="text-[12px] font-semibold uppercase tracking-wider text-[#1D1D1F]">
-                        {column}
+                    <div className="flex items-center justify-between pb-3 border-b border-border-subtle mb-3">
+                      <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
+                        {stage}
                       </span>
-                      <span className="text-[12px] text-[#6E6E73] font-medium">
+                      <span className="text-xs font-mono font-bold text-cyan-300">
                         {items.length}
                       </span>
                     </div>
 
                     <div className="space-y-2.5">
-                      {items.map((app) => (
-                        <div
-                          key={app.id}
-                          onClick={() => setSelectedApp(app)}
-                          className={`p-3 rounded-[12px] border cursor-pointer transition-all ${
-                            selectedApp?.id === app.id
-                              ? "border-[#0071E3] bg-[#0071E3]/[0.02] shadow-sm"
-                              : "border-[#E5E5EA] hover:border-[#D2D2D7] bg-[#FFFFFF]"
-                          }`}
-                        >
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-[13px] font-semibold text-[#1D1D1F]">{app.companyName}</span>
-                            <span className="text-[11px] font-mono text-[#0071E3]">{app.matchScore}%</span>
-                          </div>
-                          <p className="text-[12px] text-[#6E6E73] line-clamp-1">{app.roleTitle}</p>
-
-                          {app.interviewDate && (
-                            <div className="mt-2 text-[11px] text-[#1D1D1F] font-medium flex items-center gap-1">
-                              <Clock className="h-3 w-3 text-[#0071E3]" />
-                              <span>{new Date(app.interviewDate).toLocaleDateString()}</span>
+                      {items.map((app) => {
+                        const isSelected = selectedApp?.id === app.id;
+                        return (
+                          <div
+                            key={app.id}
+                            onClick={() => setSelectedApp(app)}
+                            className={`p-3.5 rounded-xl border cursor-pointer transition-all duration-200 ${
+                              isSelected
+                                ? "bg-surface-200 border-cyan-400 shadow-glow"
+                                : "bg-surface-100/70 border-border-subtle hover:border-border-light hover:bg-surface-200/50"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-xs font-semibold text-foreground">{app.companyName}</span>
+                              <span className="font-mono text-[10px] text-emerald-400 font-bold">
+                                {app.matchScore}% Match
+                              </span>
                             </div>
-                          )}
-                        </div>
-                      ))}
+
+                            <p className="text-xs text-muted line-clamp-1">{app.roleTitle}</p>
+
+                            {app.interviewDate && (
+                              <div className="mt-2.5 p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-mono text-emerald-300 flex items-center gap-1.5">
+                                <Clock className="h-3 w-3 text-emerald-400" />
+                                <span>{new Date(app.interviewDate).toLocaleDateString()}</span>
+                              </div>
+                            )}
+
+                            <div className="mt-2 pt-2 border-t border-border-subtle/50 flex items-center justify-between text-[10px] font-mono text-muted">
+                              <span>{app.atsPlatform}</span>
+                              <span>{app.appliedDate}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
 
                       {items.length === 0 && (
-                        <div className="h-20 flex items-center justify-center text-[12px] text-[#86868B]">
-                          No applications
+                        <div className="h-24 flex items-center justify-center font-mono text-[11px] text-muted/60 border border-dashed border-border-subtle rounded-xl">
+                          No Active Jobs
                         </div>
                       )}
                     </div>
@@ -195,21 +201,27 @@ export default function CandidateDashboard() {
           </div>
         </div>
 
-        {/* Selected Application Details */}
+        {/* ===================================================================== */}
+        {/* SELECTED APPLICATION INSPECTION PANEL                                */}
+        {/* ===================================================================== */}
         {selectedApp && (
-          <div className="bg-[#FFFFFF] p-8 rounded-[24px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#F5F5F7]">
+          <div className="glass-surface-elevated p-8 rounded-3xl border border-border-light space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-subtle">
               <div>
-                <span className="text-[12px] uppercase font-semibold text-[#6E6E73] tracking-wider">Application Detail</span>
-                <h3 className="text-[24px] font-semibold text-[#1D1D1F] mt-0.5">{selectedApp.roleTitle} @ {selectedApp.companyName}</h3>
-                <p className="text-[13px] text-[#6E6E73]">{selectedApp.location} • Applied via {selectedApp.atsPlatform} on {selectedApp.appliedDate}</p>
+                <span className="text-eyebrow-telemetry block mb-1">Application Telemetry</span>
+                <h3 className="text-2xl font-bold text-foreground">
+                  {selectedApp.roleTitle} @ {selectedApp.companyName}
+                </h3>
+                <p className="text-xs text-muted mt-1">
+                  {selectedApp.location} • Via {selectedApp.atsPlatform} • Applied {selectedApp.appliedDate}
+                </p>
               </div>
 
               <div className="flex items-center gap-3">
                 <select
                   value={selectedApp.status}
                   onChange={(e) => updateStatus(selectedApp.id, e.target.value as ApplicationStatus)}
-                  className="px-4 py-2 text-[13px] font-medium rounded-full bg-[#F5F5F7] border border-[#D2D2D7] text-[#1D1D1F] focus:outline-none focus:border-[#0071E3]"
+                  className="px-4 py-2 text-xs font-mono rounded-full bg-surface-100 border border-border-light text-foreground focus:outline-none focus:border-cyan-400"
                 >
                   <option value="Applied">Applied</option>
                   <option value="Screening">Screening</option>
@@ -217,28 +229,34 @@ export default function CandidateDashboard() {
                   <option value="Offer Received">Offer Received</option>
                   <option value="Rejected">Rejected</option>
                 </select>
+
                 <Link
                   href="/dashboard/resume-tailor"
-                  className="apple-btn-interactive text-[13px] font-normal text-white bg-[#0071E3] hover:bg-[#0077ED] px-4 py-2 rounded-full"
+                  className="btn-primary-glow text-xs py-2 px-4"
                 >
-                  Tailored Resume
+                  Inspect Tailored Resume
                 </Link>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px]">
-              <div className="p-4 rounded-[14px] bg-[#F5F5F7]">
-                <span className="font-semibold text-[#1D1D1F] block mb-1">Recruiter InMail Outreach</span>
-                <p className="text-[#6E6E73] leading-relaxed">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+              <div className="p-4 rounded-xl bg-surface-100 border border-border-subtle space-y-1">
+                <span className="text-cyan-300 font-semibold uppercase tracking-wider block">
+                  Dual-Channel Recruiter Outreach:
+                </span>
+                <p className="text-muted leading-relaxed font-sans text-xs">
                   {selectedApp.outreachSent 
-                    ? `✓ 3-Sentence intro sent to ${selectedApp.recruiterEmail || "Hiring Manager"}`
-                    : "Queued for recruiter outreach"}
+                    ? `✓ Direct 3-sentence introduction pitch delivered to ${selectedApp.recruiterEmail || "Hiring Lead"}`
+                    : "Queued for recruiter warm-inbound"}
                 </p>
               </div>
-              <div className="p-4 rounded-[14px] bg-[#F5F5F7]">
-                <span className="font-semibold text-[#1D1D1F] block mb-1">Application Notes</span>
-                <p className="text-[#6E6E73] leading-relaxed">
-                  {selectedApp.notes || "Submitted via direct ATS API feed."}
+
+              <div className="p-4 rounded-xl bg-surface-100 border border-border-subtle space-y-1">
+                <span className="text-emerald-400 font-semibold uppercase tracking-wider block">
+                  Audit Notes &amp; Optimization:
+                </span>
+                <p className="text-muted leading-relaxed font-sans text-xs">
+                  {selectedApp.notes || "Auto-dispatched via Greenhouse API parser with XYZ metric rewrites."}
                 </p>
               </div>
             </div>
