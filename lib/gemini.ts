@@ -55,8 +55,8 @@ Return a valid JSON object matching this TypeScript format exactly with no extra
   }
 
   // High-fidelity fallback engine when API key is pending
-  const jdWords = jobDescription.toLowerCase().match(/\b[a-z]{3,15}\b/g) || [];
-  const resumeWords = new Set(resumeText.toLowerCase().match(/\b[a-z]{3,15}\b/g) || []);
+  const jdWords: string[] = (jobDescription.toLowerCase().match(/\b[a-z]{3,15}\b/g) as string[]) || [];
+  const resumeWords = new Set<string>((resumeText.toLowerCase().match(/\b[a-z]{3,15}\b/g) as string[]) || []);
   
   const techKeywords = [
     "react", "next.js", "typescript", "javascript", "python", "node.js", 
