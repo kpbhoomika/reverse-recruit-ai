@@ -183,12 +183,12 @@ export default function LandingPage() {
           </p>
 
           {/* Dual Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto mb-12">
             <Link
               href="/onboarding"
               className="w-full sm:w-auto px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl hover:opacity-95 shadow-xl shadow-blue-600/25 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 group"
             >
-              <span>Start My Job Autopilot</span>
+              <span>Try 3 Applications Free</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a
@@ -196,22 +196,22 @@ export default function LandingPage() {
               className="w-full sm:w-auto px-6 py-4 text-base font-semibold text-slate-300 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 rounded-xl transition-colors flex items-center justify-center gap-2"
             >
               <Target className="h-4 w-4 text-blue-400" />
-              <span>Try Free ATS Matcher</span>
+              <span>Free ATS Keyword Audit</span>
             </a>
           </div>
 
           {/* Social Proof & Guarantee Trust Badges */}
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs sm:text-sm text-slate-400 font-medium pt-4 border-t border-slate-800/60 max-w-4xl mx-auto">
             <div className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-blue-400" />
+              <span><strong>100% Free Test Drive</strong> (No Card Required)</span>
+            </div>
+            <div className="flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-emerald-400" />
-              <span><strong>5 Minimum Interviews</strong> or 100% Refund</span>
+              <span><strong>5 Interviews Guaranteed</strong> or Refund</span>
             </div>
             <div className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-amber-400" />
-              <span>Dual-Channel ATS + Direct InMail</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-blue-400" />
+              <Users className="h-5 w-5 text-indigo-400" />
               <span>$20 Students / $99 Professionals</span>
             </div>
           </div>

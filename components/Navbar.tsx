@@ -91,7 +91,7 @@ export default function Navbar() {
             href="/onboarding"
             className="px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl hover:opacity-95 shadow-md shadow-blue-500/20 transition-all flex items-center gap-1.5"
           >
-            <span>Start for $20</span>
+            <span>Try 3 Free Apps</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>

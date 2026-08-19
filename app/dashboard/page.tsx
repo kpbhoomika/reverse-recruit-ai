@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   ChevronRight, 
@@ -15,22 +15,42 @@ import {
   ShieldCheck,
   CheckCircle2,
   Building,
-  Target
+  Target,
+  Sparkles,
+  Check,
+  Calendar,
+  Layers,
+  ArrowRight
 } from "lucide-react";
 import { initialApplications, initialCandidates } from "@/lib/mock-data";
 import { ApplicationItem, ApplicationStatus } from "@/lib/types";
 
 export default function CandidateDashboard() {
-  const [candidate] = useState(initialCandidates[0]);
+  const [candidate, setCandidate] = useState(initialCandidates[0]);
   const [applications, setApplications] = useState<ApplicationItem[]>(initialApplications);
+  const [activeFilter, setActiveFilter] = useState<"all" | ApplicationStatus>("all");
   const [selectedApp, setSelectedApp] = useState<ApplicationItem | null>(initialApplications[0]);
 
-  const stages: ApplicationStatus[] = [
-    "Applied",
-    "Screening",
-    "Interview Scheduled",
-    "Offer Received",
-  ];
+  // Load custom candidate data from localStorage if user completed onboarding
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("reverse_recruit_candidate");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setCandidate((prev) => ({
+          ...prev,
+          fullName: parsed.fullName || prev.fullName,
+          email: parsed.email || prev.email,
+          location: parsed.location || prev.location,
+          tier: (parsed.tier as "student" | "professional") || prev.tier,
+          targetRoles: parsed.targetRoles ? parsed.targetRoles.split(",").map((s: string) => s.trim()) : prev.targetRoles,
+          minSalary: parsed.minSalary ? parseInt(parsed.minSalary.replace(/[^0-9]/g, "")) || prev.minSalary : prev.minSalary,
+        }));
+      }
+    } catch (e) {
+      console.log("Using default candidate profile...");
+    }
+  }, []);
 
   const updateStatus = (appId: string, newStatus: ApplicationStatus) => {
     setApplications(
@@ -41,40 +61,50 @@ export default function CandidateDashboard() {
     }
   };
 
+  const filteredApps = applications.filter((app) => {
+    if (activeFilter === "all") return true;
+    return app.status === activeFilter;
+  });
+
+  const interviewCount = applications.filter((a) => a.status === "Interview Scheduled").length;
+  const screeningCount = applications.filter((a) => a.status === "Screening").length;
+  const offerCount = applications.filter((a) => a.status === "Offer Received").length;
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-6 sm:p-10 pt-28">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-8 lg:p-10 pt-28">
+      <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Header Bar */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-1">
+        {/* Top Header Card */}
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-1.5">
             <div className="flex items-center gap-3">
               <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                {candidate.fullName}
+                Welcome back, {candidate.fullName.split(" ")[0]}
               </h1>
               <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30">
-                {candidate.tier === "student" ? "Student Autopilot ($20)" : "Pro IT Autopilot ($99)"}
+                {candidate.tier === "student" ? "Student Plan ($20/mo)" : "Pro Plan ($99/mo)"}
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-400">
-              {candidate.targetRoles.join(" • ")} • Min Comp: ${candidate.minSalary.toLocaleString()}/yr
+              Target: <span className="text-slate-200 font-medium">{candidate.targetRoles.join(", ")}</span> • {candidate.location}
             </p>
           </div>
 
+          {/* Quick Tool Links */}
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/dashboard/resume-tailor"
-              className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
             >
               <FileText className="h-3.5 w-3.5 text-blue-400" />
               <span>ATS Tailor</span>
             </Link>
             <Link
               href="/dashboard/cover-letters"
-              className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
             >
               <Send className="h-3.5 w-3.5 text-emerald-400" />
-              <span>Outreach</span>
+              <span>Outreach Pitch</span>
             </Link>
             <Link
               href="/dashboard/offer-negotiator"
@@ -86,182 +116,198 @@ export default function CandidateDashboard() {
           </div>
         </div>
 
-        {/* 4 Metrics Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-2">
-            <span className="text-xs font-medium text-slate-400 uppercase tracking-wider block">Interviews Landed</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-white">{candidate.interviewsLanded}</span>
-              <span className="text-xs text-slate-400">/ {candidate.interviewsGuaranteed} goal</span>
+        {/* Guarantee Fulfillment Progress Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          
+          {/* Main Guarantee Metric */}
+          <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl p-5 space-y-3 shadow-lg shadow-emerald-500/5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Interview Guarantee
+              </span>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-bold">
+                100% Backed
+              </span>
             </div>
-            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-extrabold text-white">
+                {candidate.interviewsLanded} of {candidate.interviewsGuaranteed}
+              </span>
+              <span className="text-xs text-emerald-400 font-semibold">Interviews Secured</span>
+            </div>
+            <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
               <div
-                className="h-full bg-emerald-500 rounded-full"
+                className="h-full bg-emerald-500 rounded-full transition-all duration-500"
                 style={{ width: `${(candidate.interviewsLanded / candidate.interviewsGuaranteed) * 100}%` }}
               />
             </div>
           </div>
 
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-2">
-            <span className="text-xs font-medium text-slate-400 uppercase tracking-wider block">Applications Dispatched</span>
+          {/* Total Dispatches */}
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
+              Applications Dispatched
+            </span>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-white">{candidate.applicationsSubmitted}</span>
-              <span className="text-xs font-semibold text-blue-400">+8 today</span>
+              <span className="text-3xl font-extrabold text-white">
+                {candidate.applicationsSubmitted}
+              </span>
+              <span className="text-xs text-blue-400 font-semibold">+8 submitted today</span>
             </div>
-            <span className="text-[11px] text-slate-500 block">Greenhouse &amp; Lever feeds</span>
+            <p className="text-[11px] text-slate-500 font-mono">
+              Greenhouse, Lever &amp; Ashby boards
+            </p>
           </div>
 
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-2">
-            <span className="text-xs font-medium text-slate-400 uppercase tracking-wider block">Average ATS Match</span>
+          {/* Average ATS Match */}
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
+              Average Match Index
+            </span>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-indigo-400">94.8%</span>
+              <span className="text-3xl font-extrabold text-indigo-400">
+                94.6%
+              </span>
+              <span className="text-xs text-slate-400 font-medium">Top 2% Tier</span>
             </div>
-            <span className="text-[11px] text-slate-500 block">0 hallucination keyword fit</span>
+            <p className="text-[11px] text-slate-500 font-mono">
+              Google XYZ metric realignment active
+            </p>
           </div>
 
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-2">
-            <span className="text-xs font-medium text-slate-400 uppercase tracking-wider block">InMail Replies</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-purple-400">11</span>
-              <span className="text-xs font-semibold text-emerald-400">72% open rate</span>
-            </div>
-            <span className="text-[11px] text-slate-500 block">Direct hiring managers</span>
-          </div>
         </div>
 
-        {/* Pipeline Kanban */}
+        {/* Accessible, Easy-to-Read Application Tracker */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-white">Application Pipeline</h2>
-            <span className="text-xs text-emerald-400 font-mono flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-              Live Sync Active
-            </span>
+          
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-bold text-white">Live Application Tracker</h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Review your active job pipeline, scheduled interviews, and tailored dispatches.
+              </p>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-900 border border-slate-800 rounded-2xl text-xs font-medium">
+              <button
+                onClick={() => setActiveFilter("all")}
+                className={`px-3 py-1.5 rounded-xl transition-all ${
+                  activeFilter === "all" ? "bg-blue-600 text-white font-bold" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                All ({applications.length})
+              </button>
+              <button
+                onClick={() => setActiveFilter("Interview Scheduled")}
+                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 ${
+                  activeFilter === "Interview Scheduled" ? "bg-emerald-600 text-white font-bold" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                <span>Interviews</span>
+                <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">
+                  {interviewCount}
+                </span>
+              </button>
+              <button
+                onClick={() => setActiveFilter("Screening")}
+                className={`px-3 py-1.5 rounded-xl transition-all ${
+                  activeFilter === "Screening" ? "bg-indigo-600 text-white font-bold" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                Screening ({screeningCount})
+              </button>
+              <button
+                onClick={() => setActiveFilter("Offer Received")}
+                className={`px-3 py-1.5 rounded-xl transition-all ${
+                  activeFilter === "Offer Received" ? "bg-purple-600 text-white font-bold" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                Offers ({offerCount})
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {stages.map((stage) => {
-              const items = applications.filter((a) => a.status === stage);
-              return (
-                <div
-                  key={stage}
-                  className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 min-h-[380px] flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                      <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">
-                        {stage}
-                      </span>
-                      <span className="text-xs font-mono font-bold text-blue-400">
-                        {items.length}
+          {/* Simple, Accessible List of Applications */}
+          <div className="space-y-3">
+            {filteredApps.map((app) => (
+              <div
+                key={app.id}
+                className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 sm:p-6 transition-all space-y-4 shadow-md"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2.5">
+                      <h3 className="text-base sm:text-lg font-bold text-white">{app.companyName}</h3>
+                      <span className="text-xs text-slate-400">• {app.location}</span>
+                      <span className="font-mono text-[10px] font-bold text-blue-400 px-2 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20">
+                        {app.matchScore}% Match
                       </span>
                     </div>
+                    <p className="text-sm text-slate-300 font-medium">{app.roleTitle}</p>
+                  </div>
 
-                    <div className="space-y-2.5">
-                      {items.map((app) => {
-                        const isSelected = selectedApp?.id === app.id;
-                        return (
-                          <div
-                            key={app.id}
-                            onClick={() => setSelectedApp(app)}
-                            className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                              isSelected
-                                ? "bg-blue-600/15 border-blue-500 text-white shadow-lg shadow-blue-500/10"
-                                : "bg-slate-950/80 border-slate-800/80 hover:border-slate-700"
-                            }`}
-                          >
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="text-xs font-bold text-white">{app.companyName}</span>
-                              <span className="font-mono text-[10px] font-bold text-blue-400">
-                                {app.matchScore}% Match
-                              </span>
-                            </div>
-
-                            <p className="text-xs text-slate-400 line-clamp-1">{app.roleTitle}</p>
-
-                            {app.interviewDate && (
-                              <div className="mt-2 text-[10px] text-emerald-400 font-mono flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
-                                <span>{new Date(app.interviewDate).toLocaleDateString()}</span>
-                              </div>
-                            )}
-
-                            <div className="mt-2 pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] font-mono text-slate-500">
-                              <span>{app.atsPlatform}</span>
-                              <span>{app.appliedDate}</span>
-                            </div>
-                          </div>
-                        );
-                      })}
-
-                      {items.length === 0 && (
-                        <div className="h-20 flex items-center justify-center font-mono text-xs text-slate-600">
-                          No active applications
-                        </div>
-                      )}
-                    </div>
+                  {/* Status Dropdown */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <select
+                      value={app.status}
+                      onChange={(e) => updateStatus(app.id, e.target.value as ApplicationStatus)}
+                      className="px-3.5 py-1.5 text-xs font-semibold rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-blue-500"
+                    >
+                      <option value="Applied">Applied</option>
+                      <option value="Screening">Screening</option>
+                      <option value="Interview Scheduled">Interview Scheduled</option>
+                      <option value="Offer Received">Offer Received</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Interview Scheduled Highlight Banner */}
+                {app.interviewDate && (
+                  <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center justify-between">
+                    <div className="flex items-center gap-2 font-bold">
+                      <Calendar className="h-4 w-4 text-emerald-400" />
+                      <span>Interview Milestone: {new Date(app.interviewDate).toLocaleDateString()} at 3:00 PM</span>
+                    </div>
+                    <span className="text-[11px] text-emerald-400 underline cursor-pointer">
+                      Add to Calendar
+                    </span>
+                  </div>
+                )}
+
+                {/* Footer Details & Action Buttons */}
+                <div className="pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-4 text-slate-400 font-mono text-[11px]">
+                    <span>Board: <strong>{app.atsPlatform}</strong></span>
+                    <span>Applied: {app.appliedDate}</span>
+                    {app.outreachSent && (
+                      <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                        <Check className="h-3 w-3" /> InMail Pitch Sent
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href="/dashboard/resume-tailor"
+                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium transition-colors"
+                    >
+                      View Tailored Resume
+                    </Link>
+                    <Link
+                      href="/dashboard/cover-letters"
+                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium transition-colors"
+                    >
+                      View Outreach Pitch
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
+
         </div>
-
-        {/* Selected Application Details */}
-        {selectedApp && (
-          <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
-              <div>
-                <span className="text-xs font-mono text-blue-400 uppercase font-semibold">Application Details</span>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mt-0.5">
-                  {selectedApp.roleTitle} @ {selectedApp.companyName}
-                </h3>
-                <p className="text-xs text-slate-400">
-                  {selectedApp.location} • Via {selectedApp.atsPlatform} • Applied {selectedApp.appliedDate}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <select
-                  value={selectedApp.status}
-                  onChange={(e) => updateStatus(selectedApp.id, e.target.value as ApplicationStatus)}
-                  className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-blue-500"
-                >
-                  <option value="Applied">Applied</option>
-                  <option value="Screening">Screening</option>
-                  <option value="Interview Scheduled">Interview Scheduled</option>
-                  <option value="Offer Received">Offer Received</option>
-                  <option value="Rejected">Rejected</option>
-                </select>
-
-                <Link
-                  href="/dashboard/resume-tailor"
-                  className="px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-colors"
-                >
-                  Tailored Resume
-                </Link>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-blue-400 font-bold uppercase tracking-wider block">Hiring Manager Outreach:</span>
-                <p className="text-slate-300 font-sans text-xs">
-                  {selectedApp.outreachSent 
-                    ? `✓ 3-sentence introduction sent to ${selectedApp.recruiterEmail || "Hiring Lead"}`
-                    : "Queued for direct recruiter message"}
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-emerald-400 font-bold uppercase tracking-wider block">Application Notes:</span>
-                <p className="text-slate-300 font-sans text-xs">
-                  {selectedApp.notes || "Auto-dispatched via direct ATS webhook integration."}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
 
       </div>
     </div>
