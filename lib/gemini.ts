@@ -100,10 +100,12 @@ Return a valid JSON object matching this TypeScript format exactly with no extra
 
   const missingKeywords = missingRaw.length > 0 
     ? missingRaw.slice(0, 6).map(capitalize)
-    : ["Specific Industry Metrics", "Advanced Workflow Tools"];
+    : [];
 
-  const totalTokens = matchedKeywords.length + missingKeywords.length;
-  const matchScore = Math.min(98, Math.max(35, Math.round((matchedKeywords.length / Math.max(1, totalTokens)) * 100)));
+  const totalTokens = Math.max(1, matchedKeywords.length + missingKeywords.length);
+  const matchScore = missingKeywords.length === 0 && matchedKeywords.length > 0
+    ? 98
+    : Math.min(98, Math.max(35, Math.round((matchedKeywords.length / totalTokens) * 100)));
 
   const matchedStr = matchedKeywords.slice(0, 3).join(", ");
   const missingStr = missingKeywords.slice(0, 3).join(", ");

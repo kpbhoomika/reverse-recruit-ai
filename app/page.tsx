@@ -126,12 +126,12 @@ export default function LandingPage() {
 
     const missing = missingRaw.length > 0 
       ? missingRaw.slice(0, 6).map(capitalize)
-      : ["Specific Requirements", "Domain Metrics"];
+      : [];
 
-    const totalCount = matched.length + missing.length;
-    const calculatedScore = totalCount > 0 
-      ? Math.min(98, Math.max(35, Math.round((matched.length / totalCount) * 100))) 
-      : 70;
+    const totalCount = Math.max(1, matched.length + missing.length);
+    const calculatedScore = missing.length === 0 && matched.length > 0
+      ? 98
+      : Math.min(98, Math.max(35, Math.round((matched.length / totalCount) * 100)));
 
     setTimeout(() => {
       setAtsScore(calculatedScore);
@@ -385,18 +385,25 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <div>
-                    <span className="font-semibold text-rose-400 block mb-1.5">
-                      ✕ Missing Critical Keywords ({scanResult.missing.length})
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {scanResult.missing.map((m) => (
-                        <span key={m} className="px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-mono">
-                          {m}
-                        </span>
-                      ))}
+                  {scanResult.missing.length > 0 ? (
+                    <div>
+                      <span className="font-semibold text-rose-400 block mb-1.5">
+                        ✕ Missing Critical Keywords ({scanResult.missing.length})
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {scanResult.missing.map((m) => (
+                          <span key={m} className="px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-mono">
+                            {m}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+                      <span>✓ 100% Keyword Coverage — Zero missing core requirements!</span>
+                    </div>
+                  )}
 
                   <p className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 leading-relaxed font-sans">
                     {scanResult.summary}
