@@ -2,700 +2,547 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { 
-  Sparkles, 
-  CheckCircle2, 
-  ArrowRight, 
-  ShieldCheck, 
-  TrendingUp, 
-  Zap, 
-  Send, 
-  FileText, 
-  Target, 
-  Briefcase, 
-  Award, 
-  Users, 
-  Bot, 
-  ChevronRight,
-  Star,
-  DollarSign,
-  Search,
-  Building2,
-  RefreshCw,
-  Percent
-} from "lucide-react";
-import { initialJobs } from "@/lib/mock-data";
+import { ChevronRight, Check } from "lucide-react";
+import { useScrollReveal, useCounter } from "@/lib/use-motion";
 
 export default function LandingPage() {
-  // ATS Scanner Lead Magnet State
+  // ATS Scanner State
   const [targetRole, setTargetRole] = useState("Full Stack Engineer");
   const [sampleResume, setSampleResume] = useState(
     "Full Stack Developer with experience in React, TypeScript, Node.js, and PostgreSQL. Built web apps, integrated REST APIs, and managed Git repositories."
   );
   const [sampleJd, setSampleJd] = useState(
-    "Looking for a Full Stack Engineer with 2+ years experience in React, Next.js, TypeScript, PostgreSQL, and Docker. Experience with microservices, high-traffic APIs, and CI/CD pipelines preferred."
+    "Looking for a Full Stack Engineer with experience in React, Next.js, TypeScript, PostgreSQL, and Docker. Microservices, high-traffic APIs, and CI/CD pipelines."
   );
-  const [atsScore, setAtsScore] = useState<number | null>(null);
+  const [atsScore, setAtsScore] = useState<number>(74);
   const [isScanning, setIsScanning] = useState(false);
-  const [scanResult, setScanResult] = useState<{
-    matched: string[];
-    missing: string[];
-    summary: string;
-  } | null>(null);
 
-  // Pricing toggle (monthly vs quarterly discount)
+  // Pricing pill switch
   const [billingCycle, setBillingCycle] = useState<"monthly" | "quarterly">("monthly");
+
+  // Scroll reveal hooks for each section
+  const heroReveal = useScrollReveal({ threshold: 0.1 });
+  const statReveal = useScrollReveal({ threshold: 0.2 });
+  const systemReveal = useScrollReveal({ threshold: 0.15 });
+  const scannerReveal = useScrollReveal({ threshold: 0.15 });
+  const pricingReveal = useScrollReveal({ threshold: 0.15 });
+  const finaleReveal = useScrollReveal({ threshold: 0.15 });
+
+  // Animated stat counters (triggered once when statReveal is visible)
+  const countInterviews = useCounter(5, statReveal.isVisible, 800);
+  const countApps = useCounter(150, statReveal.isVisible, 800);
+  const countPrice = useCounter(20, statReveal.isVisible, 800);
+  const countAtsDisplay = useCounter(atsScore, scannerReveal.isVisible, 700);
 
   const runAtsScan = () => {
     setIsScanning(true);
     setTimeout(() => {
-      setAtsScore(74);
-      setScanResult({
-        matched: ["React", "TypeScript", "Node.js", "PostgreSQL", "REST APIs"],
-        missing: ["Next.js", "Docker", "Microservices", "CI/CD Pipelines"],
-        summary: "Your baseline resume matches 74% of keywords. With ReverseRecruit's AI tailoring, we will inject high-impact metric rewrites to push this match score to 95%+ before auto-dispatching.",
-      });
+      setAtsScore(92);
       setIsScanning(false);
-    }, 900);
+    }, 600);
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
-      {/* Glow / Gradient Background Orbs */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none overflow-hidden -z-10">
-        <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[128px] animate-glow" />
-        <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-purple-600/20 rounded-full blur-[128px] animate-glow delay-1000" />
-      </div>
-
+    <div className="bg-[#FFFFFF] text-[#1D1D1F]">
+      
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION */}
+      {/* 1. HERO SECTION (Clean, Typography-Led, Massive Whitespace) */}
       {/* ========================================================================= */}
-      <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="pt-24 pb-20 md:pt-36 md:pb-32 max-w-[1080px] mx-auto px-6 text-center">
         
-        {/* Floating Top Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-6 backdrop-blur-md shadow-inner">
-          <Sparkles className="h-3.5 w-3.5 text-blue-400" />
-          <span>The #1 Reverse Recruiting SaaS for Tech</span>
-        </div>
+        <div
+          ref={heroReveal.ref}
+          className={`reveal-init ${heroReveal.isVisible ? "reveal-visible" : ""}`}
+        >
+          <p className="apple-eyebrow text-[#6E6E73] mb-4">
+            ReverseRecruit Autopilot
+          </p>
 
-        {/* Hero Title */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.1] mb-6">
-          Land <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">5+ Tech Interviews</span> on Autopilot. Guaranteed.
-        </h1>
+          <h1 className="text-[44px] sm:text-[68px] lg:text-[84px] font-semibold tracking-[-0.03em] leading-[1.04] text-[#1D1D1F] max-w-[960px] mx-auto mb-6">
+            5 tech interviews. <br className="hidden sm:inline" />
+            Guaranteed.
+          </h1>
 
-        {/* Hero Subtitle */}
-        <p className="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-normal">
-          The job market is brutal. Stop spending 4 hours a day applying into black-hole portals. We find, tailor, and apply to <span className="text-white font-semibold">150+ verified roles</span> on your behalf and message hiring managers directly until you land your dream job.
-        </p>
+          <p className="text-[19px] sm:text-[24px] font-normal text-[#6E6E73] max-w-[700px] mx-auto leading-[1.38] mb-10">
+            We find, tailor, and submit 150+ verified applications on your behalf. You just show up to the interviews.
+          </p>
 
-        {/* Hero CTA Group */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-12">
-          <Link
-            href="/onboarding"
-            className="w-full sm:w-auto px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl hover:opacity-95 shadow-xl shadow-blue-600/30 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 group"
-          >
-            <span>Start My Job Autopilot</span>
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <a
-            href="#ats-scanner"
-            className="w-full sm:w-auto px-6 py-4 text-base font-semibold text-slate-300 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 rounded-xl transition-colors flex items-center justify-center gap-2"
-          >
-            <Target className="h-4 w-4 text-blue-400" />
-            <span>Try Free ATS Matcher</span>
-          </a>
-        </div>
-
-        {/* Social Proof & Guarantee Trust Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs sm:text-sm text-slate-400 font-medium pt-4 border-t border-slate-800/60 max-w-4xl mx-auto">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-emerald-400" />
-            <span><strong>5 Minimum Interviews</strong> or 100% Refund</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-amber-400" />
-            <span>Dual-Channel ATS + Direct InMail</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-blue-400" />
-            <span>$20 Students / $99 Professionals</span>
+          {/* Apple CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16">
+            <Link
+              href="/onboarding"
+              className="apple-btn-interactive w-full sm:w-auto bg-[#0071E3] hover:bg-[#0077ED] text-white px-7 py-3.5 rounded-full text-[17px] font-normal shadow-sm"
+            >
+              Get started from $20
+            </Link>
+            <a
+              href="#scanner"
+              className="apple-link text-[17px] font-normal inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071E3] rounded-md px-1"
+            >
+              <span>Test ATS match</span>
+              <ChevronRight className="h-4 w-4" />
+            </a>
           </div>
         </div>
-      </section>
 
-      {/* ========================================================================= */}
-      {/* 2. HOW IT WORKS (3-STEP ENGINE) */}
-      {/* ========================================================================= */}
-      <section className="py-20 border-y border-slate-800/60 bg-slate-900/40 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2 block">
-              The Reverse Recruiting System
+        {/* Minimalist Stat Strip (Animated Counter) */}
+        <div
+          ref={statReveal.ref}
+          className={`pt-12 border-t border-[#D2D2D7]/60 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-[800px] mx-auto text-center reveal-init ${
+            statReveal.isVisible ? "reveal-visible" : ""
+          }`}
+        >
+          <div className="reveal-init delay-100">
+            <span className="block text-[36px] sm:text-[44px] font-semibold tracking-tight text-[#1D1D1F]">
+              {countInterviews}+
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              How We Turn 150 Applications Into 5+ Finalist Interviews
+            <span className="text-[14px] text-[#6E6E73]">
+              Interviews guaranteed or 100% refund
+            </span>
+          </div>
+          <div className="reveal-init delay-200">
+            <span className="block text-[36px] sm:text-[44px] font-semibold tracking-tight text-[#1D1D1F]">
+              {countApps}+
+            </span>
+            <span className="text-[14px] text-[#6E6E73]">
+              Tailored applications per candidate
+            </span>
+          </div>
+          <div className="reveal-init delay-300">
+            <span className="block text-[36px] sm:text-[44px] font-semibold tracking-tight text-[#1D1D1F]">
+              ${countPrice}
+            </span>
+            <span className="text-[14px] text-[#6E6E73]">
+              Starting plan for students &amp; freshers
+            </span>
+          </div>
+        </div>
+
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 2. THE SYSTEM (Alternating #F5F5F7 Off-White Section) */}
+      {/* ========================================================================= */}
+      <section className="py-24 md:py-36 bg-[#F5F5F7] border-y border-[#D2D2D7]/60">
+        <div
+          ref={systemReveal.ref}
+          className="max-w-[1080px] mx-auto px-6"
+        >
+          
+          <div className={`max-w-[700px] mb-16 md:mb-24 reveal-init ${systemReveal.isVisible ? "reveal-visible" : ""}`}>
+            <p className="apple-eyebrow text-[#6E6E73] mb-2">
+              Architecture
+            </p>
+            <h2 className="text-[34px] sm:text-[52px] font-semibold tracking-[-0.025em] leading-[1.1] text-[#1D1D1F]">
+              Three layers. <br />
+              One outcome.
             </h2>
-            <p className="text-slate-400 mt-4 text-sm sm:text-base">
-              Traditional spray-and-pray job boards convert at less than 1%. Our three-layer agency workflow guarantees high-impact conversion.
+            <p className="text-[19px] text-[#6E6E73] mt-4 leading-[1.45]">
+              Traditional job boards rely on mass volume. We combine direct ATS board scraping with dynamic keyword tailoring and direct hiring manager outreach.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            {/* Step 1 */}
-            <div className="p-8 rounded-2xl bg-slate-900/70 border border-slate-800 relative hover:border-blue-500/40 transition-all group">
-              <div className="h-12 w-12 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center mb-6 font-bold text-lg group-hover:scale-110 transition-transform">
-                01
+            {/* Card 1 */}
+            <div
+              className={`apple-card-hover bg-[#FFFFFF] p-8 sm:p-10 rounded-[22px] border border-black/[0.04] shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col justify-between reveal-init delay-100 ${
+                systemReveal.isVisible ? "reveal-visible" : ""
+              }`}
+            >
+              <div>
+                <span className="text-[13px] font-semibold tracking-wider text-[#6E6E73] uppercase mb-4 block">
+                  01 / Sourcing
+                </span>
+                <h3 className="text-[24px] font-semibold text-[#1D1D1F] tracking-tight mb-3">
+                  Direct ATS Feeds
+                </h3>
+                <p className="text-[15px] text-[#6E6E73] leading-[1.5]">
+                  We scrape verified Greenhouse, Lever, and Ashby career portals within 48 hours of posting, filtering out stale third-party aggregator listings.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">
-                JD-Aware ATS Sourcing
-              </h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                We monitor direct Greenhouse, Lever, and Ashby career feeds within 24 hours of posting, filtering out stale aggregator listings.
-              </p>
-              <ul className="space-y-2 text-xs text-slate-300">
-                <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Only fresh roles (&lt; 48 hours old)</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Work auth &amp; location filtered</li>
-              </ul>
+              <div className="pt-8 mt-8 border-t border-[#F5F5F7] text-[13px] text-[#1D1D1F] font-medium">
+                &lt; 48-hour posting window
+              </div>
             </div>
 
-            {/* Step 2 */}
-            <div className="p-8 rounded-2xl bg-slate-900/70 border border-slate-800 relative hover:border-indigo-500/40 transition-all group">
-              <div className="h-12 w-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 font-bold text-lg group-hover:scale-110 transition-transform">
-                02
+            {/* Card 2 */}
+            <div
+              className={`apple-card-hover bg-[#FFFFFF] p-8 sm:p-10 rounded-[22px] border border-black/[0.04] shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col justify-between reveal-init delay-200 ${
+                systemReveal.isVisible ? "reveal-visible" : ""
+              }`}
+            >
+              <div>
+                <span className="text-[13px] font-semibold tracking-wider text-[#6E6E73] uppercase mb-4 block">
+                  02 / Tailoring
+                </span>
+                <h3 className="text-[24px] font-semibold text-[#1D1D1F] tracking-tight mb-3">
+                  Dynamic Keyword Alignment
+                </h3>
+                <p className="text-[15px] text-[#6E6E73] leading-[1.5]">
+                  Every application is rewritten using the Google XYZ formula to match required ATS keywords without inventing fake qualifications.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">
-                AI Resume Tailoring per Job
-              </h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                For every single application, Gemini AI rewrites your project bullets using the Google XYZ formula to match required ATS keywords with 0 hallucinations.
-              </p>
-              <ul className="space-y-2 text-xs text-slate-300">
-                <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> 95%+ ATS keyword compatibility</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Tailored 3-paragraph cover letter</li>
-              </ul>
+              <div className="pt-8 mt-8 border-t border-[#F5F5F7] text-[13px] text-[#1D1D1F] font-medium">
+                95%+ ATS compatibility
+              </div>
             </div>
 
-            {/* Step 3 */}
-            <div className="p-8 rounded-2xl bg-slate-900/70 border border-slate-800 relative hover:border-purple-500/40 transition-all group">
-              <div className="h-12 w-12 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-6 font-bold text-lg group-hover:scale-110 transition-transform">
-                03
+            {/* Card 3 */}
+            <div
+              className={`apple-card-hover bg-[#FFFFFF] p-8 sm:p-10 rounded-[22px] border border-black/[0.04] shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col justify-between reveal-init delay-300 ${
+                systemReveal.isVisible ? "reveal-visible" : ""
+              }`}
+            >
+              <div>
+                <span className="text-[13px] font-semibold tracking-wider text-[#6E6E73] uppercase mb-4 block">
+                  03 / Delivery
+                </span>
+                <h3 className="text-[24px] font-semibold text-[#1D1D1F] tracking-tight mb-3">
+                  Dual-Channel Outreach
+                </h3>
+                <p className="text-[15px] text-[#6E6E73] leading-[1.5]">
+                  We submit the application directly into the company portal and send a 3-sentence introduction to the hiring manager on LinkedIn.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">
-                Dual-Channel Dispatch &amp; Tracking
-              </h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                We submit the application directly into the ATS portal AND send a direct 3-sentence cold pitch to the hiring manager on LinkedIn.
-              </p>
-              <ul className="space-y-2 text-xs text-slate-300">
-                <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Direct recruiter inbox connection</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Live Kanban status tracking</li>
-              </ul>
+              <div className="pt-8 mt-8 border-t border-[#F5F5F7] text-[13px] text-[#1D1D1F] font-medium">
+                Direct recruiter visibility
+              </div>
             </div>
+
           </div>
+
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. INTERACTIVE LEAD MAGNET: FREE ATS SCANNER */}
+      {/* 3. PRODUCT SHOWCASE: ATS SCORE ANALYZER */}
       {/* ========================================================================= */}
-      <section id="ats-scanner" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 shadow-2xl relative overflow-hidden">
-          
-          <div className="max-w-3xl mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
-              <Bot className="h-3.5 w-3.5" />
-              <span>Interactive Lead Magnet Tool</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              Test Your Resume ATS Score Free
+      <section id="scanner" className="py-24 md:py-36 max-w-[1080px] mx-auto px-6">
+        
+        <div
+          ref={scannerReveal.ref}
+          className={`reveal-init ${scannerReveal.isVisible ? "reveal-visible" : ""}`}
+        >
+          <div className="text-center max-w-[700px] mx-auto mb-16">
+            <p className="apple-eyebrow text-[#6E6E73] mb-2">
+              Intelligence Engine
+            </p>
+            <h2 className="text-[34px] sm:text-[52px] font-semibold tracking-[-0.025em] leading-[1.1] text-[#1D1D1F]">
+              Precision matching in real time.
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base mt-2">
-              See how modern applicant tracking systems score your profile against actual job requirements.
+            <p className="text-[19px] text-[#6E6E73] mt-4">
+              See how our engine evaluates candidate qualifications against live job requirements.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          {/* Minimalist Product UI Surface */}
+          <div className="bg-[#F5F5F7] rounded-[24px] border border-[#D2D2D7]/80 p-6 sm:p-10 shadow-[0_12px_40px_rgba(0,0,0,0.06)]">
             
-            {/* Input Side */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Target Role Title
-                </label>
-                <input
-                  type="text"
-                  value={targetRole}
-                  onChange={(e) => setTargetRole(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
-                  placeholder="e.g. Full Stack Engineer, Cloud DevOps, AI Engineer"
-                />
+            {/* Top Window Bar */}
+            <div className="flex items-center justify-between pb-6 border-b border-[#D2D2D7]/60 mb-8">
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 rounded-full bg-[#D2D2D7]" />
+                <div className="h-3 w-3 rounded-full bg-[#D2D2D7]" />
+                <div className="h-3 w-3 rounded-full bg-[#D2D2D7]" />
+                <span className="text-[13px] text-[#6E6E73] font-mono ml-2">ATS Evaluation Tool</span>
+              </div>
+              <span className="text-[12px] text-[#6E6E73]">Live Preview</span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              
+              {/* Input Column */}
+              <div className="lg:col-span-7 space-y-5">
+                <div>
+                  <label className="block text-[13px] font-semibold text-[#1D1D1F] mb-1.5">
+                    Target Role
+                  </label>
+                  <input
+                    type="text"
+                    value={targetRole}
+                    onChange={(e) => setTargetRole(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-[12px] bg-[#FFFFFF] border border-[#D2D2D7] text-[14px] text-[#1D1D1F] focus:outline-none focus:border-[#0071E3] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[13px] font-semibold text-[#1D1D1F] mb-1.5">
+                    Candidate Summary
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={sampleResume}
+                    onChange={(e) => setSampleResume(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-[12px] bg-[#FFFFFF] border border-[#D2D2D7] text-[13px] text-[#1D1D1F] leading-relaxed focus:outline-none focus:border-[#0071E3] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[13px] font-semibold text-[#1D1D1F] mb-1.5">
+                    Target Job Description
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={sampleJd}
+                    onChange={(e) => setSampleJd(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-[12px] bg-[#FFFFFF] border border-[#D2D2D7] text-[13px] text-[#1D1D1F] leading-relaxed focus:outline-none focus:border-[#0071E3] transition-colors"
+                  />
+                </div>
+
+                <button
+                  onClick={runAtsScan}
+                  disabled={isScanning}
+                  className="apple-btn-interactive w-full bg-[#1D1D1F] hover:bg-[#333336] text-white py-3 rounded-full text-[15px] font-normal shadow-sm"
+                >
+                  {isScanning ? "Evaluating parameters..." : "Evaluate Match Score"}
+                </button>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Your Current Resume Summary / Skills
-                </label>
-                <textarea
-                  rows={4}
-                  value={sampleResume}
-                  onChange={(e) => setSampleResume(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
-                />
+              {/* Spec Sheet Display Output */}
+              <div className="lg:col-span-5 bg-[#FFFFFF] p-6 sm:p-8 rounded-[18px] border border-[#D2D2D7]/60 space-y-6">
+                
+                <div className="flex items-baseline justify-between border-b border-[#F5F5F7] pb-4">
+                  <div>
+                    <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73] block">
+                      ATS Score
+                    </span>
+                    <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
+                      {countAtsDisplay}%
+                    </span>
+                  </div>
+                  <span className="text-[13px] text-[#0071E3] font-medium">
+                    {atsScore > 85 ? "High Precision" : "Optimized"}
+                  </span>
+                </div>
+
+                <div className="space-y-4 text-[13px]">
+                  <div>
+                    <span className="font-semibold text-[#1D1D1F] block mb-1.5">Matched Keywords:</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {["React", "TypeScript", "Node.js", "PostgreSQL", "REST APIs"].map((kw) => (
+                        <span key={kw} className="px-2.5 py-1 rounded-md bg-[#F5F5F7] text-[#1D1D1F] text-[12px] font-mono">
+                          {kw}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="font-semibold text-[#1D1D1F] block mb-1.5">Aligned Bullet Point:</span>
+                    <p className="p-3 rounded-[10px] bg-[#F5F5F7] text-[#6E6E73] text-[12px] leading-relaxed">
+                      &quot;Architected responsive React and TypeScript frontend modules integrated with PostgreSQL microservices, reducing API response times by 38%.&quot;
+                    </p>
+                  </div>
+                </div>
+
+                <Link
+                  href="/onboarding"
+                  className="apple-link text-[14px] font-medium pt-2 block"
+                >
+                  Apply with tailored resumes ›
+                </Link>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Sample Target Job Description (JD)
-                </label>
-                <textarea
-                  rows={4}
-                  value={sampleJd}
-                  onChange={(e) => setSampleJd(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
-                />
-              </div>
+            </div>
+          </div>
+        </div>
 
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 4. PRICING (Clean Apple Comparison Matrix with Pill Switch) */}
+      {/* ========================================================================= */}
+      <section className="py-24 md:py-36 bg-[#F5F5F7] border-t border-[#D2D2D7]/60">
+        <div
+          ref={pricingReveal.ref}
+          className="max-w-[1080px] mx-auto px-6"
+        >
+          
+          <div className={`text-center max-w-[700px] mx-auto mb-12 reveal-init ${pricingReveal.isVisible ? "reveal-visible" : ""}`}>
+            <p className="apple-eyebrow text-[#6E6E73] mb-2">
+              Pricing
+            </p>
+            <h2 className="text-[34px] sm:text-[52px] font-semibold tracking-[-0.025em] leading-[1.1] text-[#1D1D1F]">
+              Simple, transparent pricing.
+            </h2>
+            <p className="text-[19px] text-[#6E6E73] mt-4">
+              All plans include the 5-interview guarantee or your money back.
+            </p>
+
+            {/* Apple Pill Switch */}
+            <div className="inline-flex items-center p-1 rounded-full bg-[#E5E5EA] mt-8">
               <button
-                onClick={runAtsScan}
-                disabled={isScanning}
-                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/25 transition-all flex items-center justify-center gap-2"
+                onClick={() => setBillingCycle("monthly")}
+                className={`px-5 py-1.5 rounded-full text-[13px] font-medium transition-all ${
+                  billingCycle === "monthly"
+                    ? "bg-[#FFFFFF] text-[#1D1D1F] shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+                    : "text-[#6E6E73] hover:text-[#1D1D1F]"
+                }`}
               >
-                {isScanning ? (
-                  <>
-                    <RefreshCw className="h-4 w-4 animate-spin" />
-                    <span>Analyzing ATS Compatibility...</span>
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4" />
-                    <span>Calculate Live Match Score</span>
-                  </>
-                )}
+                Monthly
+              </button>
+              <button
+                onClick={() => setBillingCycle("quarterly")}
+                className={`px-5 py-1.5 rounded-full text-[13px] font-medium transition-all ${
+                  billingCycle === "quarterly"
+                    ? "bg-[#FFFFFF] text-[#1D1D1F] shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+                    : "text-[#6E6E73] hover:text-[#1D1D1F]"
+                }`}
+              >
+                Quarterly (Save 15%)
               </button>
             </div>
-
-            {/* Results Side */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/80 border border-slate-800">
-              {atsScore !== null && scanResult ? (
-                <div className="space-y-6 animate-fadeIn">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-xs text-slate-400 font-medium">Estimated ATS Score</span>
-                      <h4 className="text-2xl font-bold text-white">{targetRole}</h4>
-                    </div>
-                    <div className="h-16 w-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col items-center justify-center">
-                      <span className="text-2xl font-extrabold text-amber-400">{atsScore}%</span>
-                      <span className="text-[10px] text-amber-300 font-semibold uppercase">Fair Match</span>
-                    </div>
-                  </div>
-
-                  {/* Matched & Missing Keywords */}
-                  <div className="space-y-3">
-                    <div>
-                      <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block mb-1.5">
-                        ✓ Keywords Matched in Resume ({scanResult.matched.length})
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {scanResult.matched.map((kw) => (
-                          <span key={kw} className="px-2.5 py-1 text-xs rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono">
-                            {kw}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <span className="text-xs font-semibold text-rose-400 uppercase tracking-wider block mb-1.5">
-                        ✗ Missing Critical Keywords ({scanResult.missing.length})
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {scanResult.missing.map((kw) => (
-                          <span key={kw} className="px-2.5 py-1 text-xs rounded-md bg-rose-500/10 text-rose-300 border border-rose-500/20 font-mono">
-                            {kw}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 leading-relaxed">
-                    <p className="font-medium text-slate-200 mb-1">💡 ReverseRecruit Optimization Action:</p>
-                    {scanResult.summary}
-                  </div>
-
-                  <Link
-                    href="/onboarding"
-                    className="block text-center w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs uppercase tracking-wider hover:opacity-90 shadow-md transition-opacity"
-                  >
-                    Unlock Autopilot Applications for $20 $\to$
-                  </Link>
-                </div>
-              ) : (
-                <div className="h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 text-slate-500">
-                  <div className="h-12 w-12 rounded-full bg-slate-900 flex items-center justify-center mb-3 text-slate-400">
-                    <Search className="h-6 w-6" />
-                  </div>
-                  <p className="text-sm font-medium text-slate-400">Click &quot;Calculate Live Match Score&quot; to test your profile</p>
-                  <p className="text-xs text-slate-500 max-w-xs mt-1">
-                    We will parse required vs. missing keywords and show how our agency boosts your interview conversion rate.
-                  </p>
-                </div>
-              )}
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 4. LIVE PIPELINE PREVIEW (KANBAN DEMO) */}
-      {/* ========================================================================= */}
-      <section className="py-20 border-t border-slate-800/60 bg-slate-900/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2 block">
-                Candidate Control Center
-              </span>
-              <h2 className="text-3xl font-extrabold text-white">
-                Live Transparency at Every Step
-              </h2>
-              <p className="text-slate-400 text-sm mt-2 max-w-xl">
-                Watch applications move from ATS dispatch to scheduled interviews in real time with our live Kanban pipeline.
-              </p>
-            </div>
-            <Link
-              href="/dashboard"
-              className="mt-4 md:mt-0 inline-flex items-center gap-1.5 text-xs font-semibold text-blue-400 hover:text-blue-300"
-            >
-              <span>Explore Live Dashboard</span>
-              <ChevronRight className="h-4 w-4" />
-            </Link>
           </div>
 
-          {/* Kanban Columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[880px] mx-auto">
             
-            {/* Column 1: Applied */}
-            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                <span className="text-xs font-bold uppercase text-blue-400">1. Applied (150+)</span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] bg-blue-500/10 text-blue-400 font-mono">Synced</span>
+            {/* Plan 1: Students */}
+            <div
+              className={`apple-card-hover bg-[#FFFFFF] p-8 sm:p-12 rounded-[24px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col justify-between reveal-init delay-100 ${
+                pricingReveal.isVisible ? "reveal-visible" : ""
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[13px] font-semibold text-[#6E6E73] uppercase tracking-wider">
+                    Student &amp; Fresher
+                  </span>
+                  <span className="text-[12px] text-[#86868B]">0–2 yrs exp</span>
+                </div>
+
+                <div className="flex items-baseline gap-1 my-6">
+                  <span className="text-[52px] font-semibold text-[#1D1D1F] leading-none">
+                    ${billingCycle === "monthly" ? "20" : "17"}
+                  </span>
+                  <span className="text-[15px] text-[#6E6E73]">/ month</span>
+                </div>
+
+                <p className="text-[15px] text-[#6E6E73] leading-[1.47] mb-8">
+                  Built for university graduates, freshers, and early career engineers breaking into tech.
+                </p>
+
+                <div className="space-y-3.5 text-[14px] text-[#1D1D1F] border-t border-[#F5F5F7] pt-8">
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span><strong>150+ targeted applications</strong> submitted</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span><strong>3 to 5 guaranteed interviews</strong></span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span>Dynamic ATS resume tailoring</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span>LinkedIn SEO &amp; headline upgrade</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span>Live pipeline tracker</span>
+                  </div>
+                </div>
               </div>
-              <div className="space-y-2.5">
-                <div className="p-3 rounded-lg bg-slate-950 border border-slate-800/80">
-                  <div className="flex items-center justify-between text-xs font-bold text-white">
-                    <span>Datadog</span>
-                    <span className="text-[10px] text-emerald-400 font-mono">92% ATS</span>
-                  </div>
-                  <p className="text-[11px] text-slate-400 mt-1">Associate Software Engineer</p>
-                  <div className="mt-2 text-[10px] text-slate-500 flex items-center gap-1">
-                    <Building2 className="h-3 w-3" /> Lever Portal • 1-Click Dispatched
-                  </div>
-                </div>
-                <div className="p-3 rounded-lg bg-slate-950 border border-slate-800/80">
-                  <div className="flex items-center justify-between text-xs font-bold text-white">
-                    <span>Linear</span>
-                    <span className="text-[10px] text-emerald-400 font-mono">96% ATS</span>
-                  </div>
-                  <p className="text-[11px] text-slate-400 mt-1">Frontend Architect</p>
-                  <div className="mt-2 text-[10px] text-slate-500 flex items-center gap-1">
-                    <Building2 className="h-3 w-3" /> Ashby Direct • Recruiter InMail Sent
-                  </div>
-                </div>
+
+              <div className="pt-10">
+                <Link
+                  href="/onboarding"
+                  className="apple-btn-interactive block text-center w-full bg-[#1D1D1F] hover:bg-[#333336] text-white py-3.5 rounded-full text-[15px] font-normal shadow-sm"
+                >
+                  Choose Student Plan
+                </Link>
               </div>
             </div>
 
-            {/* Column 2: Screening */}
-            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                <span className="text-xs font-bold uppercase text-amber-400">2. Recruiter Screen</span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/10 text-amber-400 font-mono">Active</span>
-              </div>
-              <div className="p-3 rounded-lg bg-slate-950 border border-amber-500/30">
-                <div className="flex items-center justify-between text-xs font-bold text-white">
-                  <span>Linear</span>
-                  <span className="text-[10px] text-amber-400 font-mono">Thursday</span>
+            {/* Plan 2: IT Professionals */}
+            <div
+              className={`apple-card-hover bg-[#FFFFFF] p-8 sm:p-12 rounded-[24px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col justify-between reveal-init delay-200 ${
+                pricingReveal.isVisible ? "reveal-visible" : ""
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[13px] font-semibold text-[#6E6E73] uppercase tracking-wider">
+                    IT Professional
+                  </span>
+                  <span className="text-[12px] text-[#0071E3] font-medium">Most popular</span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">Phone Screen w/ Talent Lead</p>
-                <div className="mt-2 text-[10px] text-emerald-400 flex items-center gap-1">
-                  ✓ AI Company Cheat Sheet Ready
-                </div>
-              </div>
-            </div>
 
-            {/* Column 3: Interview Scheduled */}
-            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                <span className="text-xs font-bold uppercase text-purple-400">3. Technical Round</span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] bg-purple-500/10 text-purple-400 font-mono">Confirmed</span>
-              </div>
-              <div className="space-y-2.5">
-                <div className="p-3 rounded-lg bg-slate-950 border border-purple-500/30">
-                  <div className="flex items-center justify-between text-xs font-bold text-white">
-                    <span>Stripe</span>
-                    <span className="text-[10px] text-purple-400 font-mono">Aug 22</span>
-                  </div>
-                  <p className="text-[11px] text-slate-400 mt-1">Architecture &amp; System Design</p>
+                <div className="flex items-baseline gap-1 my-6">
+                  <span className="text-[52px] font-semibold text-[#1D1D1F] leading-none">
+                    ${billingCycle === "monthly" ? "99" : "84"}
+                  </span>
+                  <span className="text-[15px] text-[#6E6E73]">/ month</span>
                 </div>
-                <div className="p-3 rounded-lg bg-slate-950 border border-purple-500/30">
-                  <div className="flex items-center justify-between text-xs font-bold text-white">
-                    <span>Vercel</span>
-                    <span className="text-[10px] text-purple-400 font-mono">Aug 24</span>
-                  </div>
-                  <p className="text-[11px] text-slate-400 mt-1">AI Ecosystem Live Coding</p>
-                </div>
-              </div>
-            </div>
 
-            {/* Column 4: Offer Received */}
-            <div className="p-4 rounded-xl bg-slate-900/90 border border-emerald-500/30 bg-emerald-950/10">
-              <div className="flex items-center justify-between pb-3 border-b border-emerald-500/30 mb-3">
-                <span className="text-xs font-bold uppercase text-emerald-400">4. Offer Secured 🎉</span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 font-mono">Offer</span>
+                <p className="text-[15px] text-[#6E6E73] leading-[1.47] mb-8">
+                  For mid-level, senior engineers, and architects looking for competitive comp packages.
+                </p>
+
+                <div className="space-y-3.5 text-[14px] text-[#1D1D1F] border-t border-[#F5F5F7] pt-8">
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span><strong>250+ targeted applications</strong></span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span><strong>5+ guaranteed tech interviews</strong></span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span>Direct recruiter InMail outreach</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span>AI Offer negotiation copilot</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-4 w-4 text-[#1D1D1F] shrink-0" />
+                    <span>Current employer blacklist protection</span>
+                  </div>
+                </div>
               </div>
-              <div className="p-3 rounded-lg bg-slate-950 border border-emerald-500/40">
-                <div className="flex items-center justify-between text-xs font-bold text-white">
-                  <span>Retool</span>
-                  <span className="text-[10px] text-emerald-400 font-mono">$165k Base</span>
-                </div>
-                <p className="text-[11px] text-slate-400 mt-1">Full Stack Engineer</p>
-                <div className="mt-2 text-[10px] text-blue-400 font-medium">
-                  → AI Negotiation Script Generated
-                </div>
+
+              <div className="pt-10">
+                <Link
+                  href="/onboarding"
+                  className="apple-btn-interactive block text-center w-full bg-[#0071E3] hover:bg-[#0077ED] text-white py-3.5 rounded-full text-[15px] font-normal shadow-sm"
+                >
+                  Choose Professional Plan
+                </Link>
               </div>
             </div>
 
           </div>
+
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. PRICING SECTION ($20 STUDENT vs $99 PROFESSIONAL) */}
+      {/* 5. CONTRAST BREAK: DARK APPLE FINALE SECTION */}
       {/* ========================================================================= */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2 block">
-            Transparent Pricing
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white">
-            Accessible for Students. Powerful for Pros.
-          </h2>
-          <p className="text-slate-400 mt-4 text-sm sm:text-base">
-            No hidden costs. 100% money-back guarantee if we do not land you a minimum of 5 qualified tech interviews.
+      <section className="py-24 md:py-36 bg-[#000000] text-[#FFFFFF] text-center">
+        <div
+          ref={finaleReveal.ref}
+          className={`max-w-[800px] mx-auto px-6 reveal-init ${finaleReveal.isVisible ? "reveal-visible" : ""}`}
+        >
+          <p className="text-[14px] uppercase font-semibold tracking-wider text-[#A1A1A6] mb-3">
+            Start Your Search
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          
-          {/* TIER 1: STUDENT / FRESHER ($20) */}
-          <div className="p-8 sm:p-10 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex flex-col justify-between relative">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                  Student &amp; Fresher Tier
-                </span>
-                <span className="text-xs text-slate-400 font-medium">0–2 Years Experience</span>
-              </div>
-
-              <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-5xl font-extrabold text-white">$20</span>
-                <span className="text-sm text-slate-400">/ month</span>
-              </div>
-
-              <p className="text-xs text-slate-300 leading-relaxed mb-6">
-                Tailored specifically for university students, recent 2024–2026 grads, and early-career switchers struggling to break into the tech market.
-              </p>
-
-              <div className="space-y-3 pt-6 border-t border-slate-800 mb-8 text-xs text-slate-300">
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
-                  <span><strong>150+ Verified Job Applications</strong> submitted per month</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
-                  <span><strong>Guaranteed 3 to 5 Tech Interviews</strong> or full refund</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
-                  <span><strong>Dynamic ATS Resume Tailoring</strong> with 0 hallucinations</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
-                  <span><strong>LinkedIn Profile &amp; Headline SEO</strong> upgrade</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
-                  <span><strong>Live Kanban Application Dashboard</strong> &amp; email sync</span>
-                </div>
-              </div>
-            </div>
-
-            <Link
-              href="/onboarding"
-              className="w-full py-4 text-center text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all block"
-            >
-              Get Started for $20/mo
-            </Link>
-          </div>
-
-          {/* TIER 2: IT PROFESSIONAL / SWITCHER ($99) */}
-          <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-slate-900 to-indigo-950/40 border-2 border-indigo-500/50 shadow-2xl shadow-indigo-500/10 flex flex-col justify-between relative">
-            
-            {/* Best Value Tag */}
-            <div className="absolute -top-3.5 right-8 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md">
-              Most Popular for Switchers
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                  IT Professional &amp; Career Switcher
-                </span>
-                <span className="text-xs text-slate-400 font-medium">3+ Years Experience</span>
-              </div>
-
-              <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-5xl font-extrabold text-white">$99</span>
-                <span className="text-sm text-slate-400">/ month</span>
-              </div>
-
-              <p className="text-xs text-slate-300 leading-relaxed mb-6">
-                Designed for experienced engineers, team leads, and architects aiming for $120k–$250k+ salary packages without burning personal hours.
-              </p>
-
-              <div className="space-y-3 pt-6 border-t border-slate-800 mb-8 text-xs text-slate-200">
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-indigo-400 shrink-0" />
-                  <span><strong>250+ High-Fit Applications</strong> per month</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-indigo-400 shrink-0" />
-                  <span><strong>Guaranteed 5+ Senior Tech Interviews</strong></span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-indigo-400 shrink-0" />
-                  <span><strong>Direct Recruiter &amp; Hiring Manager InMail</strong> outreach</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-indigo-400 shrink-0" />
-                  <span><strong>AI Offer Negotiation Copilot</strong> (aim for +$15k-$30k comp)</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-indigo-400 shrink-0" />
-                  <span><strong>Company Blacklist Protection</strong> (never applies to your employer)</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-indigo-400 shrink-0" />
-                  <span><strong>Priority Dedicated Reverse Recruiter</strong> review</span>
-                </div>
-              </div>
-            </div>
-
-            <Link
-              href="/onboarding"
-              className="w-full py-4 text-center text-sm font-bold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 hover:opacity-95 rounded-xl shadow-xl shadow-indigo-600/30 transition-all block"
-            >
-              Get Started for $99/mo
-            </Link>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 6. VERIFIED TESTIMONIALS */}
-      {/* ========================================================================= */}
-      <section className="py-20 border-t border-slate-800/60 bg-slate-900/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2 block">
-              Success Stories
-            </span>
-            <h2 className="text-3xl font-extrabold text-white">
-              From 0 Responses to Multiple Competing Offers
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
-              <div className="flex items-center gap-1 text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                &quot;I graduated in May 2026 and applied to over 300 jobs manually with zero calls. I joined the $20 Student plan, and within 3 weeks I had 4 screening calls and landed an Associate SWE offer at $95k!&quot;
-              </p>
-              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                <div>
-                  <p className="font-bold text-white">Alex C.</p>
-                  <p className="text-[11px] text-slate-400">New Grad SWE @ Datadog</p>
-                </div>
-                <span className="text-emerald-400 font-semibold font-mono">+$95k Offer</span>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
-              <div className="flex items-center gap-1 text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                &quot;Working a 50-hour week as a senior engineer left me zero time to write custom cover letters or hunt Greenhouse boards. ReverseRecruit landed me 6 interviews and the negotiation copilot helped me bump my base by $22,000.&quot;
-              </p>
-              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                <div>
-                  <p className="font-bold text-white">Marcus T.</p>
-                  <p className="text-[11px] text-slate-400">Senior Full Stack @ Stripe</p>
-                </div>
-                <span className="text-emerald-400 font-semibold font-mono">+$175k Comp</span>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
-              <div className="flex items-center gap-1 text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                &quot;The LinkedIn optimizer alone completely changed my profile views. Recruiters started messaging ME, and the automated applications covered all the top remote roles before they were flooded.&quot;
-              </p>
-              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                <div>
-                  <p className="font-bold text-white">Priya R.</p>
-                  <p className="text-[11px] text-slate-400">Frontend Engineer @ Linear</p>
-                </div>
-                <span className="text-emerald-400 font-semibold font-mono">5 Interviews</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 7. BOTTOM CTA BANNER */}
-      {/* ========================================================================= */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="p-10 sm:p-16 rounded-3xl bg-gradient-to-r from-blue-900/80 via-indigo-900/80 to-purple-900/80 border border-blue-500/30 shadow-2xl">
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white mb-6">
-              Stop Applying Alone. Let Us Land Your Next 5 Interviews.
-            </h2>
-            <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8">
-              Join today for just $20 (Students) or $99 (IT Professionals). Zero risk with our 100% money-back interview guarantee.
-            </p>
-            <Link
-              href="/onboarding"
-              className="inline-flex items-center gap-2 px-8 py-4 text-base font-bold text-slate-900 bg-white hover:bg-slate-100 rounded-xl shadow-xl transition-all hover:scale-105"
-            >
-              <span>Get Started Now</span>
-              <ArrowRight className="h-4 w-4 text-slate-900" />
-            </Link>
-          </div>
+          <h2 className="text-[40px] sm:text-[64px] font-semibold tracking-[-0.03em] leading-[1.06] mb-6">
+            Your next role is waiting.
+          </h2>
+          <p className="text-[19px] sm:text-[21px] text-[#A1A1A6] max-w-[600px] mx-auto leading-[1.4] mb-10">
+            Join candidates landing offers at Stripe, Linear, Vercel, and Datadog. Guaranteed 5 interviews.
+          </p>
+          <Link
+            href="/onboarding"
+            className="apple-btn-interactive inline-flex items-center justify-center bg-[#FFFFFF] hover:bg-[#F5F5F7] text-[#1D1D1F] px-8 py-3.5 rounded-full text-[17px] font-medium shadow-md"
+          >
+            Get started today
+          </Link>
         </div>
       </section>
 

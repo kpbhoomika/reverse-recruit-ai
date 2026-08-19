@@ -2,28 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { 
-  Briefcase, 
-  Sparkles, 
-  Calendar, 
-  Send, 
-  FileText, 
-  CheckCircle2, 
-  Clock, 
-  Building2, 
-  DollarSign, 
-  Linkedin, 
-  ChevronRight,
-  ExternalLink,
-  ShieldCheck,
-  AlertCircle
-} from "lucide-react";
+import { ChevronRight, Clock, ExternalLink } from "lucide-react";
 import { initialApplications, initialCandidates } from "@/lib/mock-data";
 import { ApplicationItem, ApplicationStatus } from "@/lib/types";
-import { getStatusColor } from "@/lib/utils";
 
 export default function CandidateDashboard() {
-  const [candidate, setCandidate] = useState(initialCandidates[0]);
+  const [candidate] = useState(initialCandidates[0]);
   const [applications, setApplications] = useState<ApplicationItem[]>(initialApplications);
   const [selectedApp, setSelectedApp] = useState<ApplicationItem | null>(initialApplications[0]);
 
@@ -44,207 +28,188 @@ export default function CandidateDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F] p-6 sm:p-10">
+      <div className="max-w-[1080px] mx-auto space-y-10">
         
-        {/* Header Profile Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-md">
-          <div className="flex items-center gap-4">
-            <div className="h-14 w-14 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl font-extrabold shadow-lg shadow-blue-500/20">
-              {candidate.fullName.charAt(0)}
+        {/* Header Profile Bar (Spec-Sheet Style) */}
+        <div className="bg-[#FFFFFF] p-8 rounded-[24px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-3 mb-1">
+              <h1 className="text-[28px] sm:text-[34px] font-semibold text-[#1D1D1F] tracking-tight">
+                {candidate.fullName}
+              </h1>
+              <span className="text-[12px] font-medium px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] border border-[#D2D2D7]">
+                {candidate.tier === "student" ? "$20 Student" : "$99 Pro IT"}
+              </span>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-extrabold text-white">{candidate.fullName}</h1>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                  {candidate.tier === "student" ? "Student Tier ($20)" : "Pro IT Tier ($99)"}
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-                  <ShieldCheck className="h-3 w-3" /> Autopilot Active
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 mt-1">
-                Targeting: {candidate.targetRoles.join(" • ")} | Min Comp: ${candidate.minSalary.toLocaleString()}/yr
-              </p>
-            </div>
+            <p className="text-[14px] text-[#6E6E73]">
+              {candidate.targetRoles.join(" • ")} • Min Comp: ${candidate.minSalary.toLocaleString()}/yr
+            </p>
           </div>
 
-          {/* Quick Action Hub */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2">
             <Link
               href="/dashboard/resume-tailor"
-              className="px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors flex items-center gap-1.5"
+              className="apple-btn-interactive text-[13px] font-normal text-[#1D1D1F] bg-[#F5F5F7] hover:bg-[#E5E5EA] px-4 py-2 rounded-full border border-[#D2D2D7]"
             >
-              <FileText className="h-3.5 w-3.5 text-blue-400" />
-              <span>ATS Tailor</span>
+              ATS Tailor
             </Link>
             <Link
               href="/dashboard/cover-letters"
-              className="px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors flex items-center gap-1.5"
+              className="apple-btn-interactive text-[13px] font-normal text-[#1D1D1F] bg-[#F5F5F7] hover:bg-[#E5E5EA] px-4 py-2 rounded-full border border-[#D2D2D7]"
             >
-              <Send className="h-3.5 w-3.5 text-purple-400" />
-              <span>Cover Pitch</span>
+              Outreach
             </Link>
             <Link
               href="/dashboard/offer-negotiator"
-              className="px-3 py-2 text-xs font-semibold rounded-xl bg-emerald-950/40 hover:bg-emerald-900/40 text-emerald-300 border border-emerald-500/30 transition-colors flex items-center gap-1.5"
+              className="apple-btn-interactive text-[13px] font-normal text-white bg-[#1D1D1F] hover:bg-[#333336] px-4 py-2 rounded-full shadow-sm"
             >
-              <DollarSign className="h-3.5 w-3.5 text-emerald-400" />
-              <span>Negotiate Offer</span>
+              Negotiator
             </Link>
           </div>
         </div>
 
-        {/* 4 Core Metric Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* 4 Spec Sheet Metric Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           
-          <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Interviews Landed</span>
-              <Calendar className="h-4 w-4 text-purple-400" />
+          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73]">
+              Interviews Landed
+            </span>
+            <div className="my-4">
+              <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
+                {candidate.interviewsLanded}
+              </span>
+              <span className="text-[14px] text-[#6E6E73] ml-1">/ {candidate.interviewsGuaranteed} goal</span>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-white">{candidate.interviewsLanded}</span>
-              <span className="text-xs text-slate-400">/ {candidate.interviewsGuaranteed} Guaranteed</span>
-            </div>
-            <div className="h-1.5 w-full bg-slate-800 rounded-full mt-3 overflow-hidden">
+            <div className="h-1 w-full bg-[#F5F5F7] rounded-full overflow-hidden">
               <div
-                className="h-full bg-purple-500 rounded-full"
+                className="h-full bg-[#1D1D1F] rounded-full"
                 style={{ width: `${(candidate.interviewsLanded / candidate.interviewsGuaranteed) * 100}%` }}
               />
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Applications Dispatched</span>
-              <Briefcase className="h-4 w-4 text-blue-400" />
+          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73]">
+              Applications
+            </span>
+            <div className="my-4">
+              <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
+                {candidate.applicationsSubmitted}
+              </span>
+              <span className="text-[13px] text-[#0071E3] font-medium ml-2">+8 today</span>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-white">{candidate.applicationsSubmitted}</span>
-              <span className="text-xs text-emerald-400 font-semibold">+8 today</span>
-            </div>
-            <p className="text-[11px] text-slate-500 mt-2">Greenhouse, Lever &amp; Ashby boards</p>
+            <span className="text-[12px] text-[#86868B]">Greenhouse, Lever &amp; Ashby</span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Average Match Score</span>
-              <Sparkles className="h-4 w-4 text-amber-400" />
+          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73]">
+              Avg Match Score
+            </span>
+            <div className="my-4">
+              <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
+                93.4%
+              </span>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-amber-400">93.4%</span>
-              <span className="text-xs text-slate-400">High Precision</span>
-            </div>
-            <p className="text-[11px] text-slate-500 mt-2">100% Zero-hallucination ATS match</p>
+            <span className="text-[12px] text-[#86868B]">100% Truthful ATS match</span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Recruiter InMails</span>
-              <Linkedin className="h-4 w-4 text-sky-400" />
+          <div className="apple-card-hover bg-[#FFFFFF] p-6 rounded-[20px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <span className="text-[12px] uppercase font-semibold tracking-wider text-[#6E6E73]">
+              InMail Outreach
+            </span>
+            <div className="my-4">
+              <span className="text-[44px] font-semibold text-[#1D1D1F] leading-none">
+                24
+              </span>
+              <span className="text-[13px] text-[#0071E3] font-medium ml-2">18 read</span>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-white">24</span>
-              <span className="text-xs text-sky-400 font-semibold">18 Opened</span>
-            </div>
-            <p className="text-[11px] text-slate-500 mt-2">Direct hiring manager outreach</p>
+            <span className="text-[12px] text-[#86868B]">Direct hiring managers</span>
           </div>
 
         </div>
 
-        {/* ===================================================================== */}
-        {/* MAIN APPLICATION PIPELINE (KANBAN) */}
-        {/* ===================================================================== */}
+        {/* Pipeline Tracker (Kanban) */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white">Live Application Tracker</h2>
-              <p className="text-xs text-slate-400">Real-time status updates synced with candidate email webhook</p>
+              <h2 className="text-[20px] font-semibold text-[#1D1D1F]">Application Pipeline</h2>
+              <p className="text-[13px] text-[#6E6E73]">Real-time status synced with verified ATS endpoints.</p>
             </div>
-            <span className="text-xs text-slate-500 font-mono">Auto-syncing every 3 hours</span>
+            <span className="text-[12px] text-[#86868B]">Syncs every 3 hours</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {columns.map((column) => {
               const items = applications.filter((a) => a.status === column);
+              const isActive = column === "Interview Scheduled" || column === "Offer Received";
               return (
-                <div key={column} className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 min-h-[420px]">
-                  
-                  {/* Column Header */}
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-200">
-                      {column}
-                    </span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-300">
-                      {items.length}
-                    </span>
-                  </div>
+                <div key={column} className="bg-[#FFFFFF] p-4 rounded-[18px] border border-[#D2D2D7]/80 min-h-[380px] flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between pb-3 border-b border-[#F5F5F7] mb-3">
+                      <span className="text-[12px] font-semibold uppercase tracking-wider text-[#1D1D1F]">
+                        {column}
+                      </span>
+                      <span className="text-[12px] text-[#6E6E73] font-medium">
+                        {items.length}
+                      </span>
+                    </div>
 
-                  {/* Cards inside column */}
-                  <div className="space-y-3">
-                    {items.map((app) => (
-                      <div
-                        key={app.id}
-                        onClick={() => setSelectedApp(app)}
-                        className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                          selectedApp?.id === app.id
-                            ? "bg-slate-800 border-blue-500/80 shadow-md shadow-blue-500/10"
-                            : "bg-slate-950/80 border-slate-800/80 hover:border-slate-700"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-bold text-white">{app.companyName}</span>
-                          <span className="text-[10px] font-bold text-emerald-400 font-mono">
-                            {app.matchScore}% Match
-                          </span>
-                        </div>
-                        
-                        <p className="text-[11px] text-slate-300 font-medium line-clamp-1">{app.roleTitle}</p>
-                        <p className="text-[10px] text-slate-500 mt-1">{app.location}</p>
-
-                        {app.interviewDate && (
-                          <div className="mt-2 p-1.5 rounded-md bg-purple-500/10 border border-purple-500/20 text-[10px] text-purple-300 font-medium flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            <span>Interview: {new Date(app.interviewDate).toLocaleDateString()}</span>
+                    <div className="space-y-2.5">
+                      {items.map((app) => (
+                        <div
+                          key={app.id}
+                          onClick={() => setSelectedApp(app)}
+                          className={`p-3 rounded-[12px] border cursor-pointer transition-all ${
+                            selectedApp?.id === app.id
+                              ? "border-[#0071E3] bg-[#0071E3]/[0.02] shadow-sm"
+                              : "border-[#E5E5EA] hover:border-[#D2D2D7] bg-[#FFFFFF]"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[13px] font-semibold text-[#1D1D1F]">{app.companyName}</span>
+                            <span className="text-[11px] font-mono text-[#0071E3]">{app.matchScore}%</span>
                           </div>
-                        )}
+                          <p className="text-[12px] text-[#6E6E73] line-clamp-1">{app.roleTitle}</p>
 
-                        <div className="mt-2.5 pt-2 border-t border-slate-800/60 flex items-center justify-between text-[10px] text-slate-400">
-                          <span>{app.atsPlatform}</span>
-                          <span className="text-slate-500">{app.appliedDate}</span>
+                          {app.interviewDate && (
+                            <div className="mt-2 text-[11px] text-[#1D1D1F] font-medium flex items-center gap-1">
+                              <Clock className="h-3 w-3 text-[#0071E3]" />
+                              <span>{new Date(app.interviewDate).toLocaleDateString()}</span>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    ))}
+                      ))}
 
-                    {items.length === 0 && (
-                      <div className="h-24 flex items-center justify-center border border-dashed border-slate-800 rounded-xl text-xs text-slate-600">
-                        No applications in this stage
-                      </div>
-                    )}
+                      {items.length === 0 && (
+                        <div className="h-20 flex items-center justify-center text-[12px] text-[#86868B]">
+                          No applications
+                        </div>
+                      )}
+                    </div>
                   </div>
-
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Selected Application Details & Quick Actions Modal/Drawer */}
+        {/* Selected Application Details */}
         {selectedApp && (
-          <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+          <div className="bg-[#FFFFFF] p-8 rounded-[24px] border border-[#D2D2D7]/80 shadow-[0_4px_24px_rgba(0,0,0,0.03)] space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#F5F5F7]">
               <div>
-                <span className="text-xs text-blue-400 font-semibold uppercase tracking-wider">Application Detail</span>
-                <h3 className="text-xl font-bold text-white">{selectedApp.roleTitle} @ {selectedApp.companyName}</h3>
-                <p className="text-xs text-slate-400">{selectedApp.location} • Via {selectedApp.atsPlatform} • Applied on {selectedApp.appliedDate}</p>
+                <span className="text-[12px] uppercase font-semibold text-[#6E6E73] tracking-wider">Application Detail</span>
+                <h3 className="text-[24px] font-semibold text-[#1D1D1F] mt-0.5">{selectedApp.roleTitle} @ {selectedApp.companyName}</h3>
+                <p className="text-[13px] text-[#6E6E73]">{selectedApp.location} • Applied via {selectedApp.atsPlatform} on {selectedApp.appliedDate}</p>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <select
                   value={selectedApp.status}
                   onChange={(e) => updateStatus(selectedApp.id, e.target.value as ApplicationStatus)}
-                  className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-blue-500"
+                  className="px-4 py-2 text-[13px] font-medium rounded-full bg-[#F5F5F7] border border-[#D2D2D7] text-[#1D1D1F] focus:outline-none focus:border-[#0071E3]"
                 >
                   <option value="Applied">Applied</option>
                   <option value="Screening">Screening</option>
@@ -252,29 +217,28 @@ export default function CandidateDashboard() {
                   <option value="Offer Received">Offer Received</option>
                   <option value="Rejected">Rejected</option>
                 </select>
-
                 <Link
                   href="/dashboard/resume-tailor"
-                  className="px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors"
+                  className="apple-btn-interactive text-[13px] font-normal text-white bg-[#0071E3] hover:bg-[#0077ED] px-4 py-2 rounded-full"
                 >
-                  View Tailored Resume
+                  Tailored Resume
                 </Link>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800/80">
-                <span className="font-bold text-slate-300 block mb-1">Recruiter InMail Outreach:</span>
-                <p className="text-slate-400 leading-relaxed">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px]">
+              <div className="p-4 rounded-[14px] bg-[#F5F5F7]">
+                <span className="font-semibold text-[#1D1D1F] block mb-1">Recruiter InMail Outreach</span>
+                <p className="text-[#6E6E73] leading-relaxed">
                   {selectedApp.outreachSent 
-                    ? `✓ Direct 3-sentence introduction sent to ${selectedApp.recruiterEmail || "Hiring Team"}`
-                    : "Queued for direct recruiter message"}
+                    ? `✓ 3-Sentence intro sent to ${selectedApp.recruiterEmail || "Hiring Manager"}`
+                    : "Queued for recruiter outreach"}
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800/80">
-                <span className="font-bold text-slate-300 block mb-1">Application Notes:</span>
-                <p className="text-slate-400 leading-relaxed">
-                  {selectedApp.notes || "Auto-submitted via Greenhouse API parser with tailored XYZ metrics."}
+              <div className="p-4 rounded-[14px] bg-[#F5F5F7]">
+                <span className="font-semibold text-[#1D1D1F] block mb-1">Application Notes</span>
+                <p className="text-[#6E6E73] leading-relaxed">
+                  {selectedApp.notes || "Submitted via direct ATS API feed."}
                 </p>
               </div>
             </div>

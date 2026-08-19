@@ -1,23 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "ReverseRecruit AI — Land 5+ Tech Interviews on Autopilot",
-  description: "AI-Powered Reverse Recruiting SaaS & Job Application Concierge. We find, tailor, and apply to 150+ high-fit tech jobs on your behalf with guaranteed 5+ interviews.",
-  keywords: [
-    "Reverse recruiting",
-    "Job application automation",
-    "ATS resume tailor",
-    "Fresher jobs",
-    "Software engineer jobs",
-    "LinkedIn optimizer",
-    "Cover letter generator",
-  ],
+  title: "ReverseRecruit — Reverse Recruiting & Job Autopilot",
+  description: "We find, tailor, and apply to 150+ verified engineering roles on your behalf until you land a minimum of 5 tech interviews.",
 };
 
 export default function RootLayout({
@@ -26,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white`}>
+    <html lang="en" className="bg-apple-bg text-apple-text antialiased">
+      <body className="min-h-screen flex flex-col bg-apple-bg text-apple-text">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
