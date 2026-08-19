@@ -53,17 +53,98 @@ export default function LandingPage() {
   const resultReveal = useScrollReveal({ threshold: 0.15 });
   const pricingReveal = useScrollReveal({ threshold: 0.15 });
 
-  const runAtsScan = () => {
+  const runAtsScan = async () => {
     setIsScanning(true);
+
+    try {
+      // 1. Try calling the live AI backend
+      const response = await fetch("/api/ai/tailor-resume", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          targetRole,
+          jobDescription: sampleJd,
+          resumeText: sampleResume,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.matchedKeywords && data.missingKeywords) {
+          setAtsScore(data.matchScore || 85);
+          setScanResult({
+            matched: data.matchedKeywords,
+            missing: data.missingKeywords,
+            summary: data.tailoredSummary || `Your baseline experience matches ${data.matchScore}% of core requirements for ${targetRole}. ReverseRecruit will inject tailored metrics before auto-dispatching.`,
+          });
+          setIsScanning(false);
+          return;
+        }
+      }
+    } catch (e) {
+      console.log("Using dynamic client-side tokenizer fallback...");
+    }
+
+    // 2. Dynamic Real-time Client-Side Tokenizer Fallback
+    // Extracts keywords from the job description and compares against the candidate's resume
+    const jdWords = sampleJd
+      .replace(/[,.;:()]/g, " ")
+      .split(/\s+/)
+      .filter((w) => w.length > 2 && !["and", "with", "for", "the", "looking", "years", "experience", "experience in", "preferred"].includes(w.toLowerCase()));
+
+    // Common tech skill matcher
+    const techSkillSet = [
+      "React", "Next.js", "TypeScript", "JavaScript", "Python", "Java", "Go", "Golang",
+      "Node.js", "Express", "FastAPI", "Django", "PostgreSQL", "MySQL", "MongoDB", "Redis",
+      "Docker", "Kubernetes", "AWS", "GCP", "Azure", "GraphQL", "REST APIs", "CI/CD",
+      "Git", "Microservices", "Kafka", "Linux", "Tailwind", "CSS", "HTML", "Terraform",
+      "C++", "C#", "Rust", "Swift", "Kotlin", "Spring", "Flask", "SQL", "DevOps"
+    ];
+
+    const extractedJdSkills: string[] = [];
+    techSkillSet.forEach((skill) => {
+      const regex = new RegExp(`\\b${skill.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      if (regex.test(sampleJd)) {
+        extractedJdSkills.push(skill);
+      }
+    });
+
+    // If no preset skills found, extract unique capital/alphanumeric words from JD
+    const targetKeywords = extractedJdSkills.length >= 3 
+      ? extractedJdSkills 
+      : Array.from(new Set(jdWords.filter((w) => w.length >= 4))).slice(0, 8);
+
+    const matched: string[] = [];
+    const missing: string[] = [];
+
+    targetKeywords.forEach((kw) => {
+      const regex = new RegExp(`\\b${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      if (regex.test(sampleResume)) {
+        matched.push(kw);
+      } else {
+        missing.push(kw);
+      }
+    });
+
+    // Calculate actual dynamic score
+    const totalCount = matched.length + missing.length;
+    const calculatedScore = totalCount > 0 
+      ? Math.min(98, Math.max(35, Math.round((matched.length / totalCount) * 100))) 
+      : 70;
+
     setTimeout(() => {
-      setAtsScore(88);
+      setAtsScore(calculatedScore);
       setScanResult({
-        matched: ["React", "TypeScript", "Node.js", "PostgreSQL", "REST APIs"],
-        missing: ["Next.js", "Docker", "Microservices", "CI/CD Pipelines"],
-        summary: "Your baseline experience matches 88% of core requirements. ReverseRecruit tailors your real project metrics to highlight high-concurrency and containerization skills before dispatching.",
+        matched: matched.length > 0 ? matched : ["General Experience"],
+        missing: missing.length > 0 ? missing : ["None Identified"],
+        summary: `Your baseline experience matches ${calculatedScore}% of core requirements for ${targetRole || "this role"}. ${
+          missing.length > 0
+            ? `ReverseRecruit will tailor your bullet points to highlight ${missing.slice(0, 3).join(", ")} before submitting.`
+            : "Strong baseline keyword fit! ReverseRecruit will optimize bullet metrics for maximum interview callback rate."
+        }`,
       });
       setIsScanning(false);
-    }, 800);
+    }, 500);
   };
 
   return (
