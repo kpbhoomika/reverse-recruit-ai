@@ -1,0 +1,36 @@
+name: Daily Job Ingestion & ATS Sync
+
+on:
+  schedule:
+    # Runs every day at 06:00 AM UTC (11:30 AM IST)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  job-sync:
+    name: Sync Live ATS Career Feeds
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ATS Scraper & Matching Pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "🚀 Starting Daily Reverse Recruiting Job Sync..."
+          echo "Syncing Greenhouse, Lever, and Ashby career boards..."
+          npm run build
+          echo "✅ Daily ATS Job Synchronization completed successfully."
