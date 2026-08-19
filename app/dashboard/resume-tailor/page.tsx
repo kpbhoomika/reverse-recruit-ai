@@ -52,21 +52,21 @@ export default function ResumeTailorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090E] text-[#F1F5F9] p-6 sm:p-10 pt-28">
+    <div className="min-h-screen bg-[#F7F3EA] text-[#2B050E] p-6 sm:p-10 pt-28">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Studio Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-subtle">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#3D0814]/10">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-eyebrow-telemetry flex items-center gap-1.5">
+              <span className="font-mono text-xs text-[#D91C44] uppercase font-bold tracking-wider flex items-center gap-1.5">
                 <Cpu className="h-3.5 w-3.5" /> ATS Vector Realignment Studio
               </span>
             </div>
-            <h1 className="text-3xl font-semibold text-foreground tracking-tight mt-1">
+            <h1 className="text-3xl font-bold text-[#2B050E] tracking-tight mt-1">
               Zero-Hallucination ATS Resume Tailor
             </h1>
-            <p className="text-xs text-muted mt-1">
+            <p className="text-xs text-[#706556] mt-1">
               Split-view algorithmic editor with Gemini semantic weighting and Google XYZ metric rewrites.
             </p>
           </div>
@@ -74,7 +74,7 @@ export default function ResumeTailorPage() {
           <button
             onClick={handleTailor}
             disabled={loading}
-            className="btn-primary-glow text-xs py-2.5 px-6 shrink-0 cursor-pointer"
+            className="btn-crimson text-xs py-2.5 px-6 shrink-0 cursor-pointer"
           >
             {loading ? (
               <>
@@ -93,29 +93,29 @@ export default function ResumeTailorPage() {
         {/* Input Parameters Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="block text-xs font-mono text-muted uppercase tracking-wider">
+            <label className="block text-xs font-mono text-[#706556] uppercase tracking-wider">
               Employer Job Description
             </label>
             <textarea
               rows={4}
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
-              className="w-full p-4 rounded-2xl bg-surface-100 border border-border-subtle text-foreground text-xs leading-relaxed font-mono focus:outline-none focus:border-cyan-400 transition-colors"
+              className="w-full p-4 rounded-2xl bg-[#FFFFFF] border border-[#3D0814]/10 text-[#2B050E] text-xs leading-relaxed font-mono focus:outline-none focus:border-[#D91C44] transition-colors"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-xs font-mono text-muted uppercase tracking-wider">
+            <label className="block text-xs font-mono text-[#706556] uppercase tracking-wider">
               Target Role Title
             </label>
             <input
               type="text"
               value={targetRole}
               onChange={(e) => setTargetRole(e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl bg-surface-100 border border-border-subtle text-foreground text-xs font-medium focus:outline-none focus:border-cyan-400 transition-colors mb-2"
+              className="w-full px-4 py-3 rounded-2xl bg-[#FFFFFF] border border-[#3D0814]/10 text-[#2B050E] text-xs font-medium focus:outline-none focus:border-[#D91C44] transition-colors mb-2"
             />
-            <div className="p-3 rounded-xl bg-surface-100/50 border border-border-subtle text-[11px] font-mono text-muted flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <div className="p-3 rounded-xl bg-[#F0E9DC] text-[11px] font-mono text-[#706556] flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#D91C44]" />
               <span>ATS Parser Mode: High-Concurrency Tier (Greenhouse &amp; Lever)</span>
             </div>
           </div>
@@ -125,30 +125,30 @@ export default function ResumeTailorPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
           {/* Left Pane: Original Resume */}
-          <div className="glass-surface p-6 sm:p-8 rounded-3xl border border-border-subtle space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
-              <span className="font-mono text-xs text-muted uppercase tracking-wider">
+          <div className="bg-[#FFFFFF] p-6 sm:p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#3D0814]/10">
+              <span className="font-mono text-xs text-[#706556] uppercase tracking-wider font-bold">
                 Original Experience Source
               </span>
-              <span className="text-xs font-mono text-muted">Raw Text</span>
+              <span className="text-xs font-mono text-[#706556]">Raw Text</span>
             </div>
 
             <textarea
               rows={12}
               value={resumeText}
               onChange={(e) => setResumeText(e.target.value)}
-              className="w-full p-4 rounded-xl bg-surface-100/80 border border-border-subtle text-foreground text-xs leading-relaxed font-mono focus:outline-none focus:border-cyan-400 transition-colors"
+              className="w-full p-4 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/10 text-[#2B050E] text-xs leading-relaxed font-mono focus:outline-none focus:border-[#D91C44] transition-colors"
             />
           </div>
 
           {/* Right Pane: AI-Optimized Realignment */}
-          <div className="glass-surface-elevated p-6 sm:p-8 rounded-3xl border border-border-light space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
-              <span className="font-mono text-xs text-cyan-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5" /> AI Optimized ATS Output
+          <div className="bg-[#3D0814] text-[#FAF5EE] p-6 sm:p-8 rounded-3xl border border-white/10 shadow-warm-lg space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <span className="font-mono text-xs text-[#D91C44] uppercase tracking-wider font-bold flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5" /> AI Optimized Output
               </span>
               {result && (
-                <span className="font-mono text-xs text-emerald-400 font-bold">
+                <span className="font-mono text-xs text-white font-bold px-2 py-0.5 rounded bg-[#D91C44]">
                   {result.matchScore}% Match Index
                 </span>
               )}
@@ -160,51 +160,51 @@ export default function ResumeTailorPage() {
                 {/* Tailored Executive Summary */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono text-muted uppercase tracking-wider">
+                    <span className="text-[11px] font-mono text-[#FAF5EE]/70 uppercase tracking-wider">
                       Tailored Profile Summary
                     </span>
                     <button
                       onClick={() => copyToClipboard(result.tailoredSummary)}
-                      className="text-xs font-mono text-cyan-300 hover:text-foreground flex items-center gap-1"
+                      className="text-xs font-mono text-[#D91C44] hover:text-white flex items-center gap-1"
                     >
                       {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                       <span>{copied ? "Copied" : "Copy"}</span>
                     </button>
                   </div>
-                  <p className="p-4 rounded-xl bg-surface-100 border border-border-subtle text-xs text-foreground leading-relaxed font-mono">
+                  <p className="p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-white leading-relaxed font-mono">
                     {result.tailoredSummary}
                   </p>
                 </div>
 
-                {/* XYZ Bullet Points with "Why this change?" reasoning */}
+                {/* XYZ Bullet Points */}
                 <div className="space-y-3">
-                  <span className="text-[11px] font-mono text-muted uppercase tracking-wider block">
+                  <span className="text-[11px] font-mono text-[#FAF5EE]/70 uppercase tracking-wider block">
                     Rewritten Metric Bullet Points (Google XYZ)
                   </span>
 
                   {result.tailoredBulletPoints.map((bullet, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-xl bg-surface-100 border border-border-subtle space-y-2 text-xs"
+                      className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2 text-xs"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-mono font-semibold text-emerald-400">
+                        <span className="font-mono font-semibold text-[#D91C44]">
                           ✓ Aligned Metric {idx + 1}
                         </span>
                         <button
                           onClick={() => copyToClipboard(bullet.improved)}
-                          className="text-[11px] font-mono text-muted hover:text-foreground flex items-center gap-1"
+                          className="text-[11px] font-mono text-[#FAF5EE]/70 hover:text-white flex items-center gap-1"
                         >
                           <Copy className="h-3 w-3" /> Copy
                         </button>
                       </div>
 
-                      <p className="text-foreground font-mono leading-relaxed">
+                      <p className="text-white font-mono leading-relaxed">
                         {bullet.improved}
                       </p>
 
-                      <div className="p-2.5 rounded-lg bg-surface-200/60 border border-cyan-500/20 text-[11px] text-muted space-y-0.5">
-                        <span className="font-mono text-cyan-300 font-semibold block">
+                      <div className="p-2.5 rounded-lg bg-black/20 border border-white/10 text-[11px] text-[#FAF5EE]/70 space-y-0.5">
+                        <span className="font-mono text-[#D91C44] font-semibold block">
                           WHY THIS CHANGE?
                         </span>
                         <p>{bullet.reason}</p>
@@ -215,10 +215,10 @@ export default function ResumeTailorPage() {
 
               </div>
             ) : (
-              <div className="h-64 flex flex-col items-center justify-center text-center p-6 text-muted font-mono text-xs">
-                <FileCode className="h-8 w-8 text-muted/60 mb-2" />
+              <div className="h-64 flex flex-col items-center justify-center text-center p-6 text-[#FAF5EE]/70 font-mono text-xs">
+                <FileCode className="h-8 w-8 text-[#FAF5EE]/40 mb-2" />
                 <p>Click &quot;Execute Realignment&quot; to parse keywords</p>
-                <p className="text-[11px] text-muted/60 mt-1">
+                <p className="text-[11px] text-[#FAF5EE]/50 mt-1">
                   Generates machine-validated bullet points aligned to job spec.
                 </p>
               </div>

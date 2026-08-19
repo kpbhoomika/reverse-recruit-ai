@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X, ArrowRight, Sparkles, Shield, Cpu } from "lucide-react";
+import { Menu, X, ArrowRight, Sparkles, Cpu } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -30,28 +30,26 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "py-3 px-4 sm:px-6"
-          : "py-5 px-6"
+        scrolled ? "py-3 px-4 sm:px-6" : "py-5 px-6"
       }`}
     >
       <div
-        className={`max-w-6xl mx-auto transition-all duration-300 rounded-full px-5 sm:px-6 h-13 flex items-center justify-between ${
+        className={`max-w-6xl mx-auto transition-all duration-300 rounded-full px-6 h-13 flex items-center justify-between ${
           scrolled
-            ? "glass-surface-elevated border border-border-light shadow-2xl py-2"
-            : "bg-surface-50/40 backdrop-blur-md border border-border-subtle py-2.5"
+            ? "bg-[#3D0814]/90 backdrop-blur-md border border-white/10 shadow-2xl py-2 text-[#FAF5EE]"
+            : "bg-[#3D0814] text-[#FAF5EE] py-2.5 shadow-lg border border-white/5"
         }`}
       >
-        {/* Brand Logo & Telemetry Indicator */}
+        {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="h-7 w-7 rounded-lg bg-gradient-to-tr from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 group-hover:scale-105 transition-transform">
-            <Cpu className="h-4 w-4" />
+          <div className="h-7 w-7 rounded-lg bg-[#D91C44] flex items-center justify-center text-white font-bold text-xs shadow-sm">
+            RR
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="font-bold text-sm tracking-tight text-foreground">
-              ReverseRecruit<span className="text-cyan-400">.ai</span>
+            <span className="font-semibold text-sm tracking-tight text-white">
+              ReverseRecruit<span className="text-[#D91C44]">.ai</span>
             </span>
-            <span className="hidden sm:inline-block font-mono text-[9px] uppercase tracking-widest text-emerald-400 px-1.5 py-0.2 rounded bg-emerald-500/10 border border-emerald-500/20">
+            <span className="hidden sm:inline-block font-mono text-[9px] uppercase tracking-widest text-[#FAF5EE]/80 px-1.5 py-0.2 rounded bg-white/10">
               v2.4
             </span>
           </div>
@@ -67,8 +65,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`text-xs font-medium tracking-wide transition-colors ${
                   isActive
-                    ? "text-cyan-300 font-semibold"
-                    : "text-muted hover:text-foreground"
+                    ? "text-white font-bold"
+                    : "text-[#FAF5EE]/70 hover:text-white"
                 }`}
               >
                 {link.name}
@@ -81,15 +79,15 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <Link
             href="/admin"
-            className="text-xs font-mono text-muted hover:text-foreground transition-colors"
+            className="text-xs font-mono text-[#FAF5EE]/70 hover:text-white transition-colors"
           >
             Cockpit
           </Link>
           <Link
             href="/onboarding"
-            className="btn-primary-glow text-xs py-2 px-4 shadow-sm"
+            className="btn-crimson text-xs py-2 px-4 shadow-sm"
           >
-            <span>Start My Engine</span>
+            <span>Start Free</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -97,23 +95,23 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-foreground p-1"
+          className="md:hidden text-white p-1"
           aria-label="Toggle navigation"
         >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5 text-white" />}
         </button>
       </div>
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="md:hidden mt-3 max-w-6xl mx-auto glass-surface-elevated rounded-2xl p-6 border border-border-light space-y-4 animate-fadeIn">
+        <div className="md:hidden mt-3 max-w-6xl mx-auto bg-[#3D0814] text-white rounded-2xl p-6 border border-white/10 shadow-2xl space-y-4 animate-fadeIn">
           <div className="flex flex-col space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-sm font-medium text-foreground py-1 border-b border-border-subtle"
+                className="text-sm font-medium text-[#FAF5EE] py-1 border-b border-white/10"
               >
                 {link.name}
               </Link>
@@ -121,7 +119,7 @@ export default function Navbar() {
             <Link
               href="/admin"
               onClick={() => setMobileOpen(false)}
-              className="text-sm font-mono text-muted py-1 border-b border-border-subtle"
+              className="text-sm font-mono text-[#FAF5EE]/70 py-1 border-b border-white/10"
             >
               Agency Admin Cockpit
             </Link>
@@ -129,7 +127,7 @@ export default function Navbar() {
           <Link
             href="/onboarding"
             onClick={() => setMobileOpen(false)}
-            className="btn-primary-glow w-full text-center text-xs py-3 justify-center"
+            className="btn-crimson w-full text-center text-xs py-3 justify-center"
           >
             <span>Launch Career Engine ($20 / $99)</span>
             <ArrowRight className="h-3.5 w-3.5" />

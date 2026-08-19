@@ -38,27 +38,24 @@ export default function LiveATSDiagnostic() {
 
   return (
     <div className="relative w-full max-w-5xl mx-auto my-12">
-      {/* Outer ambient glow */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-emerald-500/20 rounded-3xl blur-xl -z-10 opacity-70" />
-
-      <div className="glass-surface-elevated rounded-3xl p-6 sm:p-10 border border-border-light shadow-elevated">
+      <div className="bg-[#FFFFFF] rounded-3xl p-6 sm:p-10 border border-[#3D0814]/10 shadow-warm-lg">
         
         {/* Terminal Header */}
-        <div className="flex items-center justify-between pb-6 border-b border-border-subtle mb-8">
+        <div className="flex items-center justify-between pb-6 border-b border-[#3D0814]/10 mb-8">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
-              <div className="h-3 w-3 rounded-full bg-surface-300 border border-border-subtle" />
-              <div className="h-3 w-3 rounded-full bg-surface-300 border border-border-subtle" />
-              <div className="h-3 w-3 rounded-full bg-surface-300 border border-border-subtle" />
+              <div className="h-3 w-3 rounded-full bg-[#D91C44]" />
+              <div className="h-3 w-3 rounded-full bg-[#3D0814]/20" />
+              <div className="h-3 w-3 rounded-full bg-[#3D0814]/20" />
             </div>
-            <span className="font-mono text-xs text-muted font-medium ml-2">
-              ats-kernel-diagnostic.v2.engine
+            <span className="font-mono text-xs text-[#706556] font-medium ml-2">
+              ats-semantic-diagnostic.v2
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-[11px]">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-bright animate-ping" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D91C44]/10 border border-[#D91C44]/20 text-[#D91C44] font-mono text-[11px] font-semibold">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#D91C44] animate-ping" />
               Gemini 1.5 Semantic Parser
             </span>
           </div>
@@ -70,49 +67,49 @@ export default function LiveATSDiagnostic() {
           {/* Left Column: Interactive Inputs */}
           <div className="lg:col-span-7 space-y-4">
             <div>
-              <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-1.5">
-                Target Role Vector
+              <label className="block text-xs font-mono text-[#706556] uppercase tracking-wider mb-1.5">
+                Target Role
               </label>
               <input
                 type="text"
                 value={targetRole}
                 onChange={(e) => setTargetRole(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-sm font-medium focus:outline-none focus:border-cyan-400 transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/10 text-[#2B050E] text-sm font-medium focus:outline-none focus:border-[#D91C44] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-mono text-[#706556] uppercase tracking-wider mb-1.5">
                 Candidate Master Experience
               </label>
               <textarea
                 rows={3}
                 value={sampleResume}
                 onChange={(e) => setSampleResume(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs leading-relaxed font-mono focus:outline-none focus:border-cyan-400 transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/10 text-[#2B050E] text-xs leading-relaxed font-mono focus:outline-none focus:border-[#D91C44] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-mono text-[#706556] uppercase tracking-wider mb-1.5">
                 Employer Job Specification
               </label>
               <textarea
                 rows={3}
                 value={sampleJd}
                 onChange={(e) => setSampleJd(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-100 border border-border-subtle text-foreground text-xs leading-relaxed font-mono focus:outline-none focus:border-cyan-400 transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/10 text-[#2B050E] text-xs leading-relaxed font-mono focus:outline-none focus:border-[#D91C44] transition-colors"
               />
             </div>
 
             <button
               onClick={runDiagnostic}
               disabled={isScanning}
-              className="w-full btn-primary-glow flex items-center justify-center gap-2 cursor-pointer mt-2"
+              className="w-full btn-crimson flex items-center justify-center gap-2 cursor-pointer mt-2"
             >
               {isScanning ? (
                 <>
-                  <RefreshCw className="h-4 w-4 animate-spin text-foreground" />
+                  <RefreshCw className="h-4 w-4 animate-spin text-white" />
                   <span>Computing Vector Match &amp; Semantic Distance...</span>
                 </>
               ) : (
@@ -125,20 +122,20 @@ export default function LiveATSDiagnostic() {
           </div>
 
           {/* Right Column: Diagnostic Radial Gauge & Analysis */}
-          <div className="lg:col-span-5 bg-surface-100/90 rounded-2xl p-6 border border-border-subtle space-y-6">
+          <div className="lg:col-span-5 bg-[#3D0814] text-[#FAF5EE] rounded-2xl p-6 border border-white/10 space-y-6 shadow-xl">
             
             {/* Radial Gauge & Top Score */}
-            <div className="flex items-center justify-between pb-4 border-b border-border-subtle">
+            <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <div>
-                <span className="text-[10px] font-mono text-muted uppercase tracking-wider block">
+                <span className="text-[10px] font-mono text-[#FAF5EE]/70 uppercase tracking-wider block">
                   Calculated ATS Index
                 </span>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-4xl font-extrabold font-mono text-foreground">
+                  <span className="text-4xl font-extrabold font-mono text-white">
                     {countScore}%
                   </span>
-                  <span className="text-xs font-mono font-medium text-emerald-400">
-                    {atsScore >= 90 ? "Interview Tier (Top 1%)" : "Baseline"}
+                  <span className="text-xs font-mono font-medium text-[#FF2B56]">
+                    {atsScore >= 90 ? "Top 1% Tier" : "Baseline"}
                   </span>
                 </div>
               </div>
@@ -150,7 +147,7 @@ export default function LiveATSDiagnostic() {
                     cx="28"
                     cy="28"
                     r="22"
-                    stroke="rgba(255, 255, 255, 0.08)"
+                    stroke="rgba(255, 255, 255, 0.15)"
                     strokeWidth="4"
                     fill="none"
                   />
@@ -158,7 +155,7 @@ export default function LiveATSDiagnostic() {
                     cx="28"
                     cy="28"
                     r="22"
-                    stroke="#38BDF8"
+                    stroke="#D91C44"
                     strokeWidth="4"
                     strokeDasharray={138}
                     strokeDashoffset={138 - (138 * atsScore) / 100}
@@ -167,7 +164,7 @@ export default function LiveATSDiagnostic() {
                     className="transition-all duration-700 ease-out"
                   />
                 </svg>
-                <span className="absolute text-[10px] font-mono text-cyan-300 font-bold">
+                <span className="absolute text-[10px] font-mono text-white font-bold">
                   {countScore}%
                 </span>
               </div>
@@ -176,14 +173,14 @@ export default function LiveATSDiagnostic() {
             {/* Keyword Extraction Telemetry */}
             <div className="space-y-3 text-xs">
               <div>
-                <span className="text-[11px] font-mono text-emerald-400 font-medium uppercase tracking-wider block mb-1.5">
+                <span className="text-[11px] font-mono text-[#FAF5EE]/80 font-medium uppercase tracking-wider block mb-1.5">
                   ✓ Matched Technical Vectors (6)
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {["Go", "PostgreSQL", "AWS", "Docker", "Microservices", "High-Concurrency"].map((kw) => (
                     <span
                       key={kw}
-                      className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono text-[11px]"
+                      className="px-2 py-0.5 rounded-md bg-white/10 text-white border border-white/15 font-mono text-[11px]"
                     >
                       {kw}
                     </span>
@@ -192,17 +189,17 @@ export default function LiveATSDiagnostic() {
               </div>
 
               <div>
-                <span className="text-[11px] font-mono text-cyan-400 font-medium uppercase tracking-wider block mb-1.5">
+                <span className="text-[11px] font-mono text-[#D91C44] font-medium uppercase tracking-wider block mb-1.5">
                   ⚡ Auto-Injected XYZ Bullet Point
                 </span>
-                <p className="p-3 rounded-xl bg-surface-200/80 border border-border-subtle text-foreground text-xs leading-relaxed font-sans">
+                <p className="p-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs leading-relaxed font-sans">
                   &quot;Architected distributed Go microservices handling 250k+ daily transactions with PostgreSQL &amp; Kafka, reducing p99 latency by 44%.&quot;
                 </p>
               </div>
 
               {/* AI Reasoning Inspector */}
-              <div className="p-3 rounded-xl bg-surface-200/50 border border-cyan-500/20 text-[11px] text-muted space-y-1">
-                <span className="font-mono text-cyan-300 font-medium block">
+              <div className="p-3 rounded-xl bg-black/20 border border-white/10 text-[11px] text-[#FAF5EE]/70 space-y-1">
+                <span className="font-mono text-white font-medium block">
                   AI Rationale:
                 </span>
                 <p className="leading-relaxed">
