@@ -71,7 +71,7 @@ export default function CareerIntelligenceGraph() {
 
   return (
     <div className="relative w-full max-w-5xl mx-auto my-8">
-      <div className="bg-[#2B050E] rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl text-[#FAF5EE] relative overflow-hidden">
+      <div className="bg-[#0E0407] rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl text-[#FAF7F2] relative overflow-hidden">
         
         {/* Top Telemetry Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/10 gap-4 mb-8">
@@ -88,8 +88,8 @@ export default function CareerIntelligenceGraph() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[11px] text-[#FAF5EE]/70">
-            <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-[#FAF5EE] border border-white/10">
+          <div className="flex items-center gap-2 font-mono text-[11px] text-[#FAF7F2]/70">
+            <span className="px-2.5 py-0.5 rounded-full bg-white/5 text-[#FAF7F2] border border-white/10">
               Live Pipeline Active
             </span>
             <span>Latency: 140ms</span>
@@ -107,12 +107,12 @@ export default function CareerIntelligenceGraph() {
                 onClick={() => setActiveNode(node.id)}
                 className={`p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between ${
                   isSelected
-                    ? "bg-[#3D0814] border-[#D91C44] shadow-lg shadow-[#D91C44]/20 scale-[1.02]"
+                    ? "bg-[#1F0C12] border-[#D91C44] shadow-md shadow-[#D91C44]/20 scale-[1.02]"
                     : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10"
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between text-[10px] font-mono text-[#FAF5EE]/60 mb-2">
+                  <div className="flex items-center justify-between text-[10px] font-mono text-[#FAF7F2]/60 mb-2">
                     <span>{node.stage}</span>
                     {node.status === "active" ? (
                       <span className="h-1.5 w-1.5 rounded-full bg-[#D91C44] animate-pulse" />
@@ -125,12 +125,12 @@ export default function CareerIntelligenceGraph() {
                     {node.label}
                   </h4>
 
-                  <span className="text-xs font-mono font-medium text-[#FAF5EE] block">
+                  <span className="text-xs font-mono font-medium text-[#FAF7F2] block">
                     {node.metric}
                   </span>
                 </div>
 
-                <div className="mt-4 pt-2 border-t border-white/10 flex items-center justify-between text-[10px] text-[#FAF5EE]/60">
+                <div className="mt-4 pt-2 border-t border-white/10 flex items-center justify-between text-[10px] text-[#FAF7F2]/60">
                   <span>Inspect</span>
                   <ArrowRight className="h-3 w-3 text-[#D91C44]" />
                 </div>
@@ -142,7 +142,7 @@ export default function CareerIntelligenceGraph() {
         {/* Selected Node Telemetry Detail Banner */}
         <div className="mt-6 p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#FAF5EE]/60 block">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#FAF7F2]/60 block">
               Node Telemetry Analysis:
             </span>
             <p className="text-sm text-white font-medium">
@@ -152,7 +152,7 @@ export default function CareerIntelligenceGraph() {
 
           <div className="flex items-center gap-3 shrink-0">
             <div className="text-right">
-              <span className="text-[10px] font-mono text-[#FAF5EE]/60 block">Target Goal</span>
+              <span className="text-[10px] font-mono text-[#FAF7F2]/60 block">Target Goal</span>
               <span className="text-xs font-mono font-bold text-white">5 Interviews Minimum</span>
             </div>
             <div className="h-8 w-8 rounded-xl bg-[#D91C44]/20 border border-[#D91C44]/40 flex items-center justify-center text-[#D91C44]">

@@ -3,11 +3,11 @@ import { Cpu, ShieldCheck, Github, ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#2B050E] text-[#FAF5EE]/70 text-xs border-t border-white/10">
+    <footer className="bg-[#0E0407] text-[#FAF7F2]/70 text-xs border-t border-white/10">
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-12">
         
         {/* Footnote telemetry disclaimer */}
-        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-[11px] leading-relaxed text-[#FAF5EE]/80 space-y-2">
+        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-[11px] leading-relaxed text-[#FAF7F2]/80 space-y-2">
           <p>
             <span className="text-white font-semibold">1. Performance Guarantee:</span> The 5-interview guarantee applies to active accounts matching minimum role and skill parameters. If 5 qualified interview milestones are not verified within the monthly cycle, a 100% refund of the base plan fee is issued.
           </p>
@@ -24,7 +24,7 @@ export default function Footer() {
               <span className="h-5 w-5 rounded bg-[#D91C44] text-white flex items-center justify-center text-xs font-bold">RR</span>
               <span>ReverseRecruit</span>
             </div>
-            <p className="text-[12px] text-[#FAF5EE]/70 leading-relaxed">
+            <p className="text-[12px] text-[#FAF7F2]/70 leading-relaxed">
               Intelligent career operating system for software engineers, freshers, and career switchers.
             </p>
             <div className="flex items-center gap-1.5 text-[11px] text-[#FF2B56] font-mono">
@@ -72,18 +72,18 @@ export default function Footer() {
                 >
                   <Github className="h-3.5 w-3.5" />
                   <span>github.com/kpbhoomika</span>
-                  <ArrowUpRight className="h-3 w-3 text-[#FAF5EE]/50" />
+                  <ArrowUpRight className="h-3 w-3 text-[#FAF7F2]/50" />
                 </a>
               </li>
-              <li><span className="font-mono text-[11px] text-[#FAF5EE]/60">Daily Actions Cron: 06:00 UTC</span></li>
-              <li><span className="font-mono text-[11px] text-[#FAF5EE]/60">Direct ATS Feed Ingestion: 24h</span></li>
+              <li><span className="font-mono text-[11px] text-[#FAF7F2]/60">Daily Actions Cron: 06:00 UTC</span></li>
+              <li><span className="font-mono text-[11px] text-[#FAF7F2]/60">Direct ATS Feed Ingestion: 24h</span></li>
             </ul>
           </div>
 
         </div>
 
         {/* Legal & Copyright */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[11px] text-[#FAF5EE]/60 font-mono">
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[11px] text-[#FAF7F2]/60 font-mono">
           <p>© {new Date().getFullYear()} ReverseRecruit AI Inc. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <span className="hover:text-white cursor-pointer transition-colors">Security</span>

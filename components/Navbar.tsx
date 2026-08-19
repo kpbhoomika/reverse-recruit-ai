@@ -36,8 +36,8 @@ export default function Navbar() {
       <div
         className={`max-w-6xl mx-auto transition-all duration-300 rounded-full px-6 h-13 flex items-center justify-between ${
           scrolled
-            ? "bg-[#3D0814]/90 backdrop-blur-md border border-white/10 shadow-2xl py-2 text-[#FAF5EE]"
-            : "bg-[#3D0814] text-[#FAF5EE] py-2.5 shadow-lg border border-white/5"
+            ? "bg-[#16070B]/95 backdrop-blur-md border border-white/10 shadow-2xl py-2 text-[#FAF7F2]"
+            : "bg-[#16070B] text-[#FAF7F2] py-2.5 shadow-lg border border-white/5"
         }`}
       >
         {/* Brand Logo */}
@@ -49,7 +49,7 @@ export default function Navbar() {
             <span className="font-semibold text-sm tracking-tight text-white">
               ReverseRecruit<span className="text-[#D91C44]">.ai</span>
             </span>
-            <span className="hidden sm:inline-block font-mono text-[9px] uppercase tracking-widest text-[#FAF5EE]/80 px-1.5 py-0.2 rounded bg-white/10">
+            <span className="hidden sm:inline-block font-mono text-[9px] uppercase tracking-widest text-[#FAF7F2]/70 px-1.5 py-0.2 rounded bg-white/5">
               v2.4
             </span>
           </div>
@@ -66,7 +66,7 @@ export default function Navbar() {
                 className={`text-xs font-medium tracking-wide transition-colors ${
                   isActive
                     ? "text-white font-bold"
-                    : "text-[#FAF5EE]/70 hover:text-white"
+                    : "text-[#FAF7F2]/70 hover:text-white"
                 }`}
               >
                 {link.name}
@@ -79,7 +79,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <Link
             href="/admin"
-            className="text-xs font-mono text-[#FAF5EE]/70 hover:text-white transition-colors"
+            className="text-xs font-mono text-[#FAF7F2]/70 hover:text-white transition-colors"
           >
             Cockpit
           </Link>
@@ -104,14 +104,14 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="md:hidden mt-3 max-w-6xl mx-auto bg-[#3D0814] text-white rounded-2xl p-6 border border-white/10 shadow-2xl space-y-4 animate-fadeIn">
+        <div className="md:hidden mt-3 max-w-6xl mx-auto bg-[#16070B] text-white rounded-2xl p-6 border border-white/10 shadow-2xl space-y-4 animate-fadeIn">
           <div className="flex flex-col space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-sm font-medium text-[#FAF5EE] py-1 border-b border-white/10"
+                className="text-sm font-medium text-[#FAF7F2] py-1 border-b border-white/10"
               >
                 {link.name}
               </Link>
@@ -119,7 +119,7 @@ export default function Navbar() {
             <Link
               href="/admin"
               onClick={() => setMobileOpen(false)}
-              className="text-sm font-mono text-[#FAF5EE]/70 py-1 border-b border-white/10"
+              className="text-sm font-mono text-[#FAF7F2]/70 py-1 border-b border-white/10"
             >
               Agency Admin Cockpit
             </Link>

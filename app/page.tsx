@@ -41,16 +41,13 @@ export default function LandingPage() {
   const countInterviews = useCounter(6, resultReveal.isVisible, 900);
 
   return (
-    <div className="bg-[#F7F3EA] text-[#2B050E] overflow-hidden">
+    <div className="bg-[#F7F4EC] text-[#1C0A0F] overflow-hidden">
       
       {/* ========================================================================= */}
-      {/* 1. DEEP WINE BURGUNDY HERO SECTION                                       */}
+      {/* 1. SOPHISTICATED DEEP DARK HERO SECTION (Espresso-Wine)                  */}
       {/* ========================================================================= */}
-      <section className="bg-[#3D0814] text-[#FAF5EE] pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden">
+      <section className="bg-[#16070B] text-[#FAF7F2] pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden">
         
-        {/* Subtle atmospheric ambient glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#D91C44]/15 rounded-full blur-[140px] pointer-events-none -z-10" />
-
         <div className="max-w-6xl mx-auto px-6 text-center">
           
           <div
@@ -58,7 +55,7 @@ export default function LandingPage() {
             className={`reveal-init ${heroReveal.isVisible ? "reveal-visible" : ""}`}
           >
             {/* Small Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#FAF5EE] text-xs font-mono tracking-widest uppercase mb-8 shadow-inner">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[#FAF7F2] text-xs font-mono tracking-widest uppercase mb-8">
               <span className="h-2 w-2 rounded-full bg-[#D91C44] animate-ping" />
               <span>AI-Powered Reverse Recruiting</span>
             </div>
@@ -66,13 +63,13 @@ export default function LandingPage() {
             {/* Headline */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white max-w-5xl mx-auto mb-6 tracking-tight leading-[1.08]">
               Experience smarter, faster <br />
-              <span className="text-[#FAF5EE]/90 font-light italic font-serif">
+              <span className="text-[#FAF7F2]/90 font-light italic font-serif">
                 and more engaging career recruiting.
               </span>
             </h1>
 
             {/* Subhead Lead */}
-            <p className="text-base sm:text-lg text-[#FAF5EE]/80 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-base sm:text-lg text-[#FAF7F2]/75 max-w-2xl mx-auto mb-10 leading-relaxed">
               ReverseRecruit stands at the forefront of career automation — reverse-engineering ATS algorithms, tailoring verifiable resumes, and guaranteeing 5+ tech interviews.
             </p>
 
@@ -90,28 +87,28 @@ export default function LandingPage() {
                 className="btn-wine-outline w-full sm:w-auto text-base py-3.5 px-7"
               >
                 <span>See How It Works</span>
-                <ChevronRight className="h-4 w-4 text-[#FAF5EE]/70" />
+                <ChevronRight className="h-4 w-4 text-[#FAF7F2]/70" />
               </a>
             </div>
           </div>
 
-          {/* 4-Stat Metric Strip (Inspired directly by Reference Image Hero) */}
+          {/* 4-Stat Metric Strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-10 pb-4 border-t border-white/10 max-w-4xl mx-auto font-mono text-center">
             <div>
               <span className="text-3xl sm:text-4xl font-extrabold text-white block mb-1">5+</span>
-              <span className="text-xs text-[#FAF5EE]/70 uppercase tracking-wider">Guaranteed Interviews</span>
+              <span className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider">Guaranteed Interviews</span>
             </div>
             <div>
               <span className="text-3xl sm:text-4xl font-extrabold text-white block mb-1">150+</span>
-              <span className="text-xs text-[#FAF5EE]/70 uppercase tracking-wider">Targeted Applications</span>
+              <span className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider">Targeted Applications</span>
             </div>
             <div>
               <span className="text-3xl sm:text-4xl font-extrabold text-[#D91C44] block mb-1">96%</span>
-              <span className="text-xs text-[#FAF5EE]/70 uppercase tracking-wider">Average ATS Compatibility</span>
+              <span className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider">ATS Compatibility</span>
             </div>
             <div>
               <span className="text-3xl sm:text-4xl font-extrabold text-white block mb-1">$20</span>
-              <span className="text-xs text-[#FAF5EE]/70 uppercase tracking-wider">Starting Student Plan</span>
+              <span className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider">Starting Student Plan</span>
             </div>
           </div>
 
@@ -134,7 +131,7 @@ export default function LandingPage() {
         >
           <div className="max-w-3xl mb-16">
             <span className="section-badge-num block mb-2 font-mono">01.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#2B050E] tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
               You&apos;re not losing opportunities <br />
               <span className="text-[#706556] font-normal italic font-serif">because you&apos;re unqualified.</span>
             </h2>
@@ -147,8 +144,8 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             
             {/* The Manual Flawed Way */}
-            <div className="p-8 sm:p-10 rounded-3xl bg-[#FFFFFF] border border-[#3D0814]/10 shadow-warm space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-[#3D0814]/10">
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#FFFFFF] border border-[#16070B]/10 shadow-warm space-y-6">
+              <div className="flex items-center justify-between pb-4 border-b border-[#16070B]/10">
                 <span className="font-mono text-xs text-[#706556] font-bold uppercase tracking-wider">
                   The Broken Manual Way
                 </span>
@@ -156,19 +153,19 @@ export default function LandingPage() {
               </div>
 
               <div className="space-y-3.5 font-mono text-xs text-[#706556]">
-                <div className="p-3.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/5 flex items-center justify-between">
+                <div className="p-3.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 flex items-center justify-between">
                   <span>1. 300+ Manual Form Fillings</span>
                   <span className="text-[#D91C44]">4 Hours/Day</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/5 flex items-center justify-between">
+                <div className="p-3.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 flex items-center justify-between">
                   <span>2. Unaligned Static Resumes</span>
                   <span className="text-[#D91C44]">ATS Discarded</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/5 flex items-center justify-between">
+                <div className="p-3.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 flex items-center justify-between">
                   <span>3. No Direct Recruiter InMail</span>
                   <span className="text-[#D91C44]">Portal Black Hole</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/5 flex items-center justify-between font-semibold text-[#2B050E]">
+                <div className="p-3.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 flex items-center justify-between font-semibold text-[#1C0A0F]">
                   <span>4. Typical Outcome</span>
                   <span className="text-[#D91C44]">0–1 Screening</span>
                 </div>
@@ -176,7 +173,7 @@ export default function LandingPage() {
             </div>
 
             {/* The ReverseRecruit Way */}
-            <div className="p-8 sm:p-10 rounded-3xl bg-[#3D0814] text-[#FAF5EE] border border-white/10 shadow-warm-lg space-y-6">
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#16070B] text-[#FAF7F2] border border-white/10 shadow-warm-lg space-y-6">
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <span className="font-mono text-xs text-[#D91C44] font-bold uppercase tracking-wider flex items-center gap-1.5">
                   <Sparkles className="h-3.5 w-3.5" /> ReverseRecruit Autonomous Pipeline
@@ -184,7 +181,7 @@ export default function LandingPage() {
                 <span className="text-xs text-emerald-400 font-mono">14.2% Conversion</span>
               </div>
 
-              <div className="space-y-3.5 font-mono text-xs text-[#FAF5EE]">
+              <div className="space-y-3.5 font-mono text-xs text-[#FAF7F2]">
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
                   <span>1. Direct Greenhouse/Lever Ingestion</span>
                   <span className="text-[#D91C44]">&lt; 48h Fresh</span>
@@ -211,14 +208,14 @@ export default function LandingPage() {
       {/* ========================================================================= */}
       {/* 3. EDITORIAL STORYTELLING: ACT 2 & 3 — THE EXECUTION (Cream Surface)      */}
       {/* ========================================================================= */}
-      <section className="py-24 md:py-36 bg-[#F0E9DC] border-t border-b border-[#3D0814]/10">
+      <section className="py-24 md:py-36 bg-[#EFEAE0] border-t border-b border-[#16070B]/10">
         <div
           ref={narrativeReveal2.ref}
           className={`max-w-6xl mx-auto px-6 reveal-init ${narrativeReveal2.isVisible ? "reveal-visible" : ""}`}
         >
           <div className="max-w-3xl mb-16">
             <span className="section-badge-num block mb-2 font-mono">02.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#2B050E] tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
               ReverseRecruit understands what <br />
               <span className="text-[#D91C44] italic font-serif">recruiters actually scan for.</span>
             </h2>
@@ -229,53 +226,53 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
               <div>
                 <span className="font-mono text-xl font-bold text-[#D91C44] block mb-4">
                   01.
                 </span>
-                <h3 className="text-xl font-bold text-[#2B050E] mb-2">
+                <h3 className="text-xl font-bold text-[#1C0A0F] mb-2">
                   Semantic ATS Parsing
                 </h3>
                 <p className="text-sm text-[#706556] leading-relaxed">
                   Extracts core requirements, framework weights, and architectural keywords directly from Greenhouse, Lever, and Ashby postings.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-[#3D0814]/10 text-xs font-mono text-[#D91C44] font-semibold">
+              <div className="pt-6 mt-6 border-t border-[#16070B]/10 text-xs font-mono text-[#D91C44] font-semibold">
                 Vector Similarity Engine
               </div>
             </div>
 
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
               <div>
                 <span className="font-mono text-xl font-bold text-[#D91C44] block mb-4">
                   02.
                 </span>
-                <h3 className="text-xl font-bold text-[#2B050E] mb-2">
+                <h3 className="text-xl font-bold text-[#1C0A0F] mb-2">
                   Zero-Hallucination Tailoring
                 </h3>
                 <p className="text-sm text-[#706556] leading-relaxed">
                   Re-orders your real project bullet points using Google XYZ metrics to place highest-relevance skills in prime parser visual zones.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-[#3D0814]/10 text-xs font-mono text-[#2B050E] font-semibold">
+              <div className="pt-6 mt-6 border-t border-[#16070B]/10 text-xs font-mono text-[#1C0A0F] font-semibold">
                 100% Truthful Alignment
               </div>
             </div>
 
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
               <div>
                 <span className="font-mono text-xl font-bold text-[#D91C44] block mb-4">
                   03.
                 </span>
-                <h3 className="text-xl font-bold text-[#2B050E] mb-2">
+                <h3 className="text-xl font-bold text-[#1C0A0F] mb-2">
                   Hiring Manager Warm InMail
                 </h3>
                 <p className="text-sm text-[#706556] leading-relaxed">
                   Sends high-converting 3-sentence introductions directly to hiring leads on LinkedIn while concurrently submitting through the portal.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-[#3D0814]/10 text-xs font-mono text-[#D91C44] font-semibold">
+              <div className="pt-6 mt-6 border-t border-[#16070B]/10 text-xs font-mono text-[#D91C44] font-semibold">
                 Dual-Channel Delivery
               </div>
             </div>
@@ -293,7 +290,7 @@ export default function LandingPage() {
           className={`reveal-init ${resultReveal.isVisible ? "reveal-visible" : ""}`}
         >
           <span className="section-badge-num block mb-2 font-mono">03.</span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-[#2B050E] mb-6 tracking-tight">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-[#1C0A0F] mb-6 tracking-tight">
             Your goal isn&apos;t more applications. <br />
             <span className="text-[#D91C44] italic font-serif">It&apos;s more interviews.</span>
           </h2>
@@ -304,8 +301,8 @@ export default function LandingPage() {
           {/* Metric Telemetry Flow */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm text-center">
-              <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#2B050E] block mb-2">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm text-center">
+              <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#1C0A0F] block mb-2">
                 {countApps}
               </span>
               <span className="text-xs font-mono uppercase tracking-wider text-[#706556] block mb-1">
@@ -314,7 +311,7 @@ export default function LandingPage() {
               <span className="text-[11px] text-[#706556]">Submitted on your behalf</span>
             </div>
 
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm text-center">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm text-center">
               <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#D91C44] block mb-2">
                 {countMatches}
               </span>
@@ -324,8 +321,8 @@ export default function LandingPage() {
               <span className="text-[11px] text-[#706556]">90%+ ATS Score threshold</span>
             </div>
 
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm text-center">
-              <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#2B050E] block mb-2">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm text-center">
+              <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#1C0A0F] block mb-2">
                 {countResponses}
               </span>
               <span className="text-xs font-mono uppercase tracking-wider text-[#706556] block mb-1">
@@ -334,7 +331,7 @@ export default function LandingPage() {
               <span className="text-[11px] text-[#706556]">Direct manager responses</span>
             </div>
 
-            <div className="bg-[#3D0814] text-white p-8 rounded-3xl border border-white/10 shadow-warm-lg text-center">
+            <div className="bg-[#16070B] text-white p-8 rounded-3xl border border-white/10 shadow-warm-lg text-center">
               <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#D91C44] block mb-2">
                 {countInterviews}+
               </span>
@@ -351,11 +348,11 @@ export default function LandingPage() {
       {/* ========================================================================= */}
       {/* 5. LIVE ATS DIAGNOSTIC CENTER                                            */}
       {/* ========================================================================= */}
-      <section className="py-24 md:py-36 bg-[#F0E9DC] border-t border-b border-[#3D0814]/10">
+      <section className="py-24 md:py-36 bg-[#EFEAE0] border-t border-b border-[#16070B]/10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <span className="section-badge-num block mb-2 font-mono">04.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#2B050E] tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
               Test Your ATS Match Compatibility
             </h2>
             <p className="text-base sm:text-lg text-[#706556] mt-3">
@@ -377,7 +374,7 @@ export default function LandingPage() {
         >
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="section-badge-num block mb-2 font-mono">05.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#2B050E] tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
               Your first interview is the ROI.
             </h2>
             <p className="text-base sm:text-lg text-[#706556] mt-3">
@@ -385,13 +382,13 @@ export default function LandingPage() {
             </p>
 
             {/* Pill switch */}
-            <div className="inline-flex items-center p-1.5 rounded-full bg-[#FFFFFF] border border-[#3D0814]/10 shadow-warm mt-8">
+            <div className="inline-flex items-center p-1.5 rounded-full bg-[#FFFFFF] border border-[#16070B]/10 shadow-warm mt-8">
               <button
                 onClick={() => setBillingCycle("monthly")}
                 className={`px-6 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all ${
                   billingCycle === "monthly"
-                    ? "bg-[#3D0814] text-white font-bold shadow-sm"
-                    : "text-[#706556] hover:text-[#2B050E]"
+                    ? "bg-[#16070B] text-white font-bold shadow-sm"
+                    : "text-[#706556] hover:text-[#1C0A0F]"
                 }`}
               >
                 Monthly Autopilot
@@ -400,8 +397,8 @@ export default function LandingPage() {
                 onClick={() => setBillingCycle("annual")}
                 className={`px-6 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all ${
                   billingCycle === "annual"
-                    ? "bg-[#3D0814] text-white font-bold shadow-sm"
-                    : "text-[#706556] hover:text-[#2B050E]"
+                    ? "bg-[#16070B] text-white font-bold shadow-sm"
+                    : "text-[#706556] hover:text-[#1C0A0F]"
                 }`}
               >
                 Quarterly (Save 20%)
@@ -412,7 +409,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             
             {/* Student Plan ($20) */}
-            <div className="bg-[#FFFFFF] p-8 sm:p-10 rounded-3xl border border-[#3D0814]/10 shadow-warm flex flex-col justify-between">
+            <div className="bg-[#FFFFFF] p-8 sm:p-10 rounded-3xl border border-[#16070B]/10 shadow-warm flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-mono text-xs uppercase tracking-wider text-[#D91C44] font-bold px-3 py-1 rounded-full bg-[#D91C44]/10">
@@ -422,7 +419,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="flex items-baseline gap-2 my-6">
-                  <span className="text-5xl sm:text-6xl font-extrabold font-mono text-[#2B050E]">
+                  <span className="text-5xl sm:text-6xl font-extrabold font-mono text-[#1C0A0F]">
                     ${billingCycle === "monthly" ? "20" : "16"}
                   </span>
                   <span className="text-sm font-mono text-[#706556]">/ month</span>
@@ -432,7 +429,7 @@ export default function LandingPage() {
                   Engineered for university graduates and early-career software engineers breaking into the tough tech market.
                 </p>
 
-                <div className="space-y-3 text-xs font-mono text-[#2B050E] border-t border-[#3D0814]/10 pt-8">
+                <div className="space-y-3 text-xs font-mono text-[#1C0A0F] border-t border-[#16070B]/10 pt-8">
                   <div className="flex items-center gap-3">
                     <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
                     <span><strong>150+ Verified Applications</strong> per month</span>
@@ -467,7 +464,7 @@ export default function LandingPage() {
             </div>
 
             {/* IT Pro Plan ($99) */}
-            <div className="bg-[#3D0814] text-[#FAF5EE] p-8 sm:p-10 rounded-3xl border border-white/10 shadow-warm-lg flex flex-col justify-between relative">
+            <div className="bg-[#16070B] text-[#FAF7F2] p-8 sm:p-10 rounded-3xl border border-white/10 shadow-warm-lg flex flex-col justify-between relative">
               <div className="absolute -top-3.5 right-8 px-3.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#D91C44] text-white">
                 Most Selected by Switchers
               </div>
@@ -477,17 +474,17 @@ export default function LandingPage() {
                   <span className="font-mono text-xs uppercase tracking-wider text-[#D91C44] font-bold px-3 py-1 rounded-full bg-white/10">
                     IT Professional Tier
                   </span>
-                  <span className="text-xs font-mono text-[#FAF5EE]/70">3+ YOE</span>
+                  <span className="text-xs font-mono text-[#FAF7F2]/70">3+ YOE</span>
                 </div>
 
                 <div className="flex items-baseline gap-2 my-6">
                   <span className="text-5xl sm:text-6xl font-extrabold font-mono text-white">
                     ${billingCycle === "monthly" ? "99" : "79"}
                   </span>
-                  <span className="text-sm font-mono text-[#FAF5EE]/70">/ month</span>
+                  <span className="text-sm font-mono text-[#FAF7F2]/70">/ month</span>
                 </div>
 
-                <p className="text-sm text-[#FAF5EE]/80 leading-relaxed mb-8">
+                <p className="text-sm text-[#FAF7F2]/80 leading-relaxed mb-8">
                   For mid-level, senior engineers, and architects looking for $140k–$250k+ packages with compensation leverage.
                 </p>
 
@@ -532,14 +529,14 @@ export default function LandingPage() {
       {/* ========================================================================= */}
       {/* 7. VERIFIED CANDIDATE TIMELINES (Social Proof)                           */}
       {/* ========================================================================= */}
-      <section className="py-24 md:py-36 bg-[#F0E9DC] border-t border-b border-[#3D0814]/10">
+      <section className="py-24 md:py-36 bg-[#EFEAE0] border-t border-b border-[#16070B]/10">
         <div
           ref={testimonialReveal.ref}
           className={`max-w-6xl mx-auto px-6 reveal-init ${testimonialReveal.isVisible ? "reveal-visible" : ""}`}
         >
           <div className="max-w-3xl mb-16">
             <span className="section-badge-num block mb-2 font-mono">06.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#2B050E] tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
               Real career trajectories. <br />
               <span className="text-[#706556] font-normal italic font-serif">Measurable compensation shifts.</span>
             </h2>
@@ -547,50 +544,50 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm space-y-6">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm space-y-6">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs text-[#D91C44] font-bold">Timeline: 21 Days</span>
                 <span className="font-mono text-xs text-emerald-600 font-bold">+$95k Package</span>
               </div>
-              <p className="text-sm text-[#2B050E] font-bold">
+              <p className="text-sm text-[#1C0A0F] font-bold">
                 Electrical Engineer $\to$ Associate SWE @ Datadog
               </p>
               <p className="text-xs text-[#706556] leading-relaxed">
                 &quot;Graduated in May 2026 with 300+ manual rejections. ReverseRecruit re-engineered my embedded projects into cloud backend metrics and secured 4 screenings within 3 weeks.&quot;
               </p>
-              <div className="pt-4 border-t border-[#3D0814]/10 text-xs font-mono text-[#706556]">
+              <div className="pt-4 border-t border-[#16070B]/10 text-xs font-mono text-[#706556]">
                 Alex Chen • University 2026 Grad
               </div>
             </div>
 
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm space-y-6">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm space-y-6">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs text-[#D91C44] font-bold">Timeline: 28 Days</span>
                 <span className="font-mono text-xs text-emerald-600 font-bold">+$175k Comp</span>
               </div>
-              <p className="text-sm text-[#2B050E] font-bold">
+              <p className="text-sm text-[#1C0A0F] font-bold">
                 Mid SWE $\to$ Staff Platform Architect @ Stripe
               </p>
               <p className="text-xs text-[#706556] leading-relaxed">
                 &quot;The dual-channel InMail dispatch got me directly in front of the VP of Engineering. The negotiation copilot helped me bump the base salary by $24,000.&quot;
               </p>
-              <div className="pt-4 border-t border-[#3D0814]/10 text-xs font-mono text-[#706556]">
+              <div className="pt-4 border-t border-[#16070B]/10 text-xs font-mono text-[#706556]">
                 Marcus T. • 4 Years Experience
               </div>
             </div>
 
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#3D0814]/10 shadow-warm space-y-6">
+            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm space-y-6">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs text-[#D91C44] font-bold">Timeline: 18 Days</span>
                 <span className="font-mono text-xs text-emerald-600 font-bold">6 Interviews</span>
               </div>
-              <p className="text-sm text-[#2B050E] font-bold">
+              <p className="text-sm text-[#1C0A0F] font-bold">
                 Frontend Dev $\to$ Product Architect @ Linear
               </p>
               <p className="text-xs text-[#706556] leading-relaxed">
                 &quot;The LinkedIn SEO optimizer caused inbound recruiter inquiries to 4x within a week. I had multiple competing offers on the table.&quot;
               </p>
-              <div className="pt-4 border-t border-[#3D0814]/10 text-xs font-mono text-[#706556]">
+              <div className="pt-4 border-t border-[#16070B]/10 text-xs font-mono text-[#706556]">
                 Priya R. • Remote Global
               </div>
             </div>
@@ -600,10 +597,9 @@ export default function LandingPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 8. DEEP WINE BURGUNDY FINALE SECTION                                     */}
+      {/* 8. SOPHISTICATED DEEP DARK FINALE SECTION                                */}
       {/* ========================================================================= */}
-      <section className="bg-[#3D0814] text-[#FAF5EE] py-24 md:py-36 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#D91C44]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <section className="bg-[#16070B] text-[#FAF7F2] py-24 md:py-36 text-center relative overflow-hidden">
         <div
           ref={finaleReveal.ref}
           className={`max-w-4xl mx-auto px-6 reveal-init ${finaleReveal.isVisible ? "reveal-visible" : ""}`}
@@ -613,9 +609,9 @@ export default function LandingPage() {
           </span>
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
             Streamline your career engine <br />
-            <span className="text-[#FAF5EE]/90 italic font-serif">with ReverseRecruit.</span>
+            <span className="text-[#FAF7F2]/90 italic font-serif">with ReverseRecruit.</span>
           </h2>
-          <p className="text-base sm:text-lg text-[#FAF5EE]/80 max-w-xl mx-auto mb-12">
+          <p className="text-base sm:text-lg text-[#FAF7F2]/75 max-w-xl mx-auto mb-12">
             Join software engineers landing verified interviews at top tech companies. Backed by our 5-interview guarantee.
           </p>
           <Link

@@ -38,15 +38,15 @@ export default function LiveATSDiagnostic() {
 
   return (
     <div className="relative w-full max-w-5xl mx-auto my-12">
-      <div className="bg-[#FFFFFF] rounded-3xl p-6 sm:p-10 border border-[#3D0814]/10 shadow-warm-lg">
+      <div className="bg-[#FFFFFF] rounded-3xl p-6 sm:p-10 border border-[#16070B]/10 shadow-warm-lg">
         
         {/* Terminal Header */}
-        <div className="flex items-center justify-between pb-6 border-b border-[#3D0814]/10 mb-8">
+        <div className="flex items-center justify-between pb-6 border-b border-[#16070B]/10 mb-8">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
               <div className="h-3 w-3 rounded-full bg-[#D91C44]" />
-              <div className="h-3 w-3 rounded-full bg-[#3D0814]/20" />
-              <div className="h-3 w-3 rounded-full bg-[#3D0814]/20" />
+              <div className="h-3 w-3 rounded-full bg-[#16070B]/20" />
+              <div className="h-3 w-3 rounded-full bg-[#16070B]/20" />
             </div>
             <span className="font-mono text-xs text-[#706556] font-medium ml-2">
               ats-semantic-diagnostic.v2
@@ -74,7 +74,7 @@ export default function LiveATSDiagnostic() {
                 type="text"
                 value={targetRole}
                 onChange={(e) => setTargetRole(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/10 text-[#2B050E] text-sm font-medium focus:outline-none focus:border-[#D91C44] transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/10 text-[#1C0A0F] text-sm font-medium focus:outline-none focus:border-[#D91C44] transition-colors"
               />
             </div>
 
@@ -86,7 +86,7 @@ export default function LiveATSDiagnostic() {
                 rows={3}
                 value={sampleResume}
                 onChange={(e) => setSampleResume(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/10 text-[#2B050E] text-xs leading-relaxed font-mono focus:outline-none focus:border-[#D91C44] transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/10 text-[#1C0A0F] text-xs leading-relaxed font-mono focus:outline-none focus:border-[#D91C44] transition-colors"
               />
             </div>
 
@@ -98,7 +98,7 @@ export default function LiveATSDiagnostic() {
                 rows={3}
                 value={sampleJd}
                 onChange={(e) => setSampleJd(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F3EA] border border-[#3D0814]/10 text-[#2B050E] text-xs leading-relaxed font-mono focus:outline-none focus:border-[#D91C44] transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/10 text-[#1C0A0F] text-xs leading-relaxed font-mono focus:outline-none focus:border-[#D91C44] transition-colors"
               />
             </div>
 
@@ -122,12 +122,12 @@ export default function LiveATSDiagnostic() {
           </div>
 
           {/* Right Column: Diagnostic Radial Gauge & Analysis */}
-          <div className="lg:col-span-5 bg-[#3D0814] text-[#FAF5EE] rounded-2xl p-6 border border-white/10 space-y-6 shadow-xl">
+          <div className="lg:col-span-5 bg-[#16070B] text-[#FAF7F2] rounded-2xl p-6 border border-white/10 space-y-6 shadow-xl">
             
             {/* Radial Gauge & Top Score */}
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <div>
-                <span className="text-[10px] font-mono text-[#FAF5EE]/70 uppercase tracking-wider block">
+                <span className="text-[10px] font-mono text-[#FAF7F2]/70 uppercase tracking-wider block">
                   Calculated ATS Index
                 </span>
                 <div className="flex items-baseline gap-2 mt-1">
@@ -173,7 +173,7 @@ export default function LiveATSDiagnostic() {
             {/* Keyword Extraction Telemetry */}
             <div className="space-y-3 text-xs">
               <div>
-                <span className="text-[11px] font-mono text-[#FAF5EE]/80 font-medium uppercase tracking-wider block mb-1.5">
+                <span className="text-[11px] font-mono text-[#FAF7F2]/80 font-medium uppercase tracking-wider block mb-1.5">
                   ✓ Matched Technical Vectors (6)
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -198,7 +198,7 @@ export default function LiveATSDiagnostic() {
               </div>
 
               {/* AI Reasoning Inspector */}
-              <div className="p-3 rounded-xl bg-black/20 border border-white/10 text-[11px] text-[#FAF5EE]/70 space-y-1">
+              <div className="p-3 rounded-xl bg-black/20 border border-white/10 text-[11px] text-[#FAF7F2]/70 space-y-1">
                 <span className="font-mono text-white font-medium block">
                   AI Rationale:
                 </span>

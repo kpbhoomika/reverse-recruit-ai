@@ -10,25 +10,25 @@ const config: Config = {
     extend: {
       colors: {
         wine: {
-          950: "#1A0308",
-          900: "#2B050E",
-          800: "#3D0814",
-          700: "#520B1B",
-          600: "#6B0E24",
-          DEFAULT: "#3D0814",
+          950: "#0E0407",
+          900: "#16070B",
+          800: "#1F0C12",
+          700: "#2B1119",
+          600: "#3D1722",
+          DEFAULT: "#16070B",
         },
         cream: {
-          50: "#FCFAF6",
-          100: "#F7F3EA",
-          200: "#F0E9DC",
-          300: "#E4D9C5",
-          DEFAULT: "#F7F3EA",
+          50: "#FDFCF9",
+          100: "#F7F4EC",
+          200: "#EFEAE0",
+          300: "#E2D9CB",
+          DEFAULT: "#F7F4EC",
         },
         crimson: {
           DEFAULT: "#D91C44",
-          hover: "#BF1338",
+          hover: "#BD1438",
           bright: "#FF2B56",
-          muted: "rgba(217, 28, 68, 0.12)",
+          muted: "rgba(217, 28, 68, 0.1)",
         },
         warmGray: {
           100: "#F3EFE6",
@@ -41,7 +41,7 @@ const config: Config = {
           800: "#241F1A",
           900: "#181411",
         },
-        foreground: "#2B050E",
+        foreground: "#1C0A0F",
       },
       fontFamily: {
         sans: [
@@ -68,10 +68,10 @@ const config: Config = {
         ],
       },
       boxShadow: {
-        warm: "0 10px 35px -5px rgba(61, 8, 20, 0.06), 0 0 0 1px rgba(61, 8, 20, 0.04)",
-        "warm-lg": "0 20px 45px -10px rgba(61, 8, 20, 0.1), 0 0 0 1px rgba(61, 8, 20, 0.06)",
-        "wine-glow": "0 20px 50px rgba(61, 8, 20, 0.35)",
-        "crimson-glow": "0 8px 25px rgba(217, 28, 68, 0.3)",
+        warm: "0 10px 30px -5px rgba(22, 7, 11, 0.05), 0 0 0 1px rgba(22, 7, 11, 0.04)",
+        "warm-lg": "0 20px 45px -10px rgba(22, 7, 11, 0.08), 0 0 0 1px rgba(22, 7, 11, 0.05)",
+        "wine-glow": "0 20px 50px rgba(14, 4, 7, 0.5)",
+        "crimson-glow": "0 6px 20px rgba(217, 28, 68, 0.25)",
       },
       borderRadius: {
         "2xl": "18px",

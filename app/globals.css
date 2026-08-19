@@ -4,23 +4,23 @@
 
 @layer base {
   :root {
-    --background: #F7F3EA;
-    --foreground: #2B050E;
+    --background: #F7F4EC;
+    --foreground: #1C0A0F;
     --card: #FFFFFF;
-    --card-foreground: #2B050E;
+    --card-foreground: #1C0A0F;
     --primary: #D91C44;
     --primary-foreground: #FFFFFF;
-    --secondary: #F0E9DC;
-    --secondary-foreground: #2B050E;
+    --secondary: #EFEAE0;
+    --secondary-foreground: #1C0A0F;
     --muted: #706556;
     --muted-foreground: #9C9080;
-    --border: rgba(61, 8, 20, 0.08);
+    --border: rgba(22, 7, 11, 0.08);
   }
 }
 
 body {
-  background-color: #F7F3EA;
-  color: #2B050E;
+  background-color: #F7F4EC;
+  color: #1C0A0F;
   font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Inter", "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,38 +30,38 @@ body {
 
 /* Warm Cream Background Surfaces */
 .bg-cream-base {
-  background-color: #F7F3EA;
+  background-color: #F7F4EC;
 }
 
 .bg-cream-surface {
   background-color: #FFFFFF;
-  border: 1px solid rgba(61, 8, 20, 0.06);
-  box-shadow: 0 10px 30px -5px rgba(61, 8, 20, 0.05);
+  border: 1px solid rgba(22, 7, 11, 0.06);
+  box-shadow: 0 10px 30px -5px rgba(22, 7, 11, 0.04);
 }
 
 .bg-cream-subtle {
-  background-color: #F0E9DC;
+  background-color: #EFEAE0;
 }
 
-/* Deep Wine Burgundy Hero & Contrast Panels */
+/* Sophisticated Deep Dark Hero & Contrast Panels (Grounded Espresso-Wine) */
 .bg-wine-hero {
-  background-color: #3D0814;
-  color: #FAF5EE;
+  background-color: #16070B;
+  color: #FAF7F2;
 }
 
 .bg-wine-panel {
-  background-color: #2B050E;
-  color: #FAF5EE;
+  background-color: #0E0407;
+  color: #FAF7F2;
 }
 
 .bg-wine-surface {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Luxury Crimson Button */
+/* Luxury Crimson Button (Small vibrant jewel-tone accent) */
 .btn-crimson {
   display: inline-flex;
   align-items: center;
@@ -74,13 +74,13 @@ body {
   padding: 12px 24px;
   border-radius: 9999px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 18px rgba(217, 28, 68, 0.28);
+  box-shadow: 0 4px 16px rgba(217, 28, 68, 0.25);
 }
 
 .btn-crimson:hover {
-  background-color: #BF1338;
+  background-color: #BD1438;
   transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 6px 24px rgba(217, 28, 68, 0.38);
+  box-shadow: 0 6px 20px rgba(217, 28, 68, 0.32);
 }
 
 .btn-crimson:active {
@@ -93,20 +93,20 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  color: #FAF5EE;
+  background: rgba(255, 255, 255, 0.05);
+  color: #FAF7F2;
   font-size: 14px;
   font-weight: 500;
   padding: 12px 22px;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-wine-outline:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
 }
 
@@ -116,35 +116,27 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: #3D0814;
-  color: #FAF5EE;
+  background-color: #16070B;
+  color: #FAF7F2;
   font-size: 14px;
   font-weight: 600;
   padding: 12px 24px;
   border-radius: 9999px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 18px rgba(61, 8, 20, 0.15);
+  box-shadow: 0 4px 14px rgba(22, 7, 11, 0.12);
 }
 
 .btn-cream-dark:hover {
-  background-color: #2B050E;
+  background-color: #0E0407;
   transform: translateY(-1px) scale(1.02);
-}
-
-/* Editorial Numbers */
-.editorial-num {
-  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
-  font-weight: 700;
-  letter-spacing: -0.03em;
 }
 
 /* Section Number Badge (01. 02. etc) */
 .section-badge-num {
   font-family: "SF Mono", Menlo, monospace;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 600;
   color: #D91C44;
-  opacity: 0.85;
 }
 
 /* Motion system */
@@ -166,10 +158,10 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F7F3EA;
+  background: #F7F4EC;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(61, 8, 20, 0.2);
+  background: rgba(22, 7, 11, 0.18);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
