@@ -9,6 +9,13 @@ export type ApplicationStatus =
   | "Offer Received"
   | "Rejected";
 
+export type LeadStatus =
+  | "New Lead"
+  | "DM Sent"
+  | "Audit Sent"
+  | "Converted ($20)"
+  | "Converted ($99)";
+
 export interface CandidateProfile {
   id: string;
   fullName: string;
@@ -72,6 +79,23 @@ export interface ApplicationItem {
   recruiterEmail?: string;
   outreachSent: boolean;
   interviewDate?: string;
+  notes?: string;
+}
+
+export interface ClientLead {
+  id: string;
+  fullName: string;
+  headline: string;
+  targetRole: string;
+  yearsOfExperience: number;
+  location: string;
+  linkedinUrl: string;
+  source: string;
+  estimatedAtsScore: number;
+  missingSkills: string[];
+  daysLooking: number;
+  status: LeadStatus;
+  suggestedTier: "student" | "professional";
   notes?: string;
 }
 
