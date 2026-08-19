@@ -86,47 +86,48 @@ export default function LandingPage() {
     }
 
     // 2. Dynamic Real-time Client-Side Tokenizer Fallback
-    // Extracts keywords from the job description and compares against the candidate's resume
-    const jdWords = sampleJd
-      .replace(/[,.;:()]/g, " ")
-      .split(/\s+/)
-      .filter((w) => w.length > 2 && !["and", "with", "for", "the", "looking", "years", "experience", "experience in", "preferred"].includes(w.toLowerCase()));
+    const stopWords = new Set([
+      "and", "the", "with", "for", "are", "you", "will", "have", "from", "that", "this",
+      "looking", "seeking", "experience", "years", "preferred", "plus", "must", "work",
+      "team", "role", "our", "their", "able", "skills", "knowledge", "required", "join"
+    ]);
 
-    // Common tech skill matcher
-    const techSkillSet = [
-      "React", "Next.js", "TypeScript", "JavaScript", "Python", "Java", "Go", "Golang",
-      "Node.js", "Express", "FastAPI", "Django", "PostgreSQL", "MySQL", "MongoDB", "Redis",
-      "Docker", "Kubernetes", "AWS", "GCP", "Azure", "GraphQL", "REST APIs", "CI/CD",
-      "Git", "Microservices", "Kafka", "Linux", "Tailwind", "CSS", "HTML", "Terraform",
-      "C++", "C#", "Rust", "Swift", "Kotlin", "Spring", "Flask", "SQL", "DevOps"
-    ];
+    const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-    const extractedJdSkills: string[] = [];
-    techSkillSet.forEach((skill) => {
-      const regex = new RegExp(`\\b${skill.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
-      if (regex.test(sampleJd)) {
-        extractedJdSkills.push(skill);
-      }
+    const resumeTokens = sampleResume
+      .toLowerCase()
+      .replace(/[^a-z0-9+#.\s,-]/g, " ")
+      .split(/[,\s]+/)
+      .map(t => t.trim())
+      .filter(t => t.length >= 3 && !stopWords.has(t));
+    const resumeTokenSet = new Set<string>(resumeTokens);
+
+    const jdTokens = sampleJd
+      .toLowerCase()
+      .replace(/[^a-z0-9+#.\s,-]/g, " ")
+      .split(/[,\s]+/)
+      .map(t => t.trim())
+      .filter(t => t.length >= 3 && !stopWords.has(t));
+    const uniqueJdTokens = Array.from(new Set(jdTokens));
+
+    const matchedRaw = uniqueJdTokens.filter(t => {
+      const regex = new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      return resumeTokenSet.has(t) || regex.test(sampleResume);
     });
 
-    // If no preset skills found, extract unique capital/alphanumeric words from JD
-    const targetKeywords = extractedJdSkills.length >= 3 
-      ? extractedJdSkills 
-      : Array.from(new Set(jdWords.filter((w) => w.length >= 4))).slice(0, 8);
-
-    const matched: string[] = [];
-    const missing: string[] = [];
-
-    targetKeywords.forEach((kw) => {
-      const regex = new RegExp(`\\b${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
-      if (regex.test(sampleResume)) {
-        matched.push(kw);
-      } else {
-        missing.push(kw);
-      }
+    const missingRaw = uniqueJdTokens.filter(t => {
+      const regex = new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      return !resumeTokenSet.has(t) && !regex.test(sampleResume);
     });
 
-    // Calculate actual dynamic score
+    const matched = matchedRaw.length > 0 
+      ? matchedRaw.slice(0, 6).map(capitalize)
+      : (resumeTokens.length > 0 ? resumeTokens.slice(0, 4).map(capitalize) : ["General Background"]);
+
+    const missing = missingRaw.length > 0 
+      ? missingRaw.slice(0, 6).map(capitalize)
+      : ["Specific Requirements", "Domain Metrics"];
+
     const totalCount = matched.length + missing.length;
     const calculatedScore = totalCount > 0 
       ? Math.min(98, Math.max(35, Math.round((matched.length / totalCount) * 100))) 
@@ -135,8 +136,8 @@ export default function LandingPage() {
     setTimeout(() => {
       setAtsScore(calculatedScore);
       setScanResult({
-        matched: matched.length > 0 ? matched : ["General Experience"],
-        missing: missing.length > 0 ? missing : ["None Identified"],
+        matched,
+        missing,
         summary: `Your baseline experience matches ${calculatedScore}% of core requirements for ${targetRole || "this role"}. ${
           missing.length > 0
             ? `ReverseRecruit will tailor your bullet points to highlight ${missing.slice(0, 3).join(", ")} before submitting.`
@@ -144,7 +145,7 @@ export default function LandingPage() {
         }`,
       });
       setIsScanning(false);
-    }, 500);
+    }, 400);
   };
 
   return (
