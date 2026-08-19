@@ -17,388 +17,358 @@ import {
   Zap,
   Terminal,
   Activity,
-  Award
+  Award,
+  Users,
+  Briefcase,
+  CheckCircle2,
+  RefreshCw,
+  Clock,
+  ExternalLink
 } from "lucide-react";
-import CareerIntelligenceGraph from "@/components/visuals/CareerIntelligenceGraph";
-import LiveATSDiagnostic from "@/components/visuals/LiveATSDiagnostic";
+import { initialJobs } from "@/lib/mock-data";
 import { useScrollReveal, useCounter } from "@/lib/use-motion";
 
 export default function LandingPage() {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+  // ATS Scanner State
+  const [targetRole, setTargetRole] = useState("Full Stack Engineer");
+  const [sampleResume, setSampleResume] = useState(
+    "Full Stack Developer with experience in React, TypeScript, Node.js, and PostgreSQL. Built web apps, integrated REST APIs, and managed Git repositories."
+  );
+  const [sampleJd, setSampleJd] = useState(
+    "Looking for a Full Stack Engineer with 2+ years experience in React, Next.js, TypeScript, PostgreSQL, and Docker. Experience with microservices, high-traffic APIs, and CI/CD pipelines preferred."
+  );
+  const [atsScore, setAtsScore] = useState<number | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanResult, setScanResult] = useState<{
+    matched: string[];
+    missing: string[];
+    summary: string;
+  } | null>(null);
+
+  // Pricing toggle
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "quarterly">("monthly");
 
   const heroReveal = useScrollReveal({ threshold: 0.1 });
-  const narrativeReveal1 = useScrollReveal({ threshold: 0.15 });
-  const narrativeReveal2 = useScrollReveal({ threshold: 0.15 });
+  const narrativeReveal = useScrollReveal({ threshold: 0.15 });
   const resultReveal = useScrollReveal({ threshold: 0.15 });
   const pricingReveal = useScrollReveal({ threshold: 0.15 });
-  const testimonialReveal = useScrollReveal({ threshold: 0.15 });
-  const finaleReveal = useScrollReveal({ threshold: 0.15 });
 
-  // Result numbers animation
-  const countApps = useCounter(147, resultReveal.isVisible, 900);
-  const countMatches = useCounter(32, resultReveal.isVisible, 900);
-  const countResponses = useCounter(11, resultReveal.isVisible, 900);
-  const countInterviews = useCounter(6, resultReveal.isVisible, 900);
+  const runAtsScan = () => {
+    setIsScanning(true);
+    setTimeout(() => {
+      setAtsScore(88);
+      setScanResult({
+        matched: ["React", "TypeScript", "Node.js", "PostgreSQL", "REST APIs"],
+        missing: ["Next.js", "Docker", "Microservices", "CI/CD Pipelines"],
+        summary: "Your baseline experience matches 88% of core requirements. ReverseRecruit tailors your real project metrics to highlight high-concurrency and containerization skills before dispatching.",
+      });
+      setIsScanning(false);
+    }, 800);
+  };
 
   return (
-    <div className="bg-[#F7F4EC] text-[#1C0A0F] overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       
+      {/* Background Subtle Gradient Glow Orbs */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none overflow-hidden -z-10">
+        <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[128px]" />
+        <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-purple-600/15 rounded-full blur-[128px]" />
+      </div>
+
       {/* ========================================================================= */}
-      {/* 1. SOPHISTICATED DEEP DARK HERO SECTION (Espresso-Wine)                  */}
+      {/* 1. HERO SECTION (Exact layout & copy from screenshot)                    */}
       {/* ========================================================================= */}
-      <section className="bg-[#16070B] text-[#FAF7F2] pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden">
+      <section className="relative pt-24 pb-20 md:pt-36 md:pb-28 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          
-          <div
-            ref={heroReveal.ref}
-            className={`reveal-init ${heroReveal.isVisible ? "reveal-visible" : ""}`}
-          >
-            {/* Small Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[#FAF7F2] text-xs font-mono tracking-widest uppercase mb-8">
-              <span className="h-2 w-2 rounded-full bg-[#D91C44] animate-ping" />
-              <span>AI-Powered Reverse Recruiting</span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white max-w-5xl mx-auto mb-6 tracking-tight leading-[1.08]">
-              Experience smarter, faster <br />
-              <span className="text-[#FAF7F2]/90 font-light italic font-serif">
-                and more engaging career recruiting.
-              </span>
-            </h1>
-
-            {/* Subhead Lead */}
-            <p className="text-base sm:text-lg text-[#FAF7F2]/75 max-w-2xl mx-auto mb-10 leading-relaxed">
-              ReverseRecruit stands at the forefront of career automation — reverse-engineering ATS algorithms, tailoring verifiable resumes, and guaranteeing 5+ tech interviews.
-            </p>
-
-            {/* High-Impact CTA Group */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <Link
-                href="/onboarding"
-                className="btn-crimson w-full sm:w-auto text-base py-3.5 px-8"
-              >
-                <span>Build My Career Engine</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a
-                href="#intelligence-graph"
-                className="btn-wine-outline w-full sm:w-auto text-base py-3.5 px-7"
-              >
-                <span>See How It Works</span>
-                <ChevronRight className="h-4 w-4 text-[#FAF7F2]/70" />
-              </a>
-            </div>
-          </div>
-
-          {/* 4-Stat Metric Strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-10 pb-4 border-t border-white/10 max-w-4xl mx-auto font-mono text-center">
-            <div>
-              <span className="text-3xl sm:text-4xl font-extrabold text-white block mb-1">5+</span>
-              <span className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider">Guaranteed Interviews</span>
-            </div>
-            <div>
-              <span className="text-3xl sm:text-4xl font-extrabold text-white block mb-1">150+</span>
-              <span className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider">Targeted Applications</span>
-            </div>
-            <div>
-              <span className="text-3xl sm:text-4xl font-extrabold text-[#D91C44] block mb-1">96%</span>
-              <span className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider">ATS Compatibility</span>
-            </div>
-            <div>
-              <span className="text-3xl sm:text-4xl font-extrabold text-white block mb-1">$20</span>
-              <span className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider">Starting Student Plan</span>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Career Intelligence Living Graph inside dark hero */}
-        <div id="intelligence-graph" className="pt-10 max-w-6xl mx-auto px-6">
-          <CareerIntelligenceGraph />
-        </div>
-
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 2. EDITORIAL STORYTELLING: ACT 1 — THE PROBLEM (Warm Cream Section)      */}
-      {/* ========================================================================= */}
-      <section className="py-24 md:py-36 max-w-6xl mx-auto px-6">
         <div
-          ref={narrativeReveal1.ref}
-          className={`reveal-init ${narrativeReveal1.isVisible ? "reveal-visible" : ""}`}
+          ref={heroReveal.ref}
+          className={`reveal-init ${heroReveal.isVisible ? "reveal-visible" : ""}`}
         >
-          <div className="max-w-3xl mb-16">
-            <span className="section-badge-num block mb-2 font-mono">01.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
-              You&apos;re not losing opportunities <br />
-              <span className="text-[#706556] font-normal italic font-serif">because you&apos;re unqualified.</span>
-            </h2>
-            <p className="text-base sm:text-lg text-[#706556] mt-4 leading-relaxed">
-              When 400+ engineers apply to a single role, automated applicant tracking filters reject 98% of qualified candidates before any human ever reviews their work.
-            </p>
+          {/* Eyebrow Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-6 backdrop-blur-md shadow-inner">
+            <Sparkles className="h-3.5 w-3.5 text-blue-400" />
+            <span>The #1 Reverse Recruiting SaaS for Tech</span>
           </div>
 
-          {/* Broken Status Quo vs ReverseRecruit Engine Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            {/* The Manual Flawed Way */}
-            <div className="p-8 sm:p-10 rounded-3xl bg-[#FFFFFF] border border-[#16070B]/10 shadow-warm space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-[#16070B]/10">
-                <span className="font-mono text-xs text-[#706556] font-bold uppercase tracking-wider">
-                  The Broken Manual Way
-                </span>
-                <span className="text-xs text-[#706556] font-mono">&lt; 0.8% Conversion</span>
-              </div>
+          {/* Hero Headline */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.1] mb-6">
+            Land <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">5+ Tech Interviews on Autopilot.</span> Guaranteed.
+          </h1>
 
-              <div className="space-y-3.5 font-mono text-xs text-[#706556]">
-                <div className="p-3.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 flex items-center justify-between">
-                  <span>1. 300+ Manual Form Fillings</span>
-                  <span className="text-[#D91C44]">4 Hours/Day</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 flex items-center justify-between">
-                  <span>2. Unaligned Static Resumes</span>
-                  <span className="text-[#D91C44]">ATS Discarded</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 flex items-center justify-between">
-                  <span>3. No Direct Recruiter InMail</span>
-                  <span className="text-[#D91C44]">Portal Black Hole</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 flex items-center justify-between font-semibold text-[#1C0A0F]">
-                  <span>4. Typical Outcome</span>
-                  <span className="text-[#D91C44]">0–1 Screening</span>
-                </div>
-              </div>
-            </div>
-
-            {/* The ReverseRecruit Way */}
-            <div className="p-8 sm:p-10 rounded-3xl bg-[#16070B] text-[#FAF7F2] border border-white/10 shadow-warm-lg space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <span className="font-mono text-xs text-[#D91C44] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles className="h-3.5 w-3.5" /> ReverseRecruit Autonomous Pipeline
-                </span>
-                <span className="text-xs text-emerald-400 font-mono">14.2% Conversion</span>
-              </div>
-
-              <div className="space-y-3.5 font-mono text-xs text-[#FAF7F2]">
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
-                  <span>1. Direct Greenhouse/Lever Ingestion</span>
-                  <span className="text-[#D91C44]">&lt; 48h Fresh</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
-                  <span>2. Dynamic XYZ Resume Realignment</span>
-                  <span className="text-emerald-400">95%+ ATS Score</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
-                  <span>3. Dual-Channel Hiring Manager InMail</span>
-                  <span className="text-white">Direct Delivery</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-[#D91C44]/20 border border-[#D91C44]/40 flex items-center justify-between font-semibold text-white">
-                  <span>4. Guaranteed Outcome</span>
-                  <span className="text-emerald-300 font-bold">5+ Tech Interviews</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 3. EDITORIAL STORYTELLING: ACT 2 & 3 — THE EXECUTION (Cream Surface)      */}
-      {/* ========================================================================= */}
-      <section className="py-24 md:py-36 bg-[#EFEAE0] border-t border-b border-[#16070B]/10">
-        <div
-          ref={narrativeReveal2.ref}
-          className={`max-w-6xl mx-auto px-6 reveal-init ${narrativeReveal2.isVisible ? "reveal-visible" : ""}`}
-        >
-          <div className="max-w-3xl mb-16">
-            <span className="section-badge-num block mb-2 font-mono">02.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
-              ReverseRecruit understands what <br />
-              <span className="text-[#D91C44] italic font-serif">recruiters actually scan for.</span>
-            </h2>
-            <p className="text-base sm:text-lg text-[#706556] mt-4 leading-relaxed">
-              We deconstruct every job description into hard technical vectors, align your actual accomplishments using Google XYZ metrics, and automate the dual-channel outreach workflow.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
-              <div>
-                <span className="font-mono text-xl font-bold text-[#D91C44] block mb-4">
-                  01.
-                </span>
-                <h3 className="text-xl font-bold text-[#1C0A0F] mb-2">
-                  Semantic ATS Parsing
-                </h3>
-                <p className="text-sm text-[#706556] leading-relaxed">
-                  Extracts core requirements, framework weights, and architectural keywords directly from Greenhouse, Lever, and Ashby postings.
-                </p>
-              </div>
-              <div className="pt-6 mt-6 border-t border-[#16070B]/10 text-xs font-mono text-[#D91C44] font-semibold">
-                Vector Similarity Engine
-              </div>
-            </div>
-
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
-              <div>
-                <span className="font-mono text-xl font-bold text-[#D91C44] block mb-4">
-                  02.
-                </span>
-                <h3 className="text-xl font-bold text-[#1C0A0F] mb-2">
-                  Zero-Hallucination Tailoring
-                </h3>
-                <p className="text-sm text-[#706556] leading-relaxed">
-                  Re-orders your real project bullet points using Google XYZ metrics to place highest-relevance skills in prime parser visual zones.
-                </p>
-              </div>
-              <div className="pt-6 mt-6 border-t border-[#16070B]/10 text-xs font-mono text-[#1C0A0F] font-semibold">
-                100% Truthful Alignment
-              </div>
-            </div>
-
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm flex flex-col justify-between hover:shadow-warm-lg transition-shadow">
-              <div>
-                <span className="font-mono text-xl font-bold text-[#D91C44] block mb-4">
-                  03.
-                </span>
-                <h3 className="text-xl font-bold text-[#1C0A0F] mb-2">
-                  Hiring Manager Warm InMail
-                </h3>
-                <p className="text-sm text-[#706556] leading-relaxed">
-                  Sends high-converting 3-sentence introductions directly to hiring leads on LinkedIn while concurrently submitting through the portal.
-                </p>
-              </div>
-              <div className="pt-6 mt-6 border-t border-[#16070B]/10 text-xs font-mono text-[#D91C44] font-semibold">
-                Dual-Channel Delivery
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 4. EDITORIAL STORYTELLING: ACT 4 — THE RESULT                            */}
-      {/* ========================================================================= */}
-      <section className="py-24 md:py-36 max-w-6xl mx-auto px-6 text-center">
-        <div
-          ref={resultReveal.ref}
-          className={`reveal-init ${resultReveal.isVisible ? "reveal-visible" : ""}`}
-        >
-          <span className="section-badge-num block mb-2 font-mono">03.</span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-[#1C0A0F] mb-6 tracking-tight">
-            Your goal isn&apos;t more applications. <br />
-            <span className="text-[#D91C44] italic font-serif">It&apos;s more interviews.</span>
-          </h2>
-          <p className="text-base sm:text-lg text-[#706556] max-w-2xl mx-auto mb-16">
-            The data behind an active candidate cycle. High precision beats blind spam every single time.
+          {/* Hero Subtitle */}
+          <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-normal">
+            The job market is brutal. Stop spending 4 hours a day applying into black-hole portals. We find, tailor, and apply to <span className="text-white font-semibold">150+ verified roles</span> on your behalf and message hiring managers directly until you land your dream job.
           </p>
 
-          {/* Metric Telemetry Flow */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm text-center">
-              <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#1C0A0F] block mb-2">
-                {countApps}
-              </span>
-              <span className="text-xs font-mono uppercase tracking-wider text-[#706556] block mb-1">
-                Targeted Applications
-              </span>
-              <span className="text-[11px] text-[#706556]">Submitted on your behalf</span>
-            </div>
+          {/* Dual Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-12">
+            <Link
+              href="/onboarding"
+              className="w-full sm:w-auto px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl hover:opacity-95 shadow-xl shadow-blue-600/25 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 group"
+            >
+              <span>Start My Job Autopilot</span>
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <a
+              href="#ats-matcher"
+              className="w-full sm:w-auto px-6 py-4 text-base font-semibold text-slate-300 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 rounded-xl transition-colors flex items-center justify-center gap-2"
+            >
+              <Target className="h-4 w-4 text-blue-400" />
+              <span>Try Free ATS Matcher</span>
+            </a>
+          </div>
 
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm text-center">
-              <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#D91C44] block mb-2">
-                {countMatches}
-              </span>
-              <span className="text-xs font-mono uppercase tracking-wider text-[#706556] block mb-1">
-                High-Fit Matches
-              </span>
-              <span className="text-[11px] text-[#706556]">90%+ ATS Score threshold</span>
+          {/* Social Proof & Guarantee Trust Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs sm:text-sm text-slate-400 font-medium pt-4 border-t border-slate-800/60 max-w-4xl mx-auto">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="h-5 w-5 text-emerald-400" />
+              <span><strong>5 Minimum Interviews</strong> or 100% Refund</span>
             </div>
-
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm text-center">
-              <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#1C0A0F] block mb-2">
-                {countResponses}
-              </span>
-              <span className="text-xs font-mono uppercase tracking-wider text-[#706556] block mb-1">
-                Recruiter Inbound
-              </span>
-              <span className="text-[11px] text-[#706556]">Direct manager responses</span>
+            <div className="flex items-center gap-2">
+              <Zap className="h-5 w-5 text-amber-400" />
+              <span>Dual-Channel ATS + Direct InMail</span>
             </div>
-
-            <div className="bg-[#16070B] text-white p-8 rounded-3xl border border-white/10 shadow-warm-lg text-center">
-              <span className="text-4xl sm:text-5xl font-extrabold font-mono text-[#D91C44] block mb-2">
-                {countInterviews}+
-              </span>
-              <span className="text-xs font-mono uppercase tracking-wider text-white block mb-1 font-semibold">
-                Confirmed Interviews
-              </span>
-              <span className="text-[11px] text-emerald-300 font-semibold">100% Guaranteed</span>
+            <div className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-blue-400" />
+              <span>$20 Students / $99 Professionals</span>
             </div>
-
           </div>
         </div>
+
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. LIVE ATS DIAGNOSTIC CENTER                                            */}
+      {/* 2. THE REVERSE RECRUITING SYSTEM (4-Step Workflow)                       */}
       {/* ========================================================================= */}
-      <section className="py-24 md:py-36 bg-[#EFEAE0] border-t border-b border-[#16070B]/10">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-10">
-            <span className="section-badge-num block mb-2 font-mono">04.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
-              Test Your ATS Match Compatibility
+      <section className="py-20 md:py-28 bg-slate-900/50 border-t border-b border-slate-800/80 relative">
+        <div
+          ref={narrativeReveal.ref}
+          className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal-init ${narrativeReveal.isVisible ? "reveal-visible" : ""}`}
+        >
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-xs font-mono text-blue-400 font-semibold uppercase tracking-widest block mb-2">
+              The Reverse Recruiting System
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+              How We Turn 150 Applications Into 5+ Final-Round Interviews
             </h2>
-            <p className="text-base sm:text-lg text-[#706556] mt-3">
-              See real-time keyword scoring and automated XYZ metric injection.
+            <p className="text-slate-400 mt-4 text-base">
+              A disciplined, multi-channel approach that bypasses black-hole job boards and gets your resume directly into hiring managers&apos; hands.
             </p>
           </div>
 
-          <LiveATSDiagnostic />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 hover:border-slate-700 transition-colors">
+              <div className="h-10 w-10 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold text-sm">
+                01
+              </div>
+              <h3 className="text-lg font-bold text-white">Target Criteria Ingestion</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                You set your desired job titles, minimum salary, locations, and blacklist. We only target roles matching 100% of your constraints.
+              </p>
+              <div className="pt-2 text-[11px] font-mono text-blue-400">Greenhouse &amp; Lever Feeds</div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 hover:border-slate-700 transition-colors">
+              <div className="h-10 w-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold text-sm">
+                02
+              </div>
+              <h3 className="text-lg font-bold text-white">ATS Keyword Realignment</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                For every job posting, we re-order your real project bullet points using Google XYZ metrics to push your match score to 95%+.
+              </p>
+              <div className="pt-2 text-[11px] font-mono text-indigo-400">0 Hallucination Guarantee</div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 hover:border-slate-700 transition-colors">
+              <div className="h-10 w-10 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center font-bold text-sm">
+                03
+              </div>
+              <h3 className="text-lg font-bold text-white">Dual-Channel Dispatch</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                We submit through the verified employer application portal and simultaneously send a 3-sentence intro pitch to the hiring manager on LinkedIn.
+              </p>
+              <div className="pt-2 text-[11px] font-mono text-purple-400">Direct Manager Outreach</div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-900 border border-emerald-500/40 space-y-4 shadow-lg shadow-emerald-500/5">
+              <div className="h-10 w-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center font-bold text-sm">
+                04
+              </div>
+              <h3 className="text-lg font-bold text-white">5+ Guaranteed Interviews</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                You get interview invites directly on your calendar. Our negotiation copilot helps you benchmark salary percentiles for max comp.
+              </p>
+              <div className="pt-2 text-[11px] font-mono text-emerald-400 font-bold">100% Refund Backed</div>
+            </div>
+
+          </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. TRANSPARENT PRICING & ROI MATRIX                                      */}
+      {/* 3. INTERACTIVE ATS COMPATIBILITY MATCHER                                  */}
       {/* ========================================================================= */}
-      <section className="py-24 md:py-36 max-w-6xl mx-auto px-6">
+      <section id="ats-matcher" className="py-20 md:py-28 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="text-xs font-mono text-blue-400 font-semibold uppercase tracking-widest block mb-2">
+            Free Tool
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Test Your Resume Against Any Job Spec
+          </h2>
+          <p className="text-slate-400 mt-3 text-sm sm:text-base">
+            See how recruiters and ATS filters score your resume keyword alignment in real-time.
+          </p>
+        </div>
+
+        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Input Column */}
+            <div className="lg:col-span-7 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Target Job Title</label>
+                <input
+                  type="text"
+                  value={targetRole}
+                  onChange={(e) => setTargetRole(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Candidate Master Experience</label>
+                <textarea
+                  rows={3}
+                  value={sampleResume}
+                  onChange={(e) => setSampleResume(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white font-mono leading-relaxed focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Employer Job Specification</label>
+                <textarea
+                  rows={3}
+                  value={sampleJd}
+                  onChange={(e) => setSampleJd(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white font-mono leading-relaxed focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <button
+                onClick={runAtsScan}
+                disabled={isScanning}
+                className="w-full py-3.5 px-6 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-95 shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center gap-2"
+              >
+                {isScanning ? (
+                  <>
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                    <span>Analyzing Keyword Compatibility...</span>
+                  </>
+                ) : (
+                  <>
+                    <Target className="h-4 w-4" />
+                    <span>Run Free ATS Diagnostic</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Results Column */}
+            <div className="lg:col-span-5 bg-slate-950/80 rounded-2xl p-6 border border-slate-800 space-y-5">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+                  Diagnostic Result
+                </span>
+                <span className="text-xs font-mono font-bold text-blue-400">
+                  {atsScore ? `${atsScore}% Match` : "Awaiting Scan"}
+                </span>
+              </div>
+
+              {scanResult ? (
+                <div className="space-y-4 animate-fadeIn text-xs">
+                  <div>
+                    <span className="font-semibold text-emerald-400 block mb-1.5">
+                      ✓ Matched Core Vectors ({scanResult.matched.length})
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {scanResult.matched.map((m) => (
+                        <span key={m} className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono">
+                          {m}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="font-semibold text-rose-400 block mb-1.5">
+                      ✕ Missing Critical Keywords ({scanResult.missing.length})
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {scanResult.missing.map((m) => (
+                        <span key={m} className="px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-mono">
+                          {m}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <p className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 leading-relaxed font-sans">
+                    {scanResult.summary}
+                  </p>
+                </div>
+              ) : (
+                <div className="h-48 flex flex-col items-center justify-center text-center text-slate-500 font-mono text-xs">
+                  <Target className="h-8 w-8 text-slate-700 mb-2" />
+                  <p>Click &quot;Run Free ATS Diagnostic&quot; above</p>
+                </div>
+              )}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 4. TRANSPARENT PRICING & ROI MATRIX                                      */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-28 bg-slate-900/50 border-t border-b border-slate-800/80">
         <div
           ref={pricingReveal.ref}
-          className={`reveal-init ${pricingReveal.isVisible ? "reveal-visible" : ""}`}
+          className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal-init ${pricingReveal.isVisible ? "reveal-visible" : ""}`}
         >
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="section-badge-num block mb-2 font-mono">05.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
-              Your first interview is the ROI.
+            <span className="text-xs font-mono text-blue-400 font-semibold uppercase tracking-widest block mb-2">
+              Simple &amp; Transparent
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+              One Interview Pays For The Whole Service
             </h2>
-            <p className="text-base sm:text-lg text-[#706556] mt-3">
-              Backed by our 100% money-back guarantee if we do not secure 5 qualified interview milestones.
+            <p className="text-slate-400 mt-3 text-base">
+              Backed by our 100% money-back guarantee if we do not secure minimum 5 qualified interviews.
             </p>
 
             {/* Pill switch */}
-            <div className="inline-flex items-center p-1.5 rounded-full bg-[#FFFFFF] border border-[#16070B]/10 shadow-warm mt-8">
+            <div className="inline-flex items-center p-1 rounded-full bg-slate-900 border border-slate-800 mt-8">
               <button
                 onClick={() => setBillingCycle("monthly")}
-                className={`px-6 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all ${
+                className={`px-5 py-2 rounded-full text-xs font-semibold transition-all ${
                   billingCycle === "monthly"
-                    ? "bg-[#16070B] text-white font-bold shadow-sm"
-                    : "text-[#706556] hover:text-[#1C0A0F]"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "text-slate-400 hover:text-white"
                 }`}
               >
-                Monthly Autopilot
+                Monthly Plan
               </button>
               <button
-                onClick={() => setBillingCycle("annual")}
-                className={`px-6 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all ${
-                  billingCycle === "annual"
-                    ? "bg-[#16070B] text-white font-bold shadow-sm"
-                    : "text-[#706556] hover:text-[#1C0A0F]"
+                onClick={() => setBillingCycle("quarterly")}
+                className={`px-5 py-2 rounded-full text-xs font-semibold transition-all ${
+                  billingCycle === "quarterly"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "text-slate-400 hover:text-white"
                 }`}
               >
                 Quarterly (Save 20%)
@@ -409,45 +379,45 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             
             {/* Student Plan ($20) */}
-            <div className="bg-[#FFFFFF] p-8 sm:p-10 rounded-3xl border border-[#16070B]/10 shadow-warm flex flex-col justify-between">
+            <div className="p-8 sm:p-10 rounded-3xl bg-slate-900 border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-colors">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#D91C44] font-bold px-3 py-1 rounded-full bg-[#D91C44]/10">
+                  <span className="font-mono text-xs uppercase tracking-wider text-blue-400 font-bold px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">
                     Student &amp; Fresher Tier
                   </span>
-                  <span className="text-xs font-mono text-[#706556]">0–2 YOE</span>
+                  <span className="text-xs text-slate-400">0–2 YOE</span>
                 </div>
 
                 <div className="flex items-baseline gap-2 my-6">
-                  <span className="text-5xl sm:text-6xl font-extrabold font-mono text-[#1C0A0F]">
+                  <span className="text-5xl font-extrabold text-white">
                     ${billingCycle === "monthly" ? "20" : "16"}
                   </span>
-                  <span className="text-sm font-mono text-[#706556]">/ month</span>
+                  <span className="text-sm text-slate-400">/ month</span>
                 </div>
 
-                <p className="text-sm text-[#706556] leading-relaxed mb-8">
-                  Engineered for university graduates and early-career software engineers breaking into the tough tech market.
+                <p className="text-sm text-slate-400 leading-relaxed mb-8">
+                  Designed for recent graduates and early-career software engineers breaking into the tough tech market.
                 </p>
 
-                <div className="space-y-3 text-xs font-mono text-[#1C0A0F] border-t border-[#16070B]/10 pt-8">
+                <div className="space-y-3 text-xs text-slate-200 border-t border-slate-800 pt-8">
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
+                    <Check className="h-4 w-4 text-blue-400 shrink-0" />
                     <span><strong>150+ Verified Applications</strong> per month</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
+                    <Check className="h-4 w-4 text-blue-400 shrink-0" />
                     <span><strong>3 to 5 Guaranteed Interviews</strong></span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
-                    <span>Dynamic ATS Resume Keyword Rewrites</span>
+                    <Check className="h-4 w-4 text-blue-400 shrink-0" />
+                    <span>Dynamic ATS Resume Keyword Realignment</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
-                    <span>LinkedIn Recruiter SEO Upgrade</span>
+                    <Check className="h-4 w-4 text-blue-400 shrink-0" />
+                    <span>LinkedIn Profile SEO Optimization</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
+                    <Check className="h-4 w-4 text-blue-400 shrink-0" />
                     <span>Live Pipeline Telemetry Dashboard</span>
                   </div>
                 </div>
@@ -456,57 +426,57 @@ export default function LandingPage() {
               <div className="pt-10">
                 <Link
                   href="/onboarding"
-                  className="btn-cream-dark w-full text-center text-xs py-3.5 justify-center"
+                  className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center block transition-colors"
                 >
-                  Launch Student Plan ($20)
+                  Start Student Plan ($20)
                 </Link>
               </div>
             </div>
 
             {/* IT Pro Plan ($99) */}
-            <div className="bg-[#16070B] text-[#FAF7F2] p-8 sm:p-10 rounded-3xl border border-white/10 shadow-warm-lg flex flex-col justify-between relative">
-              <div className="absolute -top-3.5 right-8 px-3.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#D91C44] text-white">
-                Most Selected by Switchers
+            <div className="p-8 sm:p-10 rounded-3xl bg-slate-900 border border-indigo-500/50 flex flex-col justify-between relative shadow-2xl shadow-indigo-500/10">
+              <div className="absolute -top-3.5 right-8 px-3.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+                Most Popular
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#D91C44] font-bold px-3 py-1 rounded-full bg-white/10">
+                  <span className="font-mono text-xs uppercase tracking-wider text-indigo-400 font-bold px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20">
                     IT Professional Tier
                   </span>
-                  <span className="text-xs font-mono text-[#FAF7F2]/70">3+ YOE</span>
+                  <span className="text-xs text-slate-400">3+ YOE</span>
                 </div>
 
                 <div className="flex items-baseline gap-2 my-6">
-                  <span className="text-5xl sm:text-6xl font-extrabold font-mono text-white">
+                  <span className="text-5xl font-extrabold text-white">
                     ${billingCycle === "monthly" ? "99" : "79"}
                   </span>
-                  <span className="text-sm font-mono text-[#FAF7F2]/70">/ month</span>
+                  <span className="text-sm text-slate-400">/ month</span>
                 </div>
 
-                <p className="text-sm text-[#FAF7F2]/80 leading-relaxed mb-8">
-                  For mid-level, senior engineers, and architects looking for $140k–$250k+ packages with compensation leverage.
+                <p className="text-sm text-slate-400 leading-relaxed mb-8">
+                  For mid-level and senior engineers looking for $140k–$250k+ roles with compensation leverage.
                 </p>
 
-                <div className="space-y-3 text-xs font-mono text-white border-t border-white/10 pt-8">
+                <div className="space-y-3 text-xs text-slate-200 border-t border-slate-800 pt-8">
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
+                    <Check className="h-4 w-4 text-emerald-400 shrink-0" />
                     <span><strong>250+ High-Fit Applications</strong> per month</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
+                    <Check className="h-4 w-4 text-emerald-400 shrink-0" />
                     <span><strong>5+ Senior Tech Interviews Guaranteed</strong></span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
+                    <Check className="h-4 w-4 text-emerald-400 shrink-0" />
                     <span>Direct Hiring Manager InMail Outreach</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
+                    <Check className="h-4 w-4 text-emerald-400 shrink-0" />
                     <span>AI Offer Negotiation &amp; Equity Copilot</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-[#D91C44] shrink-0" />
+                    <Check className="h-4 w-4 text-emerald-400 shrink-0" />
                     <span>Current Employer Blacklist Protection</span>
                   </div>
                 </div>
@@ -515,9 +485,9 @@ export default function LandingPage() {
               <div className="pt-10">
                 <Link
                   href="/onboarding"
-                  className="btn-crimson w-full text-center text-xs py-3.5 justify-center"
+                  className="btn-brand-gradient w-full py-3.5 text-center block text-sm shadow-lg shadow-indigo-600/30"
                 >
-                  Launch Professional Plan ($99)
+                  Start Professional Plan ($99)
                 </Link>
               </div>
             </div>
@@ -527,101 +497,22 @@ export default function LandingPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. VERIFIED CANDIDATE TIMELINES (Social Proof)                           */}
+      {/* 5. FINALE CALL TO ACTION                                                  */}
       {/* ========================================================================= */}
-      <section className="py-24 md:py-36 bg-[#EFEAE0] border-t border-b border-[#16070B]/10">
-        <div
-          ref={testimonialReveal.ref}
-          className={`max-w-6xl mx-auto px-6 reveal-init ${testimonialReveal.isVisible ? "reveal-visible" : ""}`}
+      <section className="py-24 md:py-32 text-center max-w-4xl mx-auto px-4 sm:px-6">
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-white mb-6 tracking-tight">
+          Ready to Land Your Next Tech Role?
+        </h2>
+        <p className="text-slate-400 max-w-xl mx-auto mb-10 text-base">
+          Join software engineers landing verified interviews at top tech companies. Backed by our 5-interview guarantee.
+        </p>
+        <Link
+          href="/onboarding"
+          className="btn-brand-gradient text-base py-4 px-10 inline-flex items-center gap-2"
         >
-          <div className="max-w-3xl mb-16">
-            <span className="section-badge-num block mb-2 font-mono">06.</span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#1C0A0F] tracking-tight">
-              Real career trajectories. <br />
-              <span className="text-[#706556] font-normal italic font-serif">Measurable compensation shifts.</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm space-y-6">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-[#D91C44] font-bold">Timeline: 21 Days</span>
-                <span className="font-mono text-xs text-emerald-600 font-bold">+$95k Package</span>
-              </div>
-              <p className="text-sm text-[#1C0A0F] font-bold">
-                Electrical Engineer $\to$ Associate SWE @ Datadog
-              </p>
-              <p className="text-xs text-[#706556] leading-relaxed">
-                &quot;Graduated in May 2026 with 300+ manual rejections. ReverseRecruit re-engineered my embedded projects into cloud backend metrics and secured 4 screenings within 3 weeks.&quot;
-              </p>
-              <div className="pt-4 border-t border-[#16070B]/10 text-xs font-mono text-[#706556]">
-                Alex Chen • University 2026 Grad
-              </div>
-            </div>
-
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm space-y-6">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-[#D91C44] font-bold">Timeline: 28 Days</span>
-                <span className="font-mono text-xs text-emerald-600 font-bold">+$175k Comp</span>
-              </div>
-              <p className="text-sm text-[#1C0A0F] font-bold">
-                Mid SWE $\to$ Staff Platform Architect @ Stripe
-              </p>
-              <p className="text-xs text-[#706556] leading-relaxed">
-                &quot;The dual-channel InMail dispatch got me directly in front of the VP of Engineering. The negotiation copilot helped me bump the base salary by $24,000.&quot;
-              </p>
-              <div className="pt-4 border-t border-[#16070B]/10 text-xs font-mono text-[#706556]">
-                Marcus T. • 4 Years Experience
-              </div>
-            </div>
-
-            <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm space-y-6">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-[#D91C44] font-bold">Timeline: 18 Days</span>
-                <span className="font-mono text-xs text-emerald-600 font-bold">6 Interviews</span>
-              </div>
-              <p className="text-sm text-[#1C0A0F] font-bold">
-                Frontend Dev $\to$ Product Architect @ Linear
-              </p>
-              <p className="text-xs text-[#706556] leading-relaxed">
-                &quot;The LinkedIn SEO optimizer caused inbound recruiter inquiries to 4x within a week. I had multiple competing offers on the table.&quot;
-              </p>
-              <div className="pt-4 border-t border-[#16070B]/10 text-xs font-mono text-[#706556]">
-                Priya R. • Remote Global
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 8. SOPHISTICATED DEEP DARK FINALE SECTION                                */}
-      {/* ========================================================================= */}
-      <section className="bg-[#16070B] text-[#FAF7F2] py-24 md:py-36 text-center relative overflow-hidden">
-        <div
-          ref={finaleReveal.ref}
-          className={`max-w-4xl mx-auto px-6 reveal-init ${finaleReveal.isVisible ? "reveal-visible" : ""}`}
-        >
-          <span className="font-mono text-xs uppercase tracking-widest text-[#D91C44] font-semibold block mb-4">
-            Ready for Departure
-          </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
-            Streamline your career engine <br />
-            <span className="text-[#FAF7F2]/90 italic font-serif">with ReverseRecruit.</span>
-          </h2>
-          <p className="text-base sm:text-lg text-[#FAF7F2]/75 max-w-xl mx-auto mb-12">
-            Join software engineers landing verified interviews at top tech companies. Backed by our 5-interview guarantee.
-          </p>
-          <Link
-            href="/onboarding"
-            className="btn-crimson text-base py-4 px-10"
-          >
-            <span>Activate My Career Engine ($20 / $99)</span>
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+          <span>Launch Autopilot ($20 / $99)</span>
+          <ArrowRight className="h-4 w-4" />
+        </Link>
       </section>
 
     </div>

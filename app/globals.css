@@ -4,146 +4,73 @@
 
 @layer base {
   :root {
-    --background: #F7F4EC;
-    --foreground: #1C0A0F;
-    --card: #FFFFFF;
-    --card-foreground: #1C0A0F;
-    --primary: #D91C44;
+    --background: #020617;
+    --foreground: #F8FAFC;
+    --card: #0F172A;
+    --card-foreground: #F8FAFC;
+    --primary: #4F46E5;
     --primary-foreground: #FFFFFF;
-    --secondary: #EFEAE0;
-    --secondary-foreground: #1C0A0F;
-    --muted: #706556;
-    --muted-foreground: #9C9080;
-    --border: rgba(22, 7, 11, 0.08);
+    --border: rgba(255, 255, 255, 0.08);
   }
 }
 
 body {
-  background-color: #F7F4EC;
-  color: #1C0A0F;
-  font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Inter", "Helvetica Neue", Arial, sans-serif;
+  background-color: #020617;
+  color: #F8FAFC;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  letter-spacing: -0.012em;
   overflow-x: hidden;
 }
 
-/* Warm Cream Background Surfaces */
-.bg-cream-base {
-  background-color: #F7F4EC;
+/* Subtle background ambient mesh */
+.hero-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.15) 0%, transparent 60%),
+              radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
 }
 
-.bg-cream-surface {
-  background-color: #FFFFFF;
-  border: 1px solid rgba(22, 7, 11, 0.06);
-  box-shadow: 0 10px 30px -5px rgba(22, 7, 11, 0.04);
-}
-
-.bg-cream-subtle {
-  background-color: #EFEAE0;
-}
-
-/* Sophisticated Deep Dark Hero & Contrast Panels (Grounded Espresso-Wine) */
-.bg-wine-hero {
-  background-color: #16070B;
-  color: #FAF7F2;
-}
-
-.bg-wine-panel {
-  background-color: #0E0407;
-  color: #FAF7F2;
-}
-
-.bg-wine-surface {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Luxury Crimson Button (Small vibrant jewel-tone accent) */
-.btn-crimson {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #D91C44;
+/* Gradient buttons */
+.btn-brand-gradient {
+  background: linear-gradient(135deg, #2563EB 0%, #4F46E5 50%, #7C3AED 100%);
   color: #FFFFFF;
-  font-size: 14px;
   font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 9999px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 16px rgba(217, 28, 68, 0.25);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.35);
+  transition: all 0.2s ease-in-out;
 }
 
-.btn-crimson:hover {
-  background-color: #BD1438;
+.btn-brand-gradient:hover {
+  opacity: 0.95;
   transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(217, 28, 68, 0.32);
+  box-shadow: 0 6px 25px rgba(79, 70, 229, 0.45);
 }
 
-.btn-crimson:active {
+.btn-brand-gradient:active {
   transform: translateY(0) scale(0.98);
 }
 
-/* Outline Pill Button on Dark */
-.btn-wine-outline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #FAF7F2;
-  font-size: 14px;
+/* Secondary Button */
+.btn-dark-pill {
+  background: rgba(15, 23, 42, 0.8);
+  color: #E2E8F0;
   font-weight: 500;
-  padding: 12px 22px;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
 }
 
-.btn-wine-outline:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
+.btn-dark-pill:hover {
+  background: rgba(30, 41, 59, 0.9);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
-}
-
-/* Secondary Button on Light Cream */
-.btn-cream-dark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #16070B;
-  color: #FAF7F2;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 9999px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(22, 7, 11, 0.12);
-}
-
-.btn-cream-dark:hover {
-  background-color: #0E0407;
-  transform: translateY(-1px) scale(1.02);
-}
-
-/* Section Number Badge (01. 02. etc) */
-.section-badge-num {
-  font-family: "SF Mono", Menlo, monospace;
-  font-size: 26px;
-  font-weight: 600;
-  color: #D91C44;
 }
 
 /* Motion system */
 .reveal-init {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -158,17 +85,16 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F7F4EC;
+  background: #020617;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(22, 7, 11, 0.18);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D91C44;
+  background: #4F46E5;
 }
 
-/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;

@@ -3,7 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X, ArrowRight, Sparkles, Cpu } from "lucide-react";
+import { 
+  Menu, 
+  X, 
+  ArrowRight, 
+  Layers, 
+  FileText, 
+  Send, 
+  Linkedin, 
+  DollarSign, 
+  ShieldCheck, 
+  Briefcase
+} from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -12,7 +23,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 20);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -20,74 +31,67 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Live Engine", href: "/dashboard" },
-    { name: "ATS Studio", href: "/dashboard/resume-tailor" },
-    { name: "Outreach", href: "/dashboard/cover-letters" },
-    { name: "LinkedIn SEO", href: "/dashboard/linkedin-optimizer" },
-    { name: "Negotiator", href: "/dashboard/offer-negotiator" },
+    { name: "Live Pipeline", href: "/dashboard", icon: Layers },
+    { name: "ATS Resume Tailor", href: "/dashboard/resume-tailor", icon: FileText },
+    { name: "Cover Letter & Pitch", href: "/dashboard/cover-letters", icon: Send },
+    { name: "LinkedIn SEO", href: "/dashboard/linkedin-optimizer", icon: Linkedin },
+    { name: "Offer Negotiator", href: "/dashboard/offer-negotiator", icon: DollarSign },
+    { name: "Agency Cockpit", href: "/admin", icon: ShieldCheck },
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-3 px-4 sm:px-6" : "py-5 px-6"
-      }`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 py-4 px-4 sm:px-6">
       <div
-        className={`max-w-6xl mx-auto transition-all duration-300 rounded-full px-6 h-13 flex items-center justify-between ${
+        className={`max-w-7xl mx-auto rounded-2xl px-5 sm:px-6 h-14 flex items-center justify-between transition-all duration-300 ${
           scrolled
-            ? "bg-[#16070B]/95 backdrop-blur-md border border-white/10 shadow-2xl py-2 text-[#FAF7F2]"
-            : "bg-[#16070B] text-[#FAF7F2] py-2.5 shadow-lg border border-white/5"
+            ? "bg-slate-900/95 backdrop-blur-md border border-slate-800/80 shadow-2xl"
+            : "bg-slate-900/80 backdrop-blur-md border border-slate-800/60"
         }`}
       >
-        {/* Brand Logo */}
+        {/* Brand Logo & Guarantee Sub-badge */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="h-7 w-7 rounded-lg bg-[#D91C44] flex items-center justify-center text-white font-bold text-xs shadow-sm">
-            RR
+          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-blue-500/20">
+            <Briefcase className="h-4 w-4" />
           </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-semibold text-sm tracking-tight text-white">
-              ReverseRecruit<span className="text-[#D91C44]">.ai</span>
+          <div>
+            <span className="font-extrabold text-sm sm:text-base tracking-tight text-white block leading-tight">
+              ReverseRecruit<span className="text-blue-400">.ai</span>
             </span>
-            <span className="hidden sm:inline-block font-mono text-[9px] uppercase tracking-widest text-[#FAF7F2]/70 px-1.5 py-0.2 rounded bg-white/5">
-              v2.4
+            <span className="hidden sm:block text-[9px] font-mono font-semibold uppercase tracking-wider text-emerald-400 leading-none">
+              5 Interviews Guaranteed
             </span>
           </div>
         </Link>
 
         {/* Center Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-5">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
+            const Icon = link.icon;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-xs font-medium tracking-wide transition-colors ${
+                className={`text-xs font-medium tracking-wide flex items-center gap-1.5 transition-colors ${
                   isActive
-                    ? "text-white font-bold"
-                    : "text-[#FAF7F2]/70 hover:text-white"
+                    ? "text-blue-400 font-semibold"
+                    : "text-slate-300 hover:text-white"
                 }`}
               >
-                {link.name}
+                <Icon className={`h-3.5 w-3.5 ${isActive ? "text-blue-400" : "text-slate-400"}`} />
+                <span>{link.name}</span>
               </Link>
             );
           })}
         </nav>
 
-        {/* Actions & Launch Trigger */}
-        <div className="hidden md:flex items-center gap-4">
-          <Link
-            href="/admin"
-            className="text-xs font-mono text-[#FAF7F2]/70 hover:text-white transition-colors"
-          >
-            Cockpit
-          </Link>
+        {/* Launch Button */}
+        <div className="hidden sm:flex items-center gap-3">
           <Link
             href="/onboarding"
-            className="btn-crimson text-xs py-2 px-4 shadow-sm"
+            className="px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl hover:opacity-95 shadow-md shadow-blue-500/20 transition-all flex items-center gap-1.5"
           >
-            <span>Start Free</span>
+            <span>Start for $20</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -95,42 +99,39 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-white p-1"
+          className="lg:hidden text-slate-300 hover:text-white p-1"
           aria-label="Toggle navigation"
         >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5 text-white" />}
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="md:hidden mt-3 max-w-6xl mx-auto bg-[#16070B] text-white rounded-2xl p-6 border border-white/10 shadow-2xl space-y-4 animate-fadeIn">
-          <div className="flex flex-col space-y-3">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-sm font-medium text-[#FAF7F2] py-1 border-b border-white/10"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <Link
-              href="/admin"
-              onClick={() => setMobileOpen(false)}
-              className="text-sm font-mono text-[#FAF7F2]/70 py-1 border-b border-white/10"
-            >
-              Agency Admin Cockpit
-            </Link>
+        <div className="lg:hidden mt-2 max-w-7xl mx-auto bg-slate-900/95 border border-slate-800 rounded-2xl p-5 shadow-2xl space-y-4 animate-fadeIn">
+          <div className="flex flex-col space-y-2.5">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="text-sm font-medium text-slate-200 hover:text-white py-1 flex items-center gap-2"
+                >
+                  <Icon className="h-4 w-4 text-blue-400" />
+                  <span>{link.name}</span>
+                </Link>
+              );
+            })}
           </div>
           <Link
             href="/onboarding"
             onClick={() => setMobileOpen(false)}
-            className="btn-crimson w-full text-center text-xs py-3 justify-center"
+            className="btn-brand-gradient w-full text-center text-xs py-3 flex items-center justify-center gap-2"
           >
-            <span>Launch Career Engine ($20 / $99)</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <span>Start Job Autopilot ($20 / $99)</span>
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       )}

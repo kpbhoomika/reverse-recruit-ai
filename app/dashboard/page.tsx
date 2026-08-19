@@ -6,15 +6,16 @@ import {
   ChevronRight, 
   Clock, 
   ExternalLink, 
-  Cpu, 
-  Sparkles, 
   FileText, 
   Send, 
   Linkedin, 
   DollarSign,
   Activity,
   ArrowUpRight,
-  ShieldCheck
+  ShieldCheck,
+  CheckCircle2,
+  Building,
+  Target
 } from "lucide-react";
 import { initialApplications, initialCandidates } from "@/lib/mock-data";
 import { ApplicationItem, ApplicationStatus } from "@/lib/types";
@@ -41,90 +42,101 @@ export default function CandidateDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F4EC] text-[#1C0A0F] p-6 sm:p-10 pt-28">
-      <div className="max-w-6xl mx-auto space-y-10">
+    <div className="min-h-screen bg-slate-950 text-slate-100 p-6 sm:p-10 pt-28">
+      <div className="max-w-7xl mx-auto space-y-8">
         
-        {/* Header (Refined Espresso-Wine) */}
-        <div className="bg-[#16070B] text-[#FAF7F2] p-8 sm:p-10 rounded-3xl border border-white/10 shadow-warm-lg relative overflow-hidden">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-xs uppercase tracking-widest text-[#D91C44] flex items-center gap-1.5 font-semibold">
-                  <span className="h-2 w-2 rounded-full bg-[#D91C44] animate-pulse" />
-                  CAREER ENGINE ● ACTIVE
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-xs font-mono text-[#FAF7F2]/80">
-                  {candidate.tier === "student" ? "Student Plan ($20)" : "Pro IT Plan ($99)"}
-                </span>
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                Good evening, {candidate.fullName.split(" ")[0]}.
+        {/* Header Bar */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-1">
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                {candidate.fullName}
               </h1>
-              <p className="text-sm text-[#FAF7F2]/75 max-w-xl leading-relaxed">
-                Your autonomous engine is active across Greenhouse and Lever feeds. 3 new high-match roles ingested today.
-              </p>
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30">
+                {candidate.tier === "student" ? "Student Autopilot ($20)" : "Pro IT Autopilot ($99)"}
+              </span>
             </div>
-
-            {/* Studio Navigation Buttons */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <Link
-                href="/dashboard/resume-tailor"
-                className="btn-wine-outline text-xs py-2 px-4 flex items-center gap-1.5"
-              >
-                <FileText className="h-3.5 w-3.5 text-[#D91C44]" />
-                <span>ATS Tailor</span>
-              </Link>
-              <Link
-                href="/dashboard/cover-letters"
-                className="btn-wine-outline text-xs py-2 px-4 flex items-center gap-1.5"
-              >
-                <Send className="h-3.5 w-3.5 text-emerald-400" />
-                <span>Outreach</span>
-              </Link>
-              <Link
-                href="/dashboard/offer-negotiator"
-                className="btn-crimson text-xs py-2 px-4 flex items-center gap-1.5"
-              >
-                <DollarSign className="h-3.5 w-3.5" />
-                <span>Negotiator</span>
-              </Link>
-            </div>
+            <p className="text-xs sm:text-sm text-slate-400">
+              {candidate.targetRoles.join(" • ")} • Min Comp: ${candidate.minSalary.toLocaleString()}/yr
+            </p>
           </div>
 
-          {/* Telemetry Stream Strip */}
-          <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-5 gap-4 text-left font-mono">
-            <div>
-              <span className="text-[10px] text-[#FAF7F2]/60 uppercase tracking-wider block">Jobs Analyzed</span>
-              <span className="text-2xl font-bold text-white">148</span>
-            </div>
-            <div>
-              <span className="text-[10px] text-[#FAF7F2]/60 uppercase tracking-wider block">High-Match Tier</span>
-              <span className="text-2xl font-bold text-[#D91C44]">32</span>
-            </div>
-            <div>
-              <span className="text-[10px] text-[#FAF7F2]/60 uppercase tracking-wider block">Dispatched</span>
-              <span className="text-2xl font-bold text-white">{candidate.applicationsSubmitted}</span>
-            </div>
-            <div>
-              <span className="text-[10px] text-[#FAF7F2]/60 uppercase tracking-wider block">InMail Replies</span>
-              <span className="text-2xl font-bold text-emerald-400">11</span>
-            </div>
-            <div>
-              <span className="text-[10px] text-[#FAF7F2]/60 uppercase tracking-wider block">Interviews Landed</span>
-              <span className="text-2xl font-bold text-white">{candidate.interviewsLanded} / {candidate.interviewsGuaranteed}</span>
-            </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href="/dashboard/resume-tailor"
+              className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
+            >
+              <FileText className="h-3.5 w-3.5 text-blue-400" />
+              <span>ATS Tailor</span>
+            </Link>
+            <Link
+              href="/dashboard/cover-letters"
+              className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
+            >
+              <Send className="h-3.5 w-3.5 text-emerald-400" />
+              <span>Outreach</span>
+            </Link>
+            <Link
+              href="/dashboard/offer-negotiator"
+              className="px-3.5 py-2 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-95 rounded-xl shadow-md shadow-blue-500/20 transition-all flex items-center gap-1.5"
+            >
+              <DollarSign className="h-3.5 w-3.5" />
+              <span>Negotiator</span>
+            </Link>
           </div>
         </div>
 
-        {/* Pipeline Stage Matrix */}
+        {/* 4 Metrics Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-2">
+            <span className="text-xs font-medium text-slate-400 uppercase tracking-wider block">Interviews Landed</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-extrabold text-white">{candidate.interviewsLanded}</span>
+              <span className="text-xs text-slate-400">/ {candidate.interviewsGuaranteed} goal</span>
+            </div>
+            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-emerald-500 rounded-full"
+                style={{ width: `${(candidate.interviewsLanded / candidate.interviewsGuaranteed) * 100}%` }}
+              />
+            </div>
+          </div>
+
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-2">
+            <span className="text-xs font-medium text-slate-400 uppercase tracking-wider block">Applications Dispatched</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-extrabold text-white">{candidate.applicationsSubmitted}</span>
+              <span className="text-xs font-semibold text-blue-400">+8 today</span>
+            </div>
+            <span className="text-[11px] text-slate-500 block">Greenhouse &amp; Lever feeds</span>
+          </div>
+
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-2">
+            <span className="text-xs font-medium text-slate-400 uppercase tracking-wider block">Average ATS Match</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-extrabold text-indigo-400">94.8%</span>
+            </div>
+            <span className="text-[11px] text-slate-500 block">0 hallucination keyword fit</span>
+          </div>
+
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-2">
+            <span className="text-xs font-medium text-slate-400 uppercase tracking-wider block">InMail Replies</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-extrabold text-purple-400">11</span>
+              <span className="text-xs font-semibold text-emerald-400">72% open rate</span>
+            </div>
+            <span className="text-[11px] text-slate-500 block">Direct hiring managers</span>
+          </div>
+        </div>
+
+        {/* Pipeline Kanban */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-bold text-[#1C0A0F]">Application Pipeline Matrix</h2>
-              <p className="text-xs text-[#706556]">Real-time status synced with employer webhook queues</p>
-            </div>
-            <span className="font-mono text-xs text-[#D91C44] font-semibold">Sync: Operational</span>
+            <h2 className="text-lg font-bold text-white">Application Pipeline</h2>
+            <span className="text-xs text-emerald-400 font-mono flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+              Live Sync Active
+            </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -133,14 +145,14 @@ export default function CandidateDashboard() {
               return (
                 <div
                   key={stage}
-                  className="bg-[#FFFFFF] p-4 rounded-2xl border border-[#16070B]/10 shadow-warm min-h-[380px] flex flex-col justify-between"
+                  className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 min-h-[380px] flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex items-center justify-between pb-3 border-b border-[#16070B]/10 mb-3">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#706556]">
+                    <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+                      <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">
                         {stage}
                       </span>
-                      <span className="text-xs font-mono font-bold text-[#D91C44]">
+                      <span className="text-xs font-mono font-bold text-blue-400">
                         {items.length}
                       </span>
                     </div>
@@ -154,31 +166,27 @@ export default function CandidateDashboard() {
                             onClick={() => setSelectedApp(app)}
                             className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
                               isSelected
-                                ? "bg-[#16070B] text-white border-[#D91C44] shadow-md"
-                                : "bg-[#F7F4EC] border-[#16070B]/5 hover:border-[#16070B]/20"
+                                ? "bg-blue-600/15 border-blue-500 text-white shadow-lg shadow-blue-500/10"
+                                : "bg-slate-950/80 border-slate-800/80 hover:border-slate-700"
                             }`}
                           >
                             <div className="flex items-center justify-between mb-1">
-                              <span className={`text-xs font-bold ${isSelected ? "text-white" : "text-[#1C0A0F]"}`}>
-                                {app.companyName}
-                              </span>
-                              <span className="font-mono text-[10px] font-bold text-[#D91C44]">
+                              <span className="text-xs font-bold text-white">{app.companyName}</span>
+                              <span className="font-mono text-[10px] font-bold text-blue-400">
                                 {app.matchScore}% Match
                               </span>
                             </div>
 
-                            <p className={`text-xs ${isSelected ? "text-[#FAF7F2]/80" : "text-[#706556]"} line-clamp-1`}>
-                              {app.roleTitle}
-                            </p>
+                            <p className="text-xs text-slate-400 line-clamp-1">{app.roleTitle}</p>
 
                             {app.interviewDate && (
-                              <div className="mt-2.5 p-1.5 rounded-lg bg-[#D91C44]/15 border border-[#D91C44]/30 text-[10px] font-mono text-[#D91C44] flex items-center gap-1.5 font-bold">
+                              <div className="mt-2 text-[10px] text-emerald-400 font-mono flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 <span>{new Date(app.interviewDate).toLocaleDateString()}</span>
                               </div>
                             )}
 
-                            <div className={`mt-2 pt-2 border-t ${isSelected ? "border-white/10 text-[#FAF7F2]/60" : "border-[#16070B]/10 text-[#706556]"} flex items-center justify-between text-[10px] font-mono`}>
+                            <div className="mt-2 pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] font-mono text-slate-500">
                               <span>{app.atsPlatform}</span>
                               <span>{app.appliedDate}</span>
                             </div>
@@ -187,8 +195,8 @@ export default function CandidateDashboard() {
                       })}
 
                       {items.length === 0 && (
-                        <div className="h-24 flex items-center justify-center font-mono text-[11px] text-[#706556]/60 border border-dashed border-[#16070B]/10 rounded-xl">
-                          No Active Jobs
+                        <div className="h-20 flex items-center justify-center font-mono text-xs text-slate-600">
+                          No active applications
                         </div>
                       )}
                     </div>
@@ -201,16 +209,14 @@ export default function CandidateDashboard() {
 
         {/* Selected Application Details */}
         {selectedApp && (
-          <div className="bg-[#FFFFFF] p-8 rounded-3xl border border-[#16070B]/10 shadow-warm space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#16070B]/10">
+          <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
               <div>
-                <span className="text-xs font-mono text-[#D91C44] uppercase font-bold tracking-wider block mb-1">
-                  Application Telemetry
-                </span>
-                <h3 className="text-2xl font-bold text-[#1C0A0F]">
+                <span className="text-xs font-mono text-blue-400 uppercase font-semibold">Application Details</span>
+                <h3 className="text-xl sm:text-2xl font-bold text-white mt-0.5">
                   {selectedApp.roleTitle} @ {selectedApp.companyName}
                 </h3>
-                <p className="text-xs text-[#706556] mt-1">
+                <p className="text-xs text-slate-400">
                   {selectedApp.location} • Via {selectedApp.atsPlatform} • Applied {selectedApp.appliedDate}
                 </p>
               </div>
@@ -219,7 +225,7 @@ export default function CandidateDashboard() {
                 <select
                   value={selectedApp.status}
                   onChange={(e) => updateStatus(selectedApp.id, e.target.value as ApplicationStatus)}
-                  className="px-4 py-2 text-xs font-mono rounded-full bg-[#F7F4EC] border border-[#16070B]/10 text-[#1C0A0F] focus:outline-none focus:border-[#D91C44]"
+                  className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-blue-500"
                 >
                   <option value="Applied">Applied</option>
                   <option value="Screening">Screening</option>
@@ -230,7 +236,7 @@ export default function CandidateDashboard() {
 
                 <Link
                   href="/dashboard/resume-tailor"
-                  className="btn-crimson text-xs py-2 px-4"
+                  className="px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-colors"
                 >
                   Tailored Resume
                 </Link>
@@ -238,23 +244,19 @@ export default function CandidateDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-              <div className="p-4 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 space-y-1">
-                <span className="text-[#D91C44] font-bold uppercase tracking-wider block">
-                  Dual-Channel Outreach:
-                </span>
-                <p className="text-[#706556] leading-relaxed font-sans text-xs">
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <span className="text-blue-400 font-bold uppercase tracking-wider block">Hiring Manager Outreach:</span>
+                <p className="text-slate-300 font-sans text-xs">
                   {selectedApp.outreachSent 
-                    ? `✓ Direct 3-sentence introduction pitch delivered to ${selectedApp.recruiterEmail || "Hiring Lead"}`
-                    : "Queued for recruiter warm-inbound"}
+                    ? `✓ 3-sentence introduction sent to ${selectedApp.recruiterEmail || "Hiring Lead"}`
+                    : "Queued for direct recruiter message"}
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#F7F4EC] border border-[#16070B]/5 space-y-1">
-                <span className="text-[#1C0A0F] font-bold uppercase tracking-wider block">
-                  Optimization Notes:
-                </span>
-                <p className="text-[#706556] leading-relaxed font-sans text-xs">
-                  {selectedApp.notes || "Auto-dispatched via Greenhouse API parser with XYZ metric rewrites."}
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <span className="text-emerald-400 font-bold uppercase tracking-wider block">Application Notes:</span>
+                <p className="text-slate-300 font-sans text-xs">
+                  {selectedApp.notes || "Auto-dispatched via direct ATS webhook integration."}
                 </p>
               </div>
             </div>
