@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import {
   ATSAnalysisResult,
   CoverLetterResult,
@@ -7,7 +7,8 @@ import {
 } from "./types";
 
 const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
-const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
+const genAI = apiKey ? new GoogleGenAI({ apiKey }) : null;
+
 
 /**
  * Parses and analyzes a resume against a job description
@@ -19,7 +20,6 @@ export async function analyzeAndTailorResume(
 ): Promise<ATSAnalysisResult> {
   if (genAI) {
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const prompt = `You are a Principal Technical Recruiter and ATS Optimization Expert.
 Analyze this candidate's resume against the target Job Description for the role of "${targetRole}".
 
@@ -45,14 +45,18 @@ Return a valid JSON object matching this TypeScript format exactly with no extra
   ]
 }`;
 
-      const response = await model.generateContent(prompt);
-      const text = response.response.text();
+      const response = await genAI.models.generateContent({
+        model: "gemini-2.0-flash",
+        contents: prompt,
+      });
+      const text = response.text ?? "";
       const cleaned = text.replace(/```json/g, "").replace(/```/g, "").trim();
       return JSON.parse(cleaned) as ATSAnalysisResult;
     } catch (err) {
       console.warn("Gemini API call failed, using intelligent fallback engine:", err);
     }
   }
+
 
   // High-fidelity dynamic NLP extraction engine
   const stopWords = new Set([
@@ -147,7 +151,6 @@ export async function generateCoverLetter(
 ): Promise<CoverLetterResult> {
   if (genAI) {
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const prompt = `You are an elite career strategist.
 Generate:
 1. A concise, 3-paragraph, highly tailored Cover Letter for ${candidateName} applying to ${companyName} for the role of ${roleTitle}.
@@ -166,8 +169,11 @@ Return valid JSON with keys:
   "emailSubjectLine": "string"
 }`;
 
-      const response = await model.generateContent(prompt);
-      const text = response.response.text();
+      const response = await genAI.models.generateContent({
+        model: "gemini-2.0-flash",
+        contents: prompt,
+      });
+      const text = response.text ?? "";
       const cleaned = text.replace(/```json/g, "").replace(/```/g, "").trim();
       return JSON.parse(cleaned) as CoverLetterResult;
     } catch (err) {
