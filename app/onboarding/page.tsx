@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/db";
 import { 
   ChevronRight, 
   ChevronLeft, 
@@ -107,22 +108,58 @@ export default function OnboardingPage() {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      if (typeof window !== "undefined") {
-        localStorage.setItem("reverse_recruit_candidate", JSON.stringify(formData));
-      }
-    } catch (err) {
-      console.error("Failed to save to localStorage", err);
-    }
+      // Basic skills extraction from text inputs
+      const basicSkills = (formData as any).masterResumeText 
+        ? (formData as any).masterResumeText.split(" ").filter((w: string) => w.length > 4).slice(0, 10) 
+        : [];
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+      // 1. Insert into Supabase
+      const { data, error } = await supabase
+        .from("candidates")
+        .insert([{
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          linkedin_url: formData.linkedinUrl || (formData as any).linkedin || "",
+          target_roles: [(formData as any).targetRole || formData.targetRoles || "Software Engineer"],
+          target_locations: [(formData as any).targetLocation || formData.targetLocations || "Remote"],
+          min_salary: formData.minSalary ? parseInt(formData.minSalary) : null,
+          currency: "USD",
+          skills: basicSkills,
+          resume_text: (formData as any).masterResumeText || null,
+          tier: formData.tier as "student" | "professional",
+          interviews_guaranteed: formData.tier === "professional" ? 7 : 3,
+          interviews_landed: 0,
+          applications_submitted: 0,
+          subscription_active: true
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // 2. Save to local storage for the dashboard to pick up
+      if (typeof window !== "undefined") {
+        localStorage.setItem("reverse_recruit_candidate", JSON.stringify({
+          ...formData,
+          id: data.id // Ensure we have the DB UUID
+        }));
+      }
+
+      // 3. Trigger initial matching engine in background so they have jobs instantly
+      fetch(`/api/matcher/run?secret=manual-run`, { method: "GET" }).catch(() => {});
+
       window.location.href = "/dashboard";
-    }, 600);
+    } catch (err) {
+      console.error("Failed to save candidate", err);
+      setIsSubmitting(false);
+      alert("Failed to create profile. Please check your network and try again.");
+    }
   };
 
   return (

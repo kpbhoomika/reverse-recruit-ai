@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { supabase } from "@/lib/db";
 import { 
   ChevronRight, 
   Clock, 
@@ -31,11 +32,12 @@ export default function CandidateDashboard() {
   const [activeFilter, setActiveFilter] = useState<"all" | ApplicationStatus>("all");
   const [selectedApp, setSelectedApp] = useState<ApplicationItem | null>(initialApplications[0]);
 
-  // Load custom candidate data from localStorage if user completed onboarding
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("reverse_recruit_candidate");
-      if (saved) {
+    async function loadCandidateData() {
+      try {
+        const saved = localStorage.getItem("reverse_recruit_candidate");
+        if (!saved) return;
+        
         const parsed = JSON.parse(saved);
         setCandidate((prev) => ({
           ...prev,
@@ -46,10 +48,48 @@ export default function CandidateDashboard() {
           targetRoles: parsed.targetRoles ? parsed.targetRoles.split(",").map((s: string) => s.trim()) : prev.targetRoles,
           minSalary: parsed.minSalary ? parseInt(parsed.minSalary.replace(/[^0-9]/g, "")) || prev.minSalary : prev.minSalary,
         }));
+
+        if (parsed.id) {
+          const { data: matches } = await supabase
+            .from("matches")
+            .select(`*, jobs(*)`)
+            .eq("candidate_id", parsed.id)
+            .order("match_score", { ascending: false });
+
+          if (matches && matches.length > 0) {
+            const realApps: ApplicationItem[] = matches.map(m => {
+              let status: ApplicationStatus = "Queued";
+              if (m.status === "applied") status = "Applied";
+              if (m.status === "screening") status = "Screening";
+              if (m.status === "interview") status = "Interview Scheduled";
+              if (m.status === "rejected") status = "Rejected";
+              if (m.status === "offer") status = "Offer Received";
+
+              return {
+                id: m.id,
+                candidateId: m.candidate_id,
+                jobId: m.job_id,
+                companyName: m.jobs?.company_name || "Company",
+                roleTitle: m.jobs?.role_title || "Role",
+                location: m.jobs?.location || "Remote",
+                status,
+                appliedDate: m.applied_at || m.created_at,
+                atsPlatform: m.jobs?.source || "Unknown",
+                matchScore: m.match_score,
+                tailoredResumeSnippet: m.tailored_resume || undefined,
+                coverLetterSnippet: m.tailored_cover_letter || undefined,
+                outreachSent: m.outreach_sent,
+              };
+            });
+            setApplications(realApps);
+            setSelectedApp(realApps[0]);
+          }
+        }
+      } catch (e) {
+        console.log("Using default candidate profile...");
       }
-    } catch (e) {
-      console.log("Using default candidate profile...");
     }
+    loadCandidateData();
   }, []);
 
   const updateStatus = (appId: string, newStatus: ApplicationStatus) => {
