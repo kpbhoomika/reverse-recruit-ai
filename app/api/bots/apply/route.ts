@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/db";
 import { applyToGreenhouse } from "@/lib/bots/greenhouse";
+import { applyToLever } from "@/lib/bots/lever";
 import { generateResumePDF } from "@/lib/pdf-generator";
+import { sendRecruiterOutreach } from "@/lib/email/resend";
 import { GoogleGenAI } from "@google/genai";
 
-export const maxDuration = 300; // Allow 5 minutes for Playwright & AI
+export const maxDuration = 300;
 
-// We initialize the Google Gen AI client for on-the-fly tailoring
 const apiKey = process.env.GEMINI_API_KEY;
 let genAI: any = null;
 if (apiKey) {
@@ -21,14 +22,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing matchId" }, { status: 400 });
     }
 
-    // 1. Fetch match, job, and candidate from DB
     const { data: match, error: matchError } = await supabase
       .from("matches")
-      .select(`
-        *,
-        candidates (*),
-        jobs (*)
-      `)
+      .select(`*, candidates (*), jobs (*)`)
       .eq("id", matchId)
       .single();
 
@@ -39,56 +35,69 @@ export async function POST(req: NextRequest) {
     const candidate = match.candidates;
     const job = match.jobs;
 
-    // Only greenhouse is supported for this bot so far
-    if (job.source !== "greenhouse") {
-      return NextResponse.json({ error: "Only Greenhouse supported for auto-apply currently." }, { status: 400 });
+    if (job.source !== "greenhouse" && job.source !== "lever") {
+      return NextResponse.json({ error: "Only Greenhouse and Lever supported currently." }, { status: 400 });
     }
 
-    // 2. Generate customized resume text via Gemini (if not already done)
+    // 1. Generate customized resume via AI
     let finalResumeText = match.tailored_resume;
-    
     if (!finalResumeText && genAI) {
-      const prompt = `
-      You are an expert resume writer. Tailor this candidate's resume for the specific job.
-      
+      const prompt = `You are an expert resume writer. Tailor this candidate's resume for the specific job.
       Candidate Info: ${candidate.resume_text || candidate.skills.join(", ")}
       Target Role: ${job.role_title}
       Job Description: ${job.description}
+      Output a clean, ATS-friendly resume in Markdown.`;
       
-      Output a clean, ATS-friendly resume in Markdown.
-      `;
-      const response = await genAI.models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: prompt
-      });
+      const response = await genAI.models.generateContent({ model: "gemini-2.0-flash", contents: prompt });
       finalResumeText = response.text || candidate.resume_text;
-      
-      // Update DB with tailored text
       await supabase.from("matches").update({ tailored_resume: finalResumeText }).eq("id", matchId);
     }
 
-    // 3. Convert tailored text to PDF Buffer
+    // 2. Convert to PDF
     const pdfBytes = await generateResumePDF(
       candidate.full_name,
       `${candidate.email} | ${candidate.phone || ''}`,
       finalResumeText || candidate.skills.join("\n")
     );
 
-    // 4. Trigger Playwright Bot
-    const botResult = await applyToGreenhouse(job, candidate, pdfBytes);
-
-    if (botResult.success) {
-      // 5. Update DB that application was sent
-      await supabase.from("matches").update({
-        applied: true,
-        applied_at: new Date().toISOString(),
-        status: "applied"
-      }).eq("id", matchId);
-      
-      return NextResponse.json({ success: true, message: botResult.message });
+    // 3. Trigger Playwright Bot based on ATS
+    let botResult;
+    if (job.source === "greenhouse") {
+      botResult = await applyToGreenhouse(job, candidate, pdfBytes);
     } else {
+      botResult = await applyToLever(job, candidate, pdfBytes);
+    }
+
+    if (!botResult.success) {
       return NextResponse.json({ success: false, error: botResult.message }, { status: 500 });
     }
+
+    // 4. Professional Tier: Send Recruiter Outreach via Resend
+    let emailSent = false;
+    let finalCoverLetter = match.tailored_cover_letter;
+    
+    if (candidate.tier === "professional") {
+      if (!finalCoverLetter && genAI) {
+         const prompt = `Write a short, punchy cold email to the hiring manager for ${job.role_title} at ${job.company_name}. Candidate skills: ${candidate.skills.join(", ")}. Do not include Subject line.`;
+         const response = await genAI.models.generateContent({ model: "gemini-2.0-flash", contents: prompt });
+         finalCoverLetter = response.text || "I am highly interested in this role.";
+         await supabase.from("matches").update({ tailored_cover_letter: finalCoverLetter }).eq("id", matchId);
+      }
+      
+      const emailResult = await sendRecruiterOutreach(candidate, job, finalCoverLetter || "");
+      if (emailResult.success) emailSent = true;
+    }
+
+    // 5. Update DB
+    await supabase.from("matches").update({
+      applied: true,
+      applied_at: new Date().toISOString(),
+      status: "applied",
+      outreach_sent: emailSent,
+      outreach_sent_at: emailSent ? new Date().toISOString() : null
+    }).eq("id", matchId);
+    
+    return NextResponse.json({ success: true, message: botResult.message, emailSent });
 
   } catch (error: any) {
     console.error("Auto-apply failed:", error);
