@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { scrapeGreenhouse } from "@/lib/scrapers/greenhouse";
 import { scrapeLever } from "@/lib/scrapers/lever";
+import { scrapeNaukri } from "@/lib/scrapers/naukri";
+import { scrapeInternshala } from "@/lib/scrapers/internshala";
 
 export const maxDuration = 300; // 5 minute timeout for scraping
 
@@ -26,6 +28,19 @@ export async function GET(req: NextRequest) {
       results.lever = await scrapeLever();
       console.log("✅ Lever done:", results.lever);
     }
+
+    if (source === "naukri" || source === "all") {
+      console.log("🇮🇳 Starting Naukri scrape...");
+      results.naukri = await scrapeNaukri();
+      console.log("✅ Naukri done:", results.naukri);
+    }
+
+    if (source === "internshala" || source === "all") {
+      console.log("🎓 Starting Internshala scrape...");
+      results.internshala = await scrapeInternshala();
+      console.log("✅ Internshala done:", results.internshala);
+    }
+
 
     const totalInserted = Object.values(results).reduce(
       (sum: number, r: any) => sum + (r.inserted || 0),
