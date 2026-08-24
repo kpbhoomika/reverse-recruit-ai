@@ -83,6 +83,10 @@ export default function CandidateDashboard() {
             });
             setApplications(realApps);
             setSelectedApp(realApps[0]);
+          } else {
+             // Clear mock data so the user knows they are logged into their real empty profile
+             setApplications([]);
+             setSelectedApp(null);
           }
         }
       } catch (e) {
@@ -111,7 +115,7 @@ export default function CandidateDashboard() {
   const offerCount = applications.filter((a) => a.status === "Offer Received").length;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-8 lg:p-10 pt-28">
+    <div className="min-h-screen bg-slate-950 text-slate-100 px-4 pb-4 pt-36 sm:px-8 sm:pb-8 sm:pt-40 lg:px-10 lg:pb-10">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Top Header Card */}
@@ -270,11 +274,20 @@ export default function CandidateDashboard() {
 
           {/* Simple, Accessible List of Applications */}
           <div className="space-y-3">
-            {filteredApps.map((app) => (
-              <div
-                key={app.id}
-                className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 sm:p-6 transition-all space-y-4 shadow-md"
-              >
+            {filteredApps.length === 0 ? (
+              <div className="bg-slate-900/50 border border-slate-800 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center text-center space-y-3">
+                <Target className="h-10 w-10 text-slate-500 mb-2" />
+                <h3 className="text-lg font-bold text-white">The AI is Hunting!</h3>
+                <p className="text-sm text-slate-400 max-w-sm">
+                  We have saved your profile. The AI matching engine runs every night to pair your skills with new jobs and apply automatically. Check back soon!
+                </p>
+              </div>
+            ) : (
+              filteredApps.map((app) => (
+                <div
+                  key={app.id}
+                  className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 sm:p-6 transition-all space-y-4 shadow-md"
+                >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2.5">
@@ -344,7 +357,8 @@ export default function CandidateDashboard() {
                   </div>
                 </div>
               </div>
-            ))}
+              ))
+            )}
           </div>
 
         </div>

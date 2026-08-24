@@ -110,6 +110,13 @@ export default function OnboardingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // If user presses Enter on early steps, just go to the next step
+    if (step < 4) {
+      setStep(step + 1);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -118,17 +125,17 @@ export default function OnboardingPage() {
         ? (formData as any).masterResumeText.split(" ").filter((w: string) => w.length > 4).slice(0, 10) 
         : [];
 
-      // 1. Insert into Supabase
+      // 1. Upsert into Supabase (in case they retry with the same email)
       const { data, error } = await supabase
         .from("candidates")
-        .insert([{
+        .upsert([{
           full_name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
           linkedin_url: formData.linkedinUrl || (formData as any).linkedin || "",
           target_roles: [(formData as any).targetRole || formData.targetRoles || "Software Engineer"],
           target_locations: [(formData as any).targetLocation || formData.targetLocations || "Remote"],
-          min_salary: formData.minSalary ? parseInt(formData.minSalary) : null,
+          min_salary: formData.minSalary ? parseInt(formData.minSalary.replace(/[^0-9]/g, "")) || null : null,
           currency: "USD",
           skills: basicSkills,
           resume_text: (formData as any).masterResumeText || null,
@@ -137,11 +144,13 @@ export default function OnboardingPage() {
           interviews_landed: 0,
           applications_submitted: 0,
           subscription_active: true
-        }])
+        }], { onConflict: "email" })
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        throw new Error(error.message || error.details || "Database error");
+      }
 
       // 2. Save to local storage for the dashboard to pick up
       if (typeof window !== "undefined") {
@@ -155,10 +164,10 @@ export default function OnboardingPage() {
       fetch(`/api/matcher/run?secret=manual-run`, { method: "GET" }).catch(() => {});
 
       window.location.href = "/dashboard";
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to save candidate", err);
       setIsSubmitting(false);
-      alert("Failed to create profile. Please check your network and try again.");
+      alert(`Failed to create profile: ${err.message || "Unknown error"}`);
     }
   };
 

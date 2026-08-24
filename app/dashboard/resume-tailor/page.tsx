@@ -52,7 +52,7 @@ export default function ResumeTailorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-6 sm:p-10 pt-28">
+    <div className="min-h-screen bg-slate-950 text-slate-100 px-6 pb-6 pt-36 sm:px-10 sm:pb-10 sm:pt-40">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Studio Header */}
