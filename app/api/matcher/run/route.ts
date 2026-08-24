@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { runMatchingEngine } from "@/lib/matcher";
 
+export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
 
 export async function GET(req: NextRequest) {
@@ -10,9 +11,9 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    console.log("🎯 Starting matching engine...");
+    console.log("ðŸŽ¯ Starting matching engine...");
     const result = await runMatchingEngine();
-    console.log("✅ Matching done:", result);
+    console.log("âœ… Matching done:", result);
 
     return NextResponse.json({
       success: true,
@@ -26,3 +27,4 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+

@@ -1,13 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { scrapeGreenhouse } from "@/lib/scrapers/greenhouse";
 import { scrapeLever } from "@/lib/scrapers/lever";
 import { scrapeNaukri } from "@/lib/scrapers/naukri";
 import { scrapeInternshala } from "@/lib/scrapers/internshala";
 
+export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minute timeout for scraping
 
 export async function GET(req: NextRequest) {
-  // Simple auth check — only allow if secret matches
+  // Simple auth check â€” only allow if secret matches
   const secret = req.nextUrl.searchParams.get("secret");
   if (secret !== process.env.CRON_SECRET && secret !== "manual-run") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -18,27 +19,27 @@ export async function GET(req: NextRequest) {
 
   try {
     if (source === "greenhouse" || source === "all") {
-      console.log("🌱 Starting Greenhouse scrape...");
+      console.log("ðŸŒ± Starting Greenhouse scrape...");
       results.greenhouse = await scrapeGreenhouse();
-      console.log("✅ Greenhouse done:", results.greenhouse);
+      console.log("âœ… Greenhouse done:", results.greenhouse);
     }
 
     if (source === "lever" || source === "all") {
-      console.log("🎚️ Starting Lever scrape...");
+      console.log("ðŸŽšï¸ Starting Lever scrape...");
       results.lever = await scrapeLever();
-      console.log("✅ Lever done:", results.lever);
+      console.log("âœ… Lever done:", results.lever);
     }
 
     if (source === "naukri" || source === "all") {
-      console.log("🇮🇳 Starting Naukri scrape...");
+      console.log("ðŸ‡®ðŸ‡³ Starting Naukri scrape...");
       results.naukri = await scrapeNaukri();
-      console.log("✅ Naukri done:", results.naukri);
+      console.log("âœ… Naukri done:", results.naukri);
     }
 
     if (source === "internshala" || source === "all") {
-      console.log("🎓 Starting Internshala scrape...");
+      console.log("ðŸŽ“ Starting Internshala scrape...");
       results.internshala = await scrapeInternshala();
-      console.log("✅ Internshala done:", results.internshala);
+      console.log("âœ… Internshala done:", results.internshala);
     }
 
 
@@ -60,3 +61,4 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
