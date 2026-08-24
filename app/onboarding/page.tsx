@@ -121,8 +121,8 @@ export default function OnboardingPage() {
 
     try {
       // Basic skills extraction from text inputs
-      const basicSkills = (formData as any).masterResumeText 
-        ? (formData as any).masterResumeText.split(" ").filter((w: string) => w.length > 4).slice(0, 10) 
+      const basicSkills = formData.masterResumeText 
+        ? formData.masterResumeText.split(" ").filter((w: string) => w.length > 4).slice(0, 10) 
         : [];
 
       // 1. Upsert into Supabase (in case they retry with the same email)
@@ -132,13 +132,13 @@ export default function OnboardingPage() {
           full_name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
-          linkedin_url: formData.linkedinUrl || (formData as any).linkedin || "",
-          target_roles: [(formData as any).targetRole || formData.targetRoles || "Software Engineer"],
-          target_locations: [(formData as any).targetLocation || formData.targetLocations || "Remote"],
+          linkedin_url: formData.linkedinUrl,
+          target_roles: [formData.targetRoles],
+          target_locations: [formData.targetLocations],
           min_salary: formData.minSalary ? parseInt(formData.minSalary.replace(/[^0-9]/g, "")) || null : null,
           currency: "USD",
           skills: basicSkills,
-          resume_text: (formData as any).masterResumeText || null,
+          resume_text: formData.masterResumeText || null,
           tier: formData.tier as "student" | "professional",
           interviews_guaranteed: formData.tier === "professional" ? 7 : 3,
           interviews_landed: 0,

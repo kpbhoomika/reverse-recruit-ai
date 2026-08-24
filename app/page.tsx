@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -24,6 +24,22 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-blue-500/30 selection:text-white">
       
+            {/* Navbar */}
+      <nav className="absolute top-0 w-full z-50 px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between max-w-6xl mx-auto left-0 right-0">
+        <div className="font-extrabold text-xl tracking-tight text-white flex items-center gap-2">
+          <Bot className="h-6 w-6 text-blue-500" />
+          ReverseRecruit
+        </div>
+        <div className="flex items-center gap-4">
+          <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+            Login
+          </Link>
+          <Link href="/onboarding" className="text-sm font-bold text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all border border-white/10">
+            Get Started
+          </Link>
+        </div>
+      </nav>
+
       {/* Background glow effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[128px]" />
@@ -290,3 +306,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
