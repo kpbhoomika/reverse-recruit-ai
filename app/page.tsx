@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -64,7 +64,7 @@ export default function LandingPage() {
           {/* Hero Headline */}
           <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.05] mb-8">
             The Job Market Is Rigged.<br/>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">We Fix That.</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">We Help You Beat It.</span>
           </h1>
 
           {/* Hero Subtitle */}
