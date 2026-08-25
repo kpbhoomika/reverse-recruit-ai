@@ -1,6 +1,5 @@
-# ReverseRecruit AI — Job Search Concierge & Reverse Recruiting SaaS
+﻿# ReverseRecruit AI â€” Job Search Concierge & Reverse Recruiting SaaS
 
-[![Daily Job Sync](https://github.com/kpbhoomika/reverse-recruit-ai/actions/workflows/daily-job-sync.yml/badge.svg)](https://github.com/kpbhoomika/reverse-recruit-ai/actions/workflows/daily-job-sync.yml)
 [![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js%2014-black)](https://nextjs.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC)](https://tailwindcss.com)
 [![Google Gemini API](https://img.shields.io/badge/AI-Google%20Gemini%20API-blue)](https://aistudio.google.com)
@@ -31,7 +30,7 @@
 
 ---
 
-## 🛠 Tech Stack ($0 Bootstrapped Infrastructure)
+## ðŸ›  Tech Stack ($0 Bootstrapped Infrastructure)
 
 - **Frontend & Fullstack**: Next.js 14 (App Router) + TypeScript
 - **Styling**: Tailwind CSS + Lucide Icons + Glassmorphism Dark Theme
@@ -77,3 +76,4 @@ Open [http://localhost:3000](http://localhost:3000) to view the platform.
 
 ## License
 MIT License. Built by [Bhoomika K P](https://github.com/kpbhoomika).
+
