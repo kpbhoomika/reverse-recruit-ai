@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -69,7 +69,7 @@ export default function OnboardingPage() {
       const content = event.target?.result as string;
       const extractedText = content && content.length > 50 
         ? content 
-        : `${formData.fullName || "Candidate"} — ${formData.targetRoles}. Experience in web engineering, application development, API design, database schemas, and modern tech stacks. Built scalable features, optimized system latency, and collaborated across cross-functional teams.`;
+        : `${formData.fullName || "Candidate"} â€” ${formData.targetRoles}. Experience in web engineering, application development, API design, database schemas, and modern tech stacks. Built scalable features, optimized system latency, and collaborated across cross-functional teams.`;
 
       setFormData((prev) => ({
         ...prev,
@@ -87,7 +87,7 @@ export default function OnboardingPage() {
         ...prev,
         uploadedFileName: file.name,
         uploadedFileSize: fileSizeFormatted,
-        masterResumeText: `${formData.fullName || "Candidate"} — ${formData.targetRoles}. Master resume extracted from ${file.name}. Experience in full-stack software development, responsive UI, RESTful APIs, and database performance.`,
+        masterResumeText: `${formData.fullName || "Candidate"} â€” ${formData.targetRoles}. Master resume extracted from ${file.name}. Experience in full-stack software development, responsive UI, RESTful APIs, and database performance.`,
       }));
     }
   };
@@ -140,7 +140,7 @@ export default function OnboardingPage() {
           skills: basicSkills,
           resume_text: formData.masterResumeText || null,
           tier: formData.tier as "student" | "professional",
-          interviews_guaranteed: formData.tier === "professional" ? 7 : 3,
+          interviews_guaranteed: 3,
           interviews_landed: 0,
           applications_submitted: 0,
           subscription_active: true
@@ -404,7 +404,7 @@ export default function OnboardingPage() {
                       <span className="font-bold text-sm text-white block">{formData.uploadedFileName}</span>
                       <span className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
                         <CheckCircle2 className="h-3 w-3" />
-                        <span>Uploaded ({formData.uploadedFileSize}) • Skills Extracted</span>
+                        <span>Uploaded ({formData.uploadedFileSize}) â€¢ Skills Extracted</span>
                       </span>
                     </div>
                   </div>
@@ -423,7 +423,7 @@ export default function OnboardingPage() {
               <div className="pt-2">
                 <details className="text-xs text-slate-400 group">
                   <summary className="cursor-pointer font-mono text-blue-400 hover:underline">
-                    Or paste raw resume text manually ▾
+                    Or paste raw resume text manually â–¾
                   </summary>
                   <textarea
                     rows={5}
@@ -488,7 +488,7 @@ export default function OnboardingPage() {
                       <span className="text-lg font-extrabold text-blue-400">$20<span className="text-xs text-slate-400 font-normal">/mo</span></span>
                     </div>
                     <p className="text-[11px] text-slate-400">
-                      150+ applications, tailored ATS resumes, 3–5 guaranteed interviews.
+                      150+ applications, tailored ATS resumes, 3â€“5 guaranteed interviews.
                     </p>
                   </div>
 
@@ -566,3 +566,4 @@ export default function OnboardingPage() {
     </div>
   );
 }
+

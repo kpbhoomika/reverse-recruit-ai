@@ -4,7 +4,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC)](https://tailwindcss.com)
 [![Google Gemini API](https://img.shields.io/badge/AI-Google%20Gemini%20API-blue)](https://aistudio.google.com)
 
-**ReverseRecruit AI** is an end-to-end reverse recruiting SaaS platform and agency operating system built to automate tech job hunting for **Students / Freshers ($20/mo)** and **IT Professionals ($99/mo)** with a **guaranteed minimum of 5 tech interviews**.
+**ReverseRecruit AI** is an end-to-end reverse recruiting SaaS platform and agency operating system built to automate tech job hunting for **Students / Freshers ($20/mo)** and **IT Professionals ($99/mo)** with a **guaranteed minimum of 3 tech interviews**.
 
 ---
 
@@ -76,4 +76,5 @@ Open [http://localhost:3000](http://localhost:3000) to view the platform.
 
 ## License
 MIT License. Built by [Bhoomika K P](https://github.com/kpbhoomika).
+
 

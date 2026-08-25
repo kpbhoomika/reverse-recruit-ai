@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -74,7 +74,7 @@ export default function LandingPage() {
           
           <div className="flex items-center justify-center gap-2 text-emerald-400 font-bold mb-10 text-sm sm:text-base">
             <ShieldCheck className="h-5 w-5" />
-            <span>5 confirmed interview invitations or a full refund.</span>
+            <span>3 confirmed interview invitations or a full refund.</span>
           </div>
 
           {/* Hero CTA & Trust Indicators */}
@@ -257,7 +257,7 @@ export default function LandingPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <Check className="h-4 w-4 text-emerald-400 shrink-0" />
-                    <span><strong>5+ Interviews Guaranteed OR FULL REFUND</strong></span>
+                    <span><strong>3+ Interviews Guaranteed OR FULL REFUND</strong></span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Check className="h-4 w-4 text-emerald-400 shrink-0" />
@@ -292,7 +292,7 @@ export default function LandingPage() {
           Ready to Beat the Rigged Market?
         </h2>
         <p className="text-slate-400 max-w-xl mx-auto mb-10 text-base">
-          Join software engineers landing verified interviews at top tech companies. Backed by our 5-interview guarantee.
+          Join software engineers landing verified interviews at top tech companies. Backed by our 3-interview guarantee.
         </p>
         <Link
           href="/onboarding"
@@ -306,4 +306,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
