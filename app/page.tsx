@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -114,50 +114,58 @@ export default function LandingPage() {
 
           <div 
             ref={featuresReveal.ref}
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal-init ${featuresReveal.isVisible ? "reveal-visible" : ""}`}
+            className={`flex flex-col gap-6 max-w-4xl mx-auto reveal-init ${featuresReveal.isVisible ? "reveal-visible" : ""}`}
           >
             {/* Feature 1 */}
-            <div className="bg-slate-950 border border-slate-800 p-6 rounded-3xl hover:border-blue-500/50 transition-colors">
-              <div className="h-12 w-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6">
-                <Target className="h-6 w-6 text-blue-400" />
+            <div className="bg-slate-950 border border-slate-800 p-8 sm:p-10 rounded-3xl hover:border-blue-500/50 transition-colors flex flex-col sm:flex-row gap-8 items-start">
+              <div className="h-16 w-16 shrink-0 rounded-2xl bg-blue-500/10 flex items-center justify-center shadow-inner border border-blue-500/20">
+                <span className="text-2xl font-black text-blue-500">1</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-3">1. AI Matching Engine</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                We scrape Greenhouse, Lever, and private remote boards daily to find the top 1% of jobs that fit your exact skills and salary requirements.
-              </p>
+              <div>
+                <h3 className="text-2xl font-extrabold text-white mb-3 tracking-tight">The Right Jobs (Precision AI Matching)</h3>
+                <p className="text-base text-slate-400 leading-relaxed">
+                  We are picky so you don't have to be. We don't do blind spray-and-pray. Our Gemini engine cross-references every new listing against your salary floor, exact role fit, and blacklist. We only queue high-probability matches.
+                </p>
+              </div>
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-slate-950 border border-slate-800 p-6 rounded-3xl hover:border-indigo-500/50 transition-colors">
-              <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-6">
-                <FileText className="h-6 w-6 text-indigo-400" />
+            <div className="bg-slate-950 border border-slate-800 p-8 sm:p-10 rounded-3xl hover:border-indigo-500/50 transition-colors flex flex-col sm:flex-row gap-8 items-start">
+              <div className="h-16 w-16 shrink-0 rounded-2xl bg-indigo-500/10 flex items-center justify-center shadow-inner border border-indigo-500/20">
+                <span className="text-2xl font-black text-indigo-500">2</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-3">2. ATS Resume Tailoring</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                For every single application, our AI rewrites your resume using exact keywords from the job description so you score 90%+ in the ATS scanner.
-              </p>
+              <div>
+                <h3 className="text-2xl font-extrabold text-white mb-3 tracking-tight">The Right Application (ATS Tailoring)</h3>
+                <p className="text-base text-slate-400 leading-relaxed">
+                  We don't send generic resumes. Before every single application, our AI rewrites your accomplishment bullets to seamlessly hit the exact ATS keywords the job description requires—written in your voice, scoring 90%+ in scanners.
+                </p>
+              </div>
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-slate-950 border border-slate-800 p-6 rounded-3xl hover:border-purple-500/50 transition-colors">
-              <div className="h-12 w-12 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6">
-                <Bot className="h-6 w-6 text-purple-400" />
+            <div className="bg-slate-950 border border-slate-800 p-8 sm:p-10 rounded-3xl hover:border-purple-500/50 transition-colors flex flex-col sm:flex-row gap-8 items-start">
+              <div className="h-16 w-16 shrink-0 rounded-2xl bg-purple-500/10 flex items-center justify-center shadow-inner border border-purple-500/20">
+                <span className="text-2xl font-black text-purple-500">3</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-3">3. Automated Bot Submit</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Our headless browser bots automatically navigate to the job post, fill out the complex forms, upload your tailored PDF, and submit it.
-              </p>
+              <div>
+                <h3 className="text-2xl font-extrabold text-white mb-3 tracking-tight">The Right Timing (Unfair Speed)</h3>
+                <p className="text-base text-slate-400 leading-relaxed">
+                  Speed is the ultimate unfair advantage. Our headless Playwright bots navigate complex forms, upload your tailored PDF, and submit your application the exact moment a high-match job is posted, beating the crowd.
+                </p>
+              </div>
             </div>
 
             {/* Feature 4 */}
-            <div className="bg-slate-950 border border-slate-800 p-6 rounded-3xl hover:border-emerald-500/50 transition-colors">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-6">
-                <Send className="h-6 w-6 text-emerald-400" />
+            <div className="bg-slate-950 border border-slate-800 p-8 sm:p-10 rounded-3xl hover:border-emerald-500/50 transition-colors flex flex-col sm:flex-row gap-8 items-start">
+              <div className="h-16 w-16 shrink-0 rounded-2xl bg-emerald-500/10 flex items-center justify-center shadow-inner border border-emerald-500/20">
+                <span className="text-2xl font-black text-emerald-500">4</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-3">4. Recruiter Outreach</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Immediately after applying, the system drafts and sends a highly personalized cold-email pitch directly to the hiring manager to get you noticed.
-              </p>
+              <div>
+                <h3 className="text-2xl font-extrabold text-white mb-3 tracking-tight">The Autonomous Tracker & Outreach</h3>
+                <p className="text-base text-slate-400 leading-relaxed">
+                  Every job you auto-apply to lands on your live candidate dashboard that updates itself. But we don't stop there: our system immediately drafts and sends a highly personalized cold-email pitch directly to the hiring manager.
+                </p>
+              </div>
             </div>
           </div>
         </div>
