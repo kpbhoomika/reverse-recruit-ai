@@ -62,14 +62,14 @@ export default function LandingPage() {
           </div>
 
           {/* Hero Headline */}
-          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.05] mb-8">
-            The Job Market Is Rigged.<br/>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">We Help You Beat It.</span>
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.1] mb-8">
+            You're 80% More Likely To Get <br className="hidden lg:block"/>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">Hired Faster</span> With ReverseRecruit
           </h1>
 
           {/* Hero Subtitle */}
           <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-6 leading-relaxed font-normal">
-            You are being rejected by algorithms, not humans. We bypass the ATS filters, automate hundreds of flawless applications while you sleep, and pitch hiring managers directly. You just show up to the interview.
+            Here's why: we don't just send generic resumes. We help you apply to the <strong className="text-white">right jobs</strong>, with the <strong className="text-white">perfectly tailored application</strong>, at the <strong className="text-white">exact right time</strong>.
           </p>
           
           <div className="flex items-center justify-center gap-2 text-emerald-400 font-bold mb-10 text-sm sm:text-base">
