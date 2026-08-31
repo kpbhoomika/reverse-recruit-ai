@@ -144,3 +144,128 @@ export interface OfferNegotiationResult {
   negotiationEmailScript: string;
   talkingPoints: string[];
 }
+
+// =========================================================================
+// 4-IN-1 AI CAREER SUITE TYPES
+// =========================================================================
+
+export type IssueSeverity = "critical" | "warning" | "passed";
+
+export interface StructuralIssue {
+  id: string;
+  category: "Formatting" | "Structure" | "Contact Info" | "Content Length" | "Action Verbs" | "ATS Parsing";
+  severity: IssueSeverity;
+  title: string;
+  description: string;
+  recommendation: string;
+  autoFixSnippet?: string;
+}
+
+export interface SectionAuditItem {
+  section: string;
+  status: "complete" | "needs_work" | "missing";
+  feedback: string;
+}
+
+export interface DiagnoserResult {
+  overallScore: number;
+  grade: "A+" | "A" | "B" | "C" | "D";
+  summary: string;
+  metrics: {
+    formattingScore: number;
+    impactScore: number;
+    atsReadabilityScore: number;
+    sectionCompletenessScore: number;
+    actionVerbDensityScore: number;
+  };
+  structuralIssues: StructuralIssue[];
+  sectionAudit: SectionAuditItem[];
+  stats: {
+    wordCount: number;
+    bulletCount: number;
+    actionVerbCount: number;
+    weakVerbCount: number;
+    readingTimeMinutes: number;
+  };
+}
+
+export interface RecruiterKeywordItem {
+  keyword: string;
+  category: "Core Technical" | "Frameworks & Tools" | "Architecture & Cloud" | "Methodologies" | "Soft Skills";
+  frequencyInJob: number;
+  foundInResume: boolean;
+  importance: "critical" | "recommended" | "bonus";
+  suggestedContext?: string;
+}
+
+export interface RecruiterKeywordResult {
+  matchPercentage: number;
+  recruiterVerdict: "Top 5% Candidate" | "Strong Consideration" | "Borderline Screening" | "Auto-Filtered by ATS";
+  booleanSearchQuery: string;
+  keywordDensityScore: number;
+  competitivePercentile: number;
+  matchedKeywords: RecruiterKeywordItem[];
+  missingKeywords: RecruiterKeywordItem[];
+  recruiterTakeaways: string[];
+  roleSeniorityMatch: string;
+}
+
+export interface XYZRewrittenBullet {
+  id: string;
+  original: string;
+  accomplishedX: string;
+  measuredByY: string;
+  byDoingZ: string;
+  fullRewritten: string;
+  impactScoreBefore: number;
+  impactScoreAfter: number;
+  rationale: string;
+  variations: {
+    executive: string;
+    technical: string;
+    metricsHeavy: string;
+  };
+}
+
+export interface RewriterResult {
+  overallImpactScoreBefore: number;
+  overallImpactScoreAfter: number;
+  targetRole: string;
+  rewrittenBullets: XYZRewrittenBullet[];
+  generalAdvice: string[];
+}
+
+export type InterviewPersona = "faang_director" | "startup_founder" | "bar_raiser" | "tech_lead";
+
+export interface MockInterviewQuestion {
+  id: string;
+  category: "System Design" | "Behavioral (STAR)" | "Technical Deep-Dive" | "Leadership & Impact";
+  question: string;
+  context: string;
+  hints: string[];
+}
+
+export interface RubricScoreItem {
+  name: string;
+  score: number; // 0 - 100
+  feedback: string;
+}
+
+export interface HiringManagerResult {
+  overallScore: number;
+  hiringDecision: "Strong Hire" | "Hire" | "Lean Hire" | "Lean No Hire" | "Strong No Hire";
+  personaUsed: InterviewPersona;
+  interviewerSummary: string;
+  starRubric: {
+    situation: { score: number; comment: string };
+    task: { score: number; comment: string };
+    action: { score: number; comment: string };
+    result: { score: number; comment: string };
+  };
+  detailedRubric: RubricScoreItem[];
+  strengths: string[];
+  improvementAreas: string[];
+  modelAnswer: string;
+  followUpQuestion: string;
+}
+

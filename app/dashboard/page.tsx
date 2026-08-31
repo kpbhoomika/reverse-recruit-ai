@@ -10,18 +10,22 @@ import {
   FileText, 
   Send, 
   Linkedin, 
-  DollarSign,
-  Activity,
-  ArrowUpRight,
-  ShieldCheck,
-  CheckCircle2,
-  Building,
-  Target,
-  Sparkles,
-  Check,
-  Calendar,
-  Layers,
-  ArrowRight
+  DollarSign, 
+  Activity, 
+  ArrowUpRight, 
+  ShieldCheck, 
+  CheckCircle2, 
+  Building, 
+  Target, 
+  Sparkles, 
+  Check, 
+  Calendar, 
+  Layers, 
+  ArrowRight,
+  UserCheck,
+  Flame,
+  Award,
+  Zap
 } from "lucide-react";
 import { initialApplications, initialCandidates } from "@/lib/mock-data";
 import { ApplicationItem, ApplicationStatus } from "@/lib/types";
@@ -137,25 +141,175 @@ export default function CandidateDashboard() {
           {/* Quick Tool Links */}
           <div className="flex flex-wrap items-center gap-2">
             <Link
-              href="/dashboard/resume-tailor"
-              className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
+              href="/dashboard/diagnoser"
+              className="px-3 py-1.5 text-xs font-semibold text-rose-300 hover:text-white bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 rounded-xl transition-colors flex items-center gap-1.5"
             >
-              <FileText className="h-3.5 w-3.5 text-blue-400" />
-              <span>ATS Tailor</span>
+              <ShieldCheck className="h-3.5 w-3.5" />
+              <span>ATS Diagnoser</span>
             </Link>
             <Link
-              href="/dashboard/cover-letters"
-              className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
+              href="/dashboard/recruiter"
+              className="px-3 py-1.5 text-xs font-semibold text-indigo-300 hover:text-white bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 rounded-xl transition-colors flex items-center gap-1.5"
             >
-              <Send className="h-3.5 w-3.5 text-emerald-400" />
-              <span>Outreach Pitch</span>
+              <UserCheck className="h-3.5 w-3.5" />
+              <span>Recruiter Lens</span>
+            </Link>
+            <Link
+              href="/dashboard/rewriter"
+              className="px-3 py-1.5 text-xs font-semibold text-amber-300 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 rounded-xl transition-colors flex items-center gap-1.5"
+            >
+              <Flame className="h-3.5 w-3.5" />
+              <span>XYZ Rewriter</span>
+            </Link>
+            <Link
+              href="/dashboard/mock-interview"
+              className="px-3 py-1.5 text-xs font-semibold text-purple-300 hover:text-white bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-xl transition-colors flex items-center gap-1.5"
+            >
+              <Award className="h-3.5 w-3.5" />
+              <span>Mock Interview</span>
             </Link>
             <Link
               href="/dashboard/offer-negotiator"
-              className="px-3.5 py-2 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-95 rounded-xl shadow-md shadow-blue-500/20 transition-all flex items-center gap-1.5"
+              className="px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-95 rounded-xl shadow-md shadow-blue-500/20 transition-all flex items-center gap-1.5"
             >
               <DollarSign className="h-3.5 w-3.5" />
               <span>Negotiator</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* 4-in-1 AI Career Suite Hub Section */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg sm:text-xl font-extrabold text-white flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-blue-400" />
+                <span>AI Career Intelligence Suite</span>
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Specialized AI tools to scan, benchmark, rewrite, and prepare your application pipeline.
+              </p>
+            </div>
+            <span className="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full hidden sm:inline-block">
+              4 Tools Active
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Tool 1: Diagnoser */}
+            <Link
+              href="/dashboard/diagnoser"
+              className="p-5 rounded-3xl bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-rose-500/50 transition-all duration-300 shadow-xl flex flex-col justify-between gap-4 group"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="h-9 w-9 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 shadow-inner group-hover:scale-105 transition-transform">
+                    <ShieldCheck className="h-4.5 w-4.5" />
+                  </div>
+                  <span className="text-[10px] font-mono text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full font-bold">
+                    Scanner
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-white group-hover:text-rose-300 transition-colors">
+                    ATS Diagnoser
+                  </h3>
+                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                    Flags structural errors, OCR issues, and passive verb density.
+                  </p>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-rose-400">
+                <span>Run Diagnostic</span>
+                <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Tool 2: Recruiter */}
+            <Link
+              href="/dashboard/recruiter"
+              className="p-5 rounded-3xl bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-all duration-300 shadow-xl flex flex-col justify-between gap-4 group"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="h-9 w-9 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shadow-inner group-hover:scale-105 transition-transform">
+                    <UserCheck className="h-4.5 w-4.5" />
+                  </div>
+                  <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full font-bold">
+                    Boolean Matrix
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-white group-hover:text-indigo-300 transition-colors">
+                    Recruiter Lens
+                  </h3>
+                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                    Cross-references real job specs for missing boolean filters.
+                  </p>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-indigo-400">
+                <span>Inspect Keywords</span>
+                <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Tool 3: Rewriter */}
+            <Link
+              href="/dashboard/rewriter"
+              className="p-5 rounded-3xl bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition-all duration-300 shadow-xl flex flex-col justify-between gap-4 group"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="h-9 w-9 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shadow-inner group-hover:scale-105 transition-transform">
+                    <Flame className="h-4.5 w-4.5" />
+                  </div>
+                  <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full font-bold">
+                    XYZ Formula
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-white group-hover:text-amber-300 transition-colors">
+                    XYZ Rewriter
+                  </h3>
+                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                    Accomplished [X], measured by [Y], by doing [Z] with scores.
+                  </p>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-amber-400">
+                <span>Rewrite Bullets</span>
+                <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Tool 4: Mock Interview */}
+            <Link
+              href="/dashboard/mock-interview"
+              className="p-5 rounded-3xl bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-purple-500/50 transition-all duration-300 shadow-xl flex flex-col justify-between gap-4 group"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="h-9 w-9 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shadow-inner group-hover:scale-105 transition-transform">
+                    <Award className="h-4.5 w-4.5" />
+                  </div>
+                  <span className="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-full font-bold">
+                    Arena
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-white group-hover:text-purple-300 transition-colors">
+                    Mock Interview
+                  </h3>
+                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                    Hiring manager personas with STAR grading &amp; 10/10 model answers.
+                  </p>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-purple-400">
+                <span>Start Interview</span>
+                <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </div>
             </Link>
           </div>
         </div>

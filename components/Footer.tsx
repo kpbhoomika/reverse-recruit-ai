@@ -37,13 +37,13 @@ export default function Footer() {
 
           <div className="space-y-2.5">
             <h4 className="font-mono uppercase tracking-wider text-[11px] text-white font-semibold">
-              Platform Features
+              AI Career Intelligence Suite
             </h4>
             <ul className="space-y-2">
-              <li><Link href="/dashboard" className="hover:text-white transition-colors">Live Pipeline Tracker</Link></li>
-              <li><Link href="/dashboard/resume-tailor" className="hover:text-white transition-colors">ATS Resume Tailor Studio</Link></li>
-              <li><Link href="/dashboard/cover-letters" className="hover:text-white transition-colors">Recruiter InMail &amp; Pitch</Link></li>
-              <li><Link href="/dashboard/linkedin-optimizer" className="hover:text-white transition-colors">LinkedIn Profile SEO</Link></li>
+              <li><Link href="/dashboard/diagnoser" className="hover:text-white transition-colors">ATS Structural Diagnoser</Link></li>
+              <li><Link href="/dashboard/recruiter" className="hover:text-white transition-colors">Recruiter Keyword Lens</Link></li>
+              <li><Link href="/dashboard/rewriter" className="hover:text-white transition-colors">Google XYZ Bullet Rewriter</Link></li>
+              <li><Link href="/dashboard/mock-interview" className="hover:text-white transition-colors">Mock Interview Arena</Link></li>
               <li><Link href="/dashboard/offer-negotiator" className="hover:text-white transition-colors">Offer Negotiation Copilot</Link></li>
             </ul>
           </div>

@@ -13,7 +13,10 @@ import {
   Linkedin, 
   DollarSign, 
   ShieldCheck, 
-  Briefcase
+  Briefcase,
+  UserCheck,
+  Flame,
+  Award
 } from "lucide-react";
 
 export default function Navbar() {
@@ -32,11 +35,11 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Live Pipeline", href: "/dashboard", icon: Layers },
-    { name: "ATS Resume Tailor", href: "/dashboard/resume-tailor", icon: FileText },
-    { name: "Cover Letter & Pitch", href: "/dashboard/cover-letters", icon: Send },
-    { name: "LinkedIn SEO", href: "/dashboard/linkedin-optimizer", icon: Linkedin },
-    { name: "Offer Negotiator", href: "/dashboard/offer-negotiator", icon: DollarSign },
-    { name: "Agency Cockpit", href: "/admin", icon: ShieldCheck },
+    { name: "ATS Diagnoser", href: "/dashboard/diagnoser", icon: ShieldCheck, badge: "New" },
+    { name: "Recruiter Lens", href: "/dashboard/recruiter", icon: UserCheck, badge: "AI" },
+    { name: "XYZ Rewriter", href: "/dashboard/rewriter", icon: Flame, badge: "XYZ" },
+    { name: "Mock Interview", href: "/dashboard/mock-interview", icon: Award, badge: "Arena" },
+    { name: "Negotiator", href: "/dashboard/offer-negotiator", icon: DollarSign },
   ];
 
   return (

@@ -11,9 +11,13 @@ import {
   Target,
   Sparkles,
   Check,
-  ShieldCheck
+  ShieldCheck,
+  UserCheck,
+  Flame,
+  Award
 } from "lucide-react";
 import { useScrollReveal } from "@/lib/use-motion";
+import PersonaShowcase from "@/components/visuals/PersonaShowcase";
 
 export default function LandingPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "quarterly">("monthly");
@@ -62,14 +66,14 @@ export default function LandingPage() {
           </div>
 
           {/* Hero Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.1] mb-8">
-            You're 80% More Likely To Get <br className="hidden lg:block"/>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">Hired Faster</span> With ReverseRecruit
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.05] mb-8">
+            The Job Market Is Rigged.<br/>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">We Help You Beat It.</span>
           </h1>
 
           {/* Hero Subtitle */}
           <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-6 leading-relaxed font-normal">
-            Here's why: we don't just send generic resumes. We help you apply to the <strong className="text-white">right jobs</strong>, with the <strong className="text-white">perfectly tailored application</strong>, at the <strong className="text-white">exact right time</strong>.
+            You are being rejected by algorithms, not humans. We bypass the ATS filters, automate hundreds of flawless applications while you sleep, and pitch hiring managers directly. You just show up to the interview.
           </p>
           
           <div className="flex items-center justify-center gap-2 text-emerald-400 font-bold mb-10 text-sm sm:text-base">
@@ -102,7 +106,12 @@ export default function LandingPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. HOW IT WORKS (Features) */}
+      {/* 2. INTERACTIVE 4-IN-1 AI PERSONA SUITE SHOWCASE */}
+      {/* ========================================================================= */}
+      <PersonaShowcase />
+
+      {/* ========================================================================= */}
+      {/* 3. HOW IT WORKS (Features) */}
       {/* ========================================================================= */}
       <section className="relative py-20 bg-slate-900/50 border-y border-slate-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
